@@ -5,4 +5,3 @@
 ⏳ Yakında, buralar eskiden dutluktu diyebileceğiz :)
 Takipte kalın!
 
-Deneme
