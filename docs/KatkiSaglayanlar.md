@@ -3,3 +3,4 @@
 - Muhammed Musatafa Savar @muffafa
 - Uveys Gurbuz @uveysg
 - Deniz Kaparlar @denizk1
+- Azat ESER @azateser
