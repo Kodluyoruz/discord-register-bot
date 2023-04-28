@@ -24,7 +24,7 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "i18next": "^22.4.15",
-    "mongoose": "^7.0.5",
+    "mongoose": "^7.1.0",
     "winston": "^3.8.2"
   }
 }
