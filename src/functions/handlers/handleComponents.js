@@ -5,7 +5,9 @@ module.exports = (client) => {
     const componentFolders = readdirSync(`./src/components`);
     for (const folder of componentFolders) {
       const componentFiles = readdirSync(`./src/components/${folder}`).filter(
-        (file) => file.endsWith(".js")
+        (file) => file.endsWith(".js") //todo bu dosyaların içinde .js
+          // uzantılı dosydan başka bir şey tutumamız gerektiği için bu kontrol
+            // gereksiz olabilir
       );
 
       const { buttons, selectMenus, modals } = client;
@@ -32,7 +34,8 @@ module.exports = (client) => {
           }
           break;
 
-        default:
+        default: //todo switch-case yapısında default olarak bir işlem
+          // yapılmayacakasa bu blogun olmasında gerek yok silinebilir
           break;
       }
     }
