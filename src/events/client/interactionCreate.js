@@ -29,7 +29,7 @@ module.exports = {
       } catch (error) {
         logger.error(error);
       }
-    } else if (interaction.isSelectMenu()) {
+    } else if (interaction.isStringSelectMenu()) {
       const { selectMenus, logger } = client;
       const { customId } = interaction;
       const menu = selectMenus.get(customId);
