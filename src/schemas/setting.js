@@ -9,7 +9,7 @@ const settingSchema= new Schema({
         getByKey: function(Key, callback)  {
             return this.findOne({key:Key}, callback);
         },
-        getByValue: function(value, callback) {
+        getByValue: function(Value, callback) {
             return this.findOne({value:Value}, callback);
         },
         getAllData: function() {
