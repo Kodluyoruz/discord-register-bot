@@ -1,5 +1,3 @@
-
-
 const {Schema,model} = require("mongoose");
 
 const guildSchema= new Schema({
@@ -16,6 +14,12 @@ const guildSchema= new Schema({
         },
         getByName: function(name, callback) {
             return this.findOne({guildName:name}, callback);
+        },
+        getAllData: function() {
+            return this.find();
+        },
+        getAllDataByFilter: function(filter={},callback) {
+            return this.find(filter,callback);
         }
     }
 });
