@@ -20,16 +20,16 @@ module.exports = {
       }
     } else if (interaction.isButton()) {
       const { buttons, logger } = client;
-      const { customId } = interaction;
+      const [customId, code] = interaction.customId.split('-');
       const button = buttons.get(customId);
       if (!button) return new Error("Bu düğme için bir işlev ayarlanmamış.");
 
       try {
-        await button.execute(interaction, client);
+        await button.execute(interaction, client, code);
       } catch (error) {
         logger.error(error);
       }
-    } else if (interaction.isSelectMenu()) {
+    } else if (interaction.isStringSelectMenu()) {
       const { selectMenus, logger } = client;
       const { customId } = interaction;
       const menu = selectMenus.get(customId);
