@@ -1,6 +1,6 @@
 module.exports={
     name:"err",
-    execute(err){
-        console.log(`Database Connection: ${err}`);
+    execute(client, err){
+        client.logger.error(`Veritabanı: hata oluştu -> ${err}`);
     },
 };

@@ -22,14 +22,12 @@ module.exports = {
                     content: `Server Name: ${guildProfile.guildName}`
                 }
             );
-            console.log(guildProfile);
         } else {
             await interaction.reply(
                 {
                     content: `Server ID: ${guildProfile.guildId}`
                 }
             );
-            console.log(guildProfile);
         }
 
     }

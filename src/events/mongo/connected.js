@@ -1,6 +1,6 @@
 module.exports={
     name:"connected",
     execute(client){
-        console.log("[Database status]: Connected.");
+        client.logger.info("Veritabanı: bağlandı");
     },
 };

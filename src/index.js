@@ -9,20 +9,20 @@ const {
 const fs = require('fs');
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessages,
-        
-    ]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+  ],
 });
 
 client.commands = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
+client.modals = new Collection();
 client.commandArray = [];
 
-require('./utils/logger')(client);
+require("./utils/logger")(client);
 
 client.createLogger();
 
