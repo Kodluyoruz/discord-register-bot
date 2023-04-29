@@ -1,27 +1,23 @@
 require("dotenv").config();
 const { token } = process.env;
-const {
-    Client,
-    Collection,
-    GatewayIntentBits
-} = require("discord.js");
-const fs = require('fs');
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const fs = require("fs");
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessages,
-        
-    ]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+  ],
 });
 
 client.commands = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
+client.modals = new Collection();
 client.commandArray = [];
 
-require('./utils/logger')(client);
+require("./utils/logger")(client);
 
 client.createLogger();
 
@@ -37,4 +33,4 @@ for (const folder of functionFolders) {
 client.handleEvents();
 client.handleCommands();
 client.handleComponents();
-client.login(token)
+client.login(token);
