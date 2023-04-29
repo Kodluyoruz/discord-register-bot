@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { token } = process.env;
+const { token,DB_URI} = process.env;
+const { connect } = require("mongoose");
 const {
     Client,
     Collection,
@@ -37,4 +38,8 @@ for (const folder of functionFolders) {
 client.handleEvents();
 client.handleCommands();
 client.handleComponents();
-client.login(token)
+client.login(token);
+
+(async()=>{
+  await connect(DB_URI).catch(console.error);
+})();
