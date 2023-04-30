@@ -11,9 +11,9 @@ module.exports = {
   async execute(interaction) {
     const select = new StringSelectMenuBuilder()
       .setCustomId("roleMenu")
-      .setPlaceholder("Make a selection!");
+      .setPlaceholder("Bir rol seç!");
 
-      interaction.guild.channels.cache.each((role) => {
+      interaction.guild.roles.cache.each((role) => {
       select.addOptions(
         new StringSelectMenuOptionBuilder()
           .setLabel(role.name)
