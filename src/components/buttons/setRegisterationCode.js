@@ -15,15 +15,23 @@ module.exports = {
         .setCustomId("codeEntryScreen")
         .setTitle("Kayıt Kodu");
   
-      const textInput = new TextInputBuilder()
+      const textCodeInput = new TextInputBuilder()
         .setCustomId("codeInput")
         .setLabel("Kayıt Kodunuz")
         .setRequired(true)
         .setStyle(TextInputStyle.Short);
+      
+      const textNameInput = new TextInputBuilder()
+        .setCustomId("nameInput")
+        .setLabel("Ad Soyad")
+        .setRequired(false)
+        .setStyle(TextInputStyle.Short);
   
-      modal.addComponents(new ActionRowBuilder().addComponents(textInput));
+      const codeActionRow = new ActionRowBuilder().addComponents(textCodeInput);
+      const nameActionRow = new ActionRowBuilder().addComponents(textNameInput);
+      modal.addComponents(codeActionRow, nameActionRow);
   
-      await interaction.showModal(modal);
+      await interaction.showModal(modal)
     },
   };
   

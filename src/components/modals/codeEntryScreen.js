@@ -9,7 +9,9 @@ module.exports = {
   },
   async execute(interaction, client) {
     // TODO: CHECK IT FOR IS THIS REGISTRATION CODE IS CORRECT
+    // TODO: Save to database with name and code (also with usertag)
     const codeInput = interaction.fields.getTextInputValue("codeInput");
+    const nameInput = interaction.fields.getTextInputValue("nameInput");
     // let code = await client.db.get("code");
     const code = "123";
 
@@ -26,7 +28,7 @@ module.exports = {
         .setURL("https://github.com/Kodluyoruz/discord-register-bot")
         .addFields([
           {
-            name: `TEBRİKLER`,
+            name: `TEBRİKLER ${nameInput}`,
             value: `@rol-adi rol başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
             inline: false,
           },
