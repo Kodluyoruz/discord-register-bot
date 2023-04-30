@@ -1,3 +1,5 @@
+// TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
+
 const {
   SlashCommandBuilder,
   ButtonBuilder,
@@ -41,8 +43,8 @@ module.exports = {
       .setLabel("Kuruluma Başla")
       .setStyle(ButtonStyle.Success);
 
-    const setChannelButton = new ButtonBuilder()
-      .setCustomId("setChannel")
+    const setChannelesButton = new ButtonBuilder()
+      .setCustomId("setChannels")
       .setLabel("Ayarları Düzenle")
       .setStyle(ButtonStyle.Secondary);
 
@@ -51,7 +53,7 @@ module.exports = {
         new ActionRowBuilder().addComponents([
           docsButton,
           setRoleButton,
-          setChannelButton,
+          setChannelesButton,
         ]),
       ],
       embeds: [embed],

@@ -36,8 +36,8 @@ module.exports = {
       .setURL("https://github.com/Kodluyoruz/discord-register-bot")
       .setStyle(ButtonStyle.Link);
 
-    const setChannelButton = new ButtonBuilder()
-      .setCustomId("setChannel")
+    const setChannelesButton = new ButtonBuilder()
+      .setCustomId("setChannels")
       .setLabel("Ayarlar")
       .setStyle(ButtonStyle.Primary);
 
@@ -45,7 +45,7 @@ module.exports = {
       components: [
         new ActionRowBuilder().addComponents([
           docsButton,
-          setChannelButton,
+          setChannelesButton,
         ]),
       ],
       embeds: [embed],
