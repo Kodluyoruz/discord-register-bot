@@ -9,8 +9,8 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ayarlar")
-    .setDescription("Ayarlar menüsünü açar."),
+    .setName("kurulum")
+    .setDescription("Kurulum menüsünü açar."),
 
   async execute(interaction, client) {
     const embed = new EmbedBuilder()
@@ -36,15 +36,21 @@ module.exports = {
       .setURL("https://github.com/Kodluyoruz/discord-register-bot")
       .setStyle(ButtonStyle.Link);
 
+    const setRoleButton = new ButtonBuilder()
+      .setCustomId("setRole")
+      .setLabel("Kuruluma Başla")
+      .setStyle(ButtonStyle.Success);
+
     const setChannelButton = new ButtonBuilder()
       .setCustomId("setChannel")
-      .setLabel("Ayarlar")
-      .setStyle(ButtonStyle.Primary);
+      .setLabel("Ayarları Düzenle")
+      .setStyle(ButtonStyle.Secondary);
 
     await interaction.reply({
       components: [
         new ActionRowBuilder().addComponents([
           docsButton,
+          setRoleButton,
           setChannelButton,
         ]),
       ],
