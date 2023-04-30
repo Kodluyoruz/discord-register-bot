@@ -1,5 +1,3 @@
-const { guildId } = process.env;
-
 const {
   ActionRowBuilder,
   StringSelectMenuBuilder,
@@ -10,13 +8,12 @@ module.exports = {
   data: {
     name: "setRole",
   },
-  async execute(interaction, client) {
+  async execute(interaction) {
     const select = new StringSelectMenuBuilder()
       .setCustomId("roleMenu")
       .setPlaceholder("Make a selection!");
 
-    const guild = await client.guilds.fetch(guildId);
-    guild.roles.cache.each((role) => {
+      interaction.guild.channels.cache.each((role) => {
       select.addOptions(
         new StringSelectMenuOptionBuilder()
           .setLabel(role.name)
