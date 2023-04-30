@@ -16,8 +16,6 @@ module.exports = {
       .setLabel("Kod Üret")
       .setStyle(ButtonStyle.Success);
 
-    console.log(`${interaction.values[0]}`);
-
     await interaction.reply({
       components: [
         new ActionRowBuilder().addComponents([setRegisterCodesButton, createNewRegisterCodesButton]),

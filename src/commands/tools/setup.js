@@ -1,3 +1,5 @@
+// TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
+
 const {
   SlashCommandBuilder,
   ButtonBuilder,
@@ -9,8 +11,8 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ayarlar")
-    .setDescription("Ayarlar menüsünü açar."),
+    .setName("kurulum")
+    .setDescription("Kurulum menüsünü açar."),
 
   async execute(interaction, client) {
     const embed = new EmbedBuilder()
@@ -36,15 +38,21 @@ module.exports = {
       .setURL("https://github.com/Kodluyoruz/discord-register-bot")
       .setStyle(ButtonStyle.Link);
 
+    const setRoleButton = new ButtonBuilder()
+      .setCustomId("setRole")
+      .setLabel("Kuruluma Başla")
+      .setStyle(ButtonStyle.Success);
+
     const setChannelesButton = new ButtonBuilder()
       .setCustomId("setChannels")
-      .setLabel("Ayarlar")
-      .setStyle(ButtonStyle.Primary);
+      .setLabel("Ayarları Düzenle")
+      .setStyle(ButtonStyle.Secondary);
 
     await interaction.reply({
       components: [
         new ActionRowBuilder().addComponents([
           docsButton,
+          setRoleButton,
           setChannelesButton,
         ]),
       ],
