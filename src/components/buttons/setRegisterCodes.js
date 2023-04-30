@@ -1,12 +1,28 @@
+const {
+  ModalBuilder,
+  ActionRowBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+} = require("discord.js");
+
 module.exports = {
-    data: {
-      name: "setRegisterCodes",
-    },
-    // eslint-disable-next-line no-unused-vars
-    async execute(interaction, client, code) {
-      await interaction.reply({
-        content: `Set register ${code}`,
-      });
-    },
-  };
-  
+  data: {
+    name: "setRegisterCodes",
+  },
+  async execute(interaction, client, roleId) {
+    const modal = new ModalBuilder()
+      .setCustomId(`setCodesScreen-${roleId}`)
+      .setTitle("Mevcut kodları gir");
+
+    const textInput = new TextInputBuilder()
+      .setCustomId("codesInput")
+      .setLabel("Kodları virgül ile ayırarak girin.") // TODO:  Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3 FAZLA UZUN OLUYOR
+      .setPlaceholder("Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3")
+      .setRequired(true)
+      .setStyle(TextInputStyle.Paragraph);
+
+    modal.addComponents(new ActionRowBuilder().addComponents(textInput));
+
+    await interaction.showModal(modal);
+  },
+};

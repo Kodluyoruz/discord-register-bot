@@ -20,12 +20,12 @@ module.exports = {
       }
     } else if (interaction.isButton()) {
       const { buttons, logger } = client;
-      const [customId, code] = interaction.customId.split('-');
+      const [customId, roleId] = interaction.customId.split('-');
       const button = buttons.get(customId);
       if (!button) return new Error("Bu düğme için bir işlev ayarlanmamış.");
 
       try {
-        await button.execute(interaction, client, code);
+        await button.execute(interaction, client, roleId);
       } catch (error) {
         logger.error(error);
       }
@@ -42,12 +42,12 @@ module.exports = {
       }
     } else if (interaction.type == InteractionType.ModalSubmit) {
       const { modals } = client;
-      const { customId } = interaction;
+      const [customId, roleId] = interaction.customId.split('-');
       const modal = modals.get(customId);
       if (!modal) return new Error("Bu modal için kod yazılmamış.");
 
       try {
-        await modal.execute(interaction, client);
+        await modal.execute(interaction, client, roleId);
       } catch (error) {
         console.error(error);
       }
