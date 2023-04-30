@@ -6,11 +6,8 @@ const settingSchema= new Schema({
     value:String
 },{
     statics: {
-        getByKey: function(Key, callback)  {
-            return this.findOne({key:Key}, callback);
-        },
-        getByValue: function(Value, callback) {
-            return this.findOne({value:Value}, callback);
+        getValueByKey: function(guildId,key,callback)  {
+            return this.findOne({guildId:guildId,key:key}, callback);
         },
         getAllData: function() {
             return this.find();
