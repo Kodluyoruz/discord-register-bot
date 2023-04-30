@@ -8,14 +8,27 @@ const codeSchema= new Schema({
     note:String
 },{
     statics: {
-        getByRoleId: function(id, callback)  {
-            return this.findOne({roleId:id}, callback);
+        addCode: function(guildId, roleId,codeIds,callback)  {
+            const reformattedArrayCode = codeIds.map((codeId) => ({ guildId,roleId,codeId}));
+            return this.insertMany(reformattedArrayCode,callback);
         },
-        getByCodeId: function(id, callback) {
-            return this.findOne({codeId:id}, callback);
+        getByCode: function(guildId,codeId,callback)  {
+            return this.findOne({guildId:guildId,codeId:codeId}, callback);
         },
-        getByUserId: function(id, callback) {
-            return this.findOne({userId:id}, callback);
+        saveCodeToUser: function(guildId,codeId,userId,callback)  {
+            let code= this.findOne({guildId:guildId,codeId:codeId}, callback);
+            if (code.userId!=null) {
+                return code.userId;
+            }
+            return this.updateOne(
+                {
+                    guildId:guildId,
+                    codeId:codeId,
+                    userId: userId
+                },
+                callback
+            );
+           
         },
         getAllData: function() {
             return this.find();
