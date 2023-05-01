@@ -1,10 +1,11 @@
-const {
+import {
+  ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   ChannelType,
-  ActionRowBuilder,
-} = require("discord.js");
-module.exports = {
+} from 'discord.js'
+
+export default {
   name: "ready",
   once: true,
   async execute(client) {

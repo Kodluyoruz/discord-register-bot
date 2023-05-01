@@ -1,10 +1,7 @@
-const {
-  ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-} = require("discord.js");
+import {ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} from "discord.js";
 
-module.exports = {
+
+export default {
   data: {
     name: "setRole",
   },

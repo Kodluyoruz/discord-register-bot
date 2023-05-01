@@ -1,8 +1,7 @@
-const { createLogger, format, transports } = require('winston');
-const path = require('path');
+import { createLogger, format, transports } from 'winston'
+import path from 'path'
 
-
-module.exports = (client) => {
+export default (client) => {
   client.createLogger = async () => {
     client.logger = createLogger({
       format: format.combine(
@@ -12,13 +11,13 @@ module.exports = (client) => {
       transports: [
         new transports.Console(),
         new transports.File({
-          filename: path.join(__dirname, '../../logs', 'error.log'),
+          filename: 'logs/error.log',
           level: 'error',
         }),
         new transports.File({
-          filename: path.join(__dirname, '../../logs', 'combined.log'),
+          filename: 'logs/combined.log',
         }),
       ],
     });
   };
-};
+}

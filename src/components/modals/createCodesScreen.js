@@ -1,12 +1,11 @@
-const {
-  ButtonBuilder,
+import {
   ActionRowBuilder,
-  ButtonStyle,
+  ButtonBuilder,
+  ButtonStyle, Colors,
   EmbedBuilder,
-  Colors,
-} = require("discord.js");
+} from 'discord.js'
 
-module.exports = {
+export default {
   data: {
     name: "createCodesScreen",
   },

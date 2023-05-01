@@ -1,12 +1,12 @@
 // TODO: If settings is not completed then it will render next select menu which is moderation channel
 
-const {
+import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-} = require("discord.js");
+} from 'discord.js'
 
-module.exports = {
+export default {
   data: {
     name: "setRegChannel",
   },

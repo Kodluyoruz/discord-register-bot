@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Kodluyoruz Discord Kayıt Botu [Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",

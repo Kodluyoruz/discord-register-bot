@@ -1,6 +1,7 @@
-const fs = require("fs");
-const {connection}=require("mongoose");
-module.exports = (client) => {
+import fs from 'fs'
+import mongoose from 'mongoose'
+
+export default (client) => {
   client.handleEvents = async () => {
     const eventFolders = fs.readdirSync(`./src/events`);
     for (const folder of eventFolders) {
@@ -10,7 +11,7 @@ module.exports = (client) => {
       switch (folder) {
         case "client":
           for (const file of eventFiles) {
-            const event = require(`../../events/${folder}/${file}`);
+            const event = (await import(`../../events/${folder}/${file}`)).default;
             if (event.once)
               client.once(event.name, (...args) =>
                 event.execute(...args, client)
@@ -23,9 +24,9 @@ module.exports = (client) => {
           break;
         case "mongo":
           for(const file of eventFiles){
-            const event=require(`../../events/${folder}/${file}`);
-            if(event.once) connection.once(event.name,(...args)=>event.execute(...args,client))
-            else connection.on(event.name,(...args)=>event.execute(...args,client));
+            const event=(await import(`../../events/${folder}/${file}`)).default;
+            if(event.once) mongoose.connection.once(event.name,(...args)=>event.execute(...args,client))
+            else mongoose.connection.on(event.name,(...args)=>event.execute(...args,client));
           }
           break;
         default:
@@ -33,4 +34,4 @@ module.exports = (client) => {
       }
     }
   };
-};
+}

@@ -1,9 +1,6 @@
-const {
-  EmbedBuilder,
-  Colors,
-} = require("discord.js");
+import { Colors, EmbedBuilder } from 'discord.js'
 
-module.exports = {
+export default {
   data: {
     name: "codeEntryScreen",
   },

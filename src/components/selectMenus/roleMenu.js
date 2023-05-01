@@ -1,6 +1,6 @@
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js'
 
-module.exports = {
+export default {
   data: {
     name: `roleMenu`,
   },

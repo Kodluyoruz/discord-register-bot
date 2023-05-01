@@ -1,13 +1,10 @@
-const {
-  SlashCommandBuilder,
-  ButtonBuilder,
+import {
   ActionRowBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-  Colors,
-} = require("discord.js");
+  ButtonBuilder, ButtonStyle, Colors, EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js'
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("ayarlar")
     .setDescription("Ayarlar menüsünü açar."),

@@ -1,10 +1,10 @@
-const {
+import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-} = require("discord.js");
+} from 'discord.js'
 
-module.exports = {
+export default {
     data: {
       name: "setLogChannel",
     },

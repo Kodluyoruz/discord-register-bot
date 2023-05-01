@@ -1,13 +1,11 @@
-require("dotenv").config();
-const { token,DB_URI} = process.env;
-const { connect } = require("mongoose");
-const {
-    Client,
-    Collection,
-    GatewayIntentBits
-} = require("discord.js");
-const fs = require('fs');
+import dotenv from "dotenv";
+import { connect } from "mongoose";
+import { Client, Collection, GatewayIntentBits } from "discord.js";
+import fs from "fs";
 
+dotenv.config();
+
+const { token, DB_URI } = process.env;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -22,24 +20,20 @@ client.selectMenus = new Collection();
 client.modals = new Collection();
 client.commandArray = [];
 
-require("./utils/logger")(client);
-
-client.createLogger();
-
 const functionFolders = fs.readdirSync(`./src/functions`);
 for (const folder of functionFolders) {
   const functionFiles = fs
     .readdirSync(`./src/functions/${folder}`)
     .filter((file) => file.endsWith(".js"));
   for (const file of functionFiles)
-    require(`./functions/${folder}/${file}`)(client);
+    (await import(`./functions/${folder}/${file}`)).default(client);
 }
 
-client.handleEvents();
-client.handleCommands();
-client.handleComponents();
-client.login(token);
+await client.createLogger();
+await client.handleEvents();
+await client.handleCommands();
+await client.handleComponents();
 
-(async()=>{
-  await connect(DB_URI).catch(console.error);
-})();
+await connect(DB_URI);
+await client.login(token);
+

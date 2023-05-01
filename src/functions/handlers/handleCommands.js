@@ -1,9 +1,8 @@
-require("dotenv").config();
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9')
-const fs = require("fs");
+import { REST } from '@discordjs/rest'
+import { Routes } from 'discord-api-types/v9'
+import fs from 'fs'
 
-module.exports = (client) => {
+export default (client) => {
   client.handleCommands = async () => {
     const { logger } = client;
     const commandFolders = fs.readdirSync("./src/commands");
@@ -14,7 +13,7 @@ module.exports = (client) => {
 
       const { commands, commandArray } = client;
       for (const file of commandFiles) {
-        const command = require(`../../commands/${folder}/${file}`);
+        const command = (await import(`../../commands/${folder}/${file}`)).default;
         commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
         logger.info(`Komut: ${command.data.name} yüklendi`)
@@ -36,4 +35,4 @@ module.exports = (client) => {
         logger.error(error)
       }
   };
-};
+}

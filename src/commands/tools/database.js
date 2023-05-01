@@ -1,10 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js');
-const mongoose = require("mongoose");
-const Guild = require('../../schemas/guild');
-const Code = require('../../schemas/code');
-const Setting = require('../../schemas/setting');
+import { SlashCommandBuilder } from 'discord.js'
 
-module.exports = {
+import Guild from '../../schemas/guild.js'
+
+export default {
     data: new SlashCommandBuilder()
         .setName('database')
         .setDescription('Ornek database'),

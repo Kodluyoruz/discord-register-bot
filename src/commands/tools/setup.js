@@ -1,15 +1,12 @@
 // TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
 
-const {
-  SlashCommandBuilder,
-  ButtonBuilder,
+import {
   ActionRowBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-  Colors,
-} = require("discord.js");
+  ButtonBuilder, ButtonStyle, Colors, EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js'
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName("kurulum")
     .setDescription("Kurulum menüsünü açar."),

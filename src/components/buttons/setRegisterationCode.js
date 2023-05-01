@@ -1,11 +1,11 @@
-const {
-    ModalBuilder,
-    ActionRowBuilder,
-    TextInputBuilder,
-    TextInputStyle,
-  } = require("discord.js");
+import {
+  ActionRowBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+} from 'discord.js'
 
-module.exports = {
+export default {
     data: {
       name: "setRegisterationCode",
     },

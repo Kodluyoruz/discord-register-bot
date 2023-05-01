@@ -1,4 +1,4 @@
-const {Schema,model} = require("mongoose");
+import { model, Schema } from 'mongoose'
 
 const settingSchema= new Schema({
     guildId:String,
@@ -18,4 +18,4 @@ const settingSchema= new Schema({
     }
 });
 
-module.exports=model("Setting",settingSchema);
+export default model("Setting", settingSchema);
