@@ -1,9 +1,11 @@
+import Code from "../../schemas/code.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   Colors,
   EmbedBuilder,
+  ModalSubmitInteraction,
 } from "discord.js";
 
 export default {
@@ -12,6 +14,12 @@ export default {
   },
 
   // eslint-disable-next-line no-unused-vars
+  /**
+   *
+   * @param {ModalSubmitInteraction} interaction
+   * @param {Client} client
+   * @param {String} roleId
+   */
   async execute(interaction, client, roleId) {
     //const codeNumber = interaction.fields.getTextInputValue("codeNumberInput");
     // TODO: create random codes by code number input
@@ -22,6 +30,18 @@ export default {
     // await interaction.reply({
     //   content: `Oluştrulmak istenen kod sayısı: ${codeNumber}\nAtanacak rol:${roleId}`,
     // });
+
+    const codeCount = parseInt(
+      interaction.fields.getTextInputValue("codeNumberInput")
+    );
+
+    const generateRandomCode = ["123", "345", "777", "111", "666"];
+
+    const codes = await Code.addCode(
+      interaction.guildId,
+      roleId,
+      generateRandomCode
+    );
 
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
@@ -36,7 +56,7 @@ export default {
       .addFields([
         {
           name: `TEBRİKLER KODLAR OLUŞTURULDU`,
-          value: `kodlar...`, // TODO: codes will be displayed
+          value: generateRandomCode.join("/n"), // TODO: codes will be displayed
           inline: false,
         },
       ]);

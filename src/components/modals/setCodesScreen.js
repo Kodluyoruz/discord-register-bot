@@ -1,3 +1,4 @@
+import Code from "../../schemas/code.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -20,6 +21,12 @@ export default {
     //   content: `Oluştrulmak istenen kodlar: ${codes}\nAtanacak rol:${roleId}`,
     // });
 
+    const codeInput = interaction.fields
+      .getTextInputValue("codesInput")
+      .split(",");
+
+    const codes = await Code.addCode(interaction.guildId, roleId, codeInput);
+
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
       .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
@@ -33,7 +40,7 @@ export default {
       .addFields([
         {
           name: `TEBRİKLER KODLAR OLUŞTURULDU`,
-          value: `kodlar...`, // TODO: codes will be displayed
+          value: codeInput.join("/n"), // TODO: codes will be displayed
           inline: false,
         },
       ]);

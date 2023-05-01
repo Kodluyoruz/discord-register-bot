@@ -1,3 +1,4 @@
+import Code from "../../schemas/code.js";
 import { Colors, EmbedBuilder } from "discord.js";
 
 export default {
@@ -10,9 +11,13 @@ export default {
     const codeInput = interaction.fields.getTextInputValue("codeInput");
     const nameInput = interaction.fields.getTextInputValue("nameInput");
     // let code = await client.db.get("code");
-    const code = "123";
 
-    if (codeInput == code) {
+    const codeEntry = await Code.getByCode(interaction.guildId, codeInput);
+
+    if (codeEntry) {
+      const role = interaction.guild.roles.cache.find(
+        (r) => r.id == codeEntry.roleId
+      );
       const embed = new EmbedBuilder()
         .setColor(Colors.Blue)
         .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
@@ -26,7 +31,7 @@ export default {
         .addFields([
           {
             name: `TEBRİKLER ${nameInput}`,
-            value: `@rol-adi rol başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
+            value: `@${role.name} rolü başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
             inline: false,
           },
         ]);
