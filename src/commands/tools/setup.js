@@ -2,9 +2,12 @@
 
 import {
   ActionRowBuilder,
-  ButtonBuilder, ButtonStyle, Colors, EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  Colors,
+  EmbedBuilder,
   SlashCommandBuilder,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
   data: new SlashCommandBuilder()

@@ -1,25 +1,26 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle, Colors,
+  ButtonStyle,
+  Colors,
   EmbedBuilder,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
-    data: {
-      name: "setCodesScreen",
-    },
-    // eslint-disable-next-line no-unused-vars
-    async execute(interaction, client, roleId) {
-      //const codes = interaction.fields.getTextInputValue("codesInput");
-      // TODO: split codes by commas
-      // TODO: save codes into database with roleCode
+  data: {
+    name: "setCodesScreen",
+  },
+  // eslint-disable-next-line no-unused-vars
+  async execute(interaction, client, roleId) {
+    //const codes = interaction.fields.getTextInputValue("codesInput");
+    // TODO: split codes by commas
+    // TODO: save codes into database with roleCode
 
-      // await interaction.reply({
-      //   content: `Oluştrulmak istenen kodlar: ${codes}\nAtanacak rol:${roleId}`,
-      // });
+    // await interaction.reply({
+    //   content: `Oluştrulmak istenen kodlar: ${codes}\nAtanacak rol:${roleId}`,
+    // });
 
-      const embed = new EmbedBuilder()
+    const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
       .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
       .setThumbnail(interaction.user.displayAvatarURL())
@@ -48,6 +49,5 @@ export default {
       ],
       embeds: [embed],
     });
-    },
-  };
-  
+  },
+};

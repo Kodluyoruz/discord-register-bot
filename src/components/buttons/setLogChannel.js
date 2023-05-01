@@ -2,15 +2,15 @@ import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
-    data: {
-      name: "setLogChannel",
-    },
-    // eslint-disable-next-line no-unused-vars
-    async execute(interaction, client) {
-      const select = new StringSelectMenuBuilder()
+  data: {
+    name: "setLogChannel",
+  },
+  // eslint-disable-next-line no-unused-vars
+  async execute(interaction, client) {
+    const select = new StringSelectMenuBuilder()
       .setCustomId("logMenu")
       .setPlaceholder("Log kanalını seçin!");
 
@@ -29,6 +29,5 @@ export default {
       content: "Logların düşeceği odayı seçin.",
       components: [row],
     });
-    },
-  };
-  
+  },
+};

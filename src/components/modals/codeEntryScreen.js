@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder } from 'discord.js'
+import { Colors, EmbedBuilder } from "discord.js";
 
 export default {
   data: {
@@ -34,12 +34,10 @@ export default {
       await interaction.reply({
         embeds: [embed],
       });
-      return;
     } else {
       await interaction.reply({
         content: `Kayıt kodunuz hatalı.`,
       });
-      return;
     }
   },
 };

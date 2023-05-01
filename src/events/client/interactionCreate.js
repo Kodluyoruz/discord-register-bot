@@ -1,4 +1,4 @@
-import { InteractionType } from 'discord.js'
+import { InteractionType } from "discord.js";
 
 export default {
   name: "interactionCreate",
@@ -20,7 +20,7 @@ export default {
       }
     } else if (interaction.isButton()) {
       const { buttons, logger } = client;
-      const [customId, roleId] = interaction.customId.split('-');
+      const [customId, roleId] = interaction.customId.split("-");
       const button = buttons.get(customId);
       if (!button) return new Error("Bu düğme için bir işlev ayarlanmamış.");
 
@@ -42,7 +42,7 @@ export default {
       }
     } else if (interaction.type == InteractionType.ModalSubmit) {
       const { modals } = client;
-      const [customId, roleId] = interaction.customId.split('-');
+      const [customId, roleId] = interaction.customId.split("-");
       const modal = modals.get(customId);
       if (!modal) return new Error("Bu modal için kod yazılmamış.");
 

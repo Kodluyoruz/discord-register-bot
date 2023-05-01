@@ -1,6 +1,6 @@
 export default {
-    name:"connected",
-    execute(client){
-        client.logger.info("Veritabanı: bağlandı");
-    },
+  name: "connected",
+  execute(client) {
+    client.logger.info("Veritabanı: bağlandı");
+  },
 };

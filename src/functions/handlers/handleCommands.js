@@ -1,6 +1,6 @@
-import { REST } from '@discordjs/rest'
-import { Routes } from 'discord-api-types/v9'
-import fs from 'fs'
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
+import fs from "fs";
 
 export default (client) => {
   client.handleCommands = async () => {
@@ -13,26 +13,27 @@ export default (client) => {
 
       const { commands, commandArray } = client;
       for (const file of commandFiles) {
-        const command = (await import(`../../commands/${folder}/${file}`)).default;
+        const command = (await import(`../../commands/${folder}/${file}`))
+          .default;
         commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
-        logger.info(`Komut: ${command.data.name} yüklendi`)
+        logger.info(`Komut: ${command.data.name} yüklendi`);
       }
     }
 
-      const clientId = process.env.clientId;
-      const guildId = process.env.guildId;
-      const rest = new REST({ version: '9'}).setToken(process.env.token);
-      try {
-        logger.info("Uygulama (/) komutları yükleniyor.")
+    const clientId = process.env.clientId;
+    const guildId = process.env.guildId;
+    const rest = new REST({ version: "9" }).setToken(process.env.token);
+    try {
+      logger.info("Uygulama (/) komutları yükleniyor.");
 
-        await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-            body: client.commandArray,
-        })
+      await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+        body: client.commandArray,
+      });
 
-        logger.info("Uygulama (/) komutları başarıyla yüklendi.")
-      } catch (error) {
-        logger.error(error)
-      }
+      logger.info("Uygulama (/) komutları başarıyla yüklendi.");
+    } catch (error) {
+      logger.error(error);
+    }
   };
-}
+};

@@ -1,23 +1,24 @@
-import { createLogger, format, transports } from 'winston'
-import path from 'path'
+import { createLogger, format, transports } from "winston";
 
 export default (client) => {
   client.createLogger = async () => {
     client.logger = createLogger({
       format: format.combine(
-        format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
-        format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`),
+        format.timestamp({ format: "DD-MM-YYYY HH:mm:ss" }),
+        format.printf(
+          (info) => `[${info.timestamp}] ${info.level}: ${info.message}`
+        )
       ),
       transports: [
         new transports.Console(),
         new transports.File({
-          filename: 'logs/error.log',
-          level: 'error',
+          filename: "logs/error.log",
+          level: "error",
         }),
         new transports.File({
-          filename: 'logs/combined.log',
+          filename: "logs/combined.log",
         }),
       ],
     });
   };
-}
+};

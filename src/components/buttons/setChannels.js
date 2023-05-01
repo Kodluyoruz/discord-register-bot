@@ -1,6 +1,6 @@
 //TODO: This will render buttons label and theri style depending on their status.
 
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js'
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
 export default {
   data: {

@@ -1,5 +1,8 @@
-import {ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} from "discord.js";
-
+import {
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
+} from "discord.js";
 
 export default {
   data: {
@@ -10,7 +13,7 @@ export default {
       .setCustomId("roleMenu")
       .setPlaceholder("Bir rol seç!");
 
-      interaction.guild.roles.cache.each((role) => {
+    interaction.guild.roles.cache.each((role) => {
       select.addOptions(
         new StringSelectMenuOptionBuilder()
           .setLabel(role.name)

@@ -3,7 +3,7 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ChannelType,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
   name: "ready",

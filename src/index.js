@@ -25,8 +25,9 @@ for (const folder of functionFolders) {
   const functionFiles = fs
     .readdirSync(`./src/functions/${folder}`)
     .filter((file) => file.endsWith(".js"));
-  for (const file of functionFiles)
+  for (const file of functionFiles) {
     (await import(`./functions/${folder}/${file}`)).default(client);
+  }
 }
 
 await client.createLogger();
@@ -36,4 +37,3 @@ await client.handleComponents();
 
 await connect(DB_URI);
 await client.login(token);
-

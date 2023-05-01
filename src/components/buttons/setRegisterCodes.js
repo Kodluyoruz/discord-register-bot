@@ -3,7 +3,7 @@ import {
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
   data: {

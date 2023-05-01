@@ -4,7 +4,7 @@ import {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-} from 'discord.js'
+} from "discord.js";
 
 export default {
   data: {
