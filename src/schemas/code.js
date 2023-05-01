@@ -22,16 +22,9 @@ const codeSchema = new Schema(
         return this.findOne({ guildId: guildId, codeId: codeId }, callback);
       },
       saveCodeToUser: function (guildId, codeId, userId, callback) {
-        let code = this.findOne({ guildId: guildId, codeId: codeId }, callback);
-        if (code.userId != null) {
-          return code.userId;
-        }
-        return this.updateOne(
-          {
-            guildId: guildId,
-            codeId: codeId,
-            userId: userId,
-          },
+        return this.findOneAndUpdate(
+          { guildId: guildId, codeId: codeId },
+          { userId: userId },
           callback
         );
       },

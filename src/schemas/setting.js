@@ -11,6 +11,14 @@ const settingSchema = new Schema(
       getValueByKey: function (guildId, key, callback) {
         return this.findOne({ guildId: guildId, key: key }, callback);
       },
+      setValueByKey: function (guildId, key, value, callback) {
+        return this.findOneAndUpdate(
+          { guildId: guildId, key: key },
+          { value: value },
+          { upsert: true },
+          callback
+        );
+      },
       getAllData: function () {
         return this.find();
       },
