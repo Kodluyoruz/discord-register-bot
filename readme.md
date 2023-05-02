@@ -30,7 +30,7 @@ DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
 
 ## Katkı Sağlayanlar
 
-<img alt="aa" src="https://avatars.githubusercontent.com/u/29636342?v=4" width="50px" style="border-radius:25;">
+<img alt="aa" src="https://avatars.githubusercontent.com/u/29636342?v=4" width="50px" style="border-radius:25px;">
 
 ## Dökümanlar
 
