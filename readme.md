@@ -32,8 +32,8 @@ DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
 
 Bilgehan Zeki Özaytaç @WildGenie (https://github.com/WildGenie)
 <br/>
-Hasan Aydoğdu @haydogdu1990 (https://github.com/haydogdu1990)  
-<img alt="aa" src="https://avatars.githubusercontent.com/u/29636342?v=4" width="50px" style="border-radius:25px;">
+Hasan Aydoğdu @haydogdu1990 (https://github.com/haydogdu1990) <img alt="aa" src="https://avatars.githubusercontent.com/u/29636342?v=4" width="50px" style="border-radius:25px;">  
+
 <br/>
 Muhammed Musatafa Savar @muffafa (https://github.com/muffafa)
 <br/>
