@@ -36,13 +36,13 @@ Hasan Aydoğdu @haydogdu1990 (https://github.com/haydogdu1990)
 <img alt="aa" src="https://avatars.githubusercontent.com/u/29636342?v=4" width="50px" style="border-radius:25px;">
 <br/>
 Muhammed Musatafa Savar @muffafa (https://github.com/muffafa)
-
+<br/>
 Uveys Gurbuz @uveysg (https://github.com/uveysg)
-
+<br/>
 Deniz Kaparlar @denizk1 (https://github.com/denizk1)
-
+<br/>
 Azat ESER @azateser (https://github.com/azateser)
-
+<br/>
 ## Dökümanlar
 
 ## Lisans
