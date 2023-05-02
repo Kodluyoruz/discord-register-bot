@@ -2,7 +2,7 @@
 ![Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
 
 ## Proje Açıklaması
-Projede Discord.js, dotenv, i18next, mongoose, winston kütüphaneleri kullanılmıştır. Node.js'in güncel sürümüne, MongoDB veritabanına, [Discord Bot Kaydına](docs/BotKaydi.md) ihtiyaç duyar.
+Projede Discord.js, dotenv, i18next, mongoose, winston kütüphaneleri kullanılmıştır. [Node.js](https://nodejs.org/en/download)'in güncel sürümüne, [MongoDB](https://www.mongodb.com/) veritabanına, [Discord Bot Kaydına](docs/BotKaydi.md) ihtiyaç duyar.
 
 ## Başlangıç
 
