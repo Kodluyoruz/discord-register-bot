@@ -30,17 +30,17 @@ DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
 
 ## Katkı Sağlayanlar
 
-Bilgehan Zeki Özaytaç @WildGenie (https://github.com/WildGenie)
+Bilgehan Zeki Özaytaç [WildGenie](https://github.com/WildGenie)
 <br/>
-Hasan Aydoğdu @haydogdu1990 (https://github.com/haydogdu1990) 
+Hasan Aydoğdu [haydogdu1990](https://github.com/haydogdu1990) 
 <br/>
-Muhammed Musatafa Savar @muffafa (https://github.com/muffafa)
+Muhammed Musatafa Savar [muffafa](https://github.com/muffafa)
 <br/>
-Uveys Gurbuz @uveysg (https://github.com/uveysg)
+Uveys Gurbuz [uveysg](https://github.com/uveysg)
 <br/>
-Deniz Kaparlar @denizk1 (https://github.com/denizk1)
+Deniz Kaparlar [denizk1](https://github.com/denizk1)
 <br/>
-Azat ESER @azateser (https://github.com/azateser)
+Azat ESER [azateser](https://github.com/azateser)
 <br/>
 ## Dökümanlar
 
