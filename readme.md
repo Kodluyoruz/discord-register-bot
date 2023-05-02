@@ -12,7 +12,7 @@ Takipte kalın!
 ```sh
 npm install
 ```
-
+[deneme](docs/ProjeninCalistirilmasi.md)
 ### Ayarlar
 
 ```sh
