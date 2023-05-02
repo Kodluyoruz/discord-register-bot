@@ -12,7 +12,8 @@ Takipte kalın!
 ```sh
 npm install
 ```
-[deneme](docs/ProjeninCalistirilmasi.md)
+#### [Proje Nasıl Çalıştırılır?](docs/ProjeninCalistirilmasi.md)
+
 ### Ayarlar
 
 ```sh
