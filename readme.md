@@ -2,7 +2,7 @@
 ![Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
 
 ## Proje Açıklaması
-Kodluyoruz Discord Kayıt Botu, Kullanıcılara verilen kayıt kodu ile sunucuya kayıt ve rol tanımlama yapabilen bir Discord botudur. Yeni kayıt kodları üretilebilir, log, moderasyon ve kayıt kanallarını belirlenebilir.
+Kodluyoruz Discord Kayıt Botu, Kullanıcılara verilen kayıt kodu ile sunucuya kayıt ve rol tanımlama yapabilen bir Discord botudur. Yeni kayıt kodları üretilebilir, log, moderasyon ve kayıt kanalları belirlenebilir.
 
 Projede Discord.js, dotenv, i18next, mongoose, winston kütüphaneleri kullanılmıştır. [Node.js](https://nodejs.org/en/download)'in güncel sürümüne, [MongoDB](https://www.mongodb.com/) veritabanına, [Discord Bot Kaydına](docs/BotKaydi.md) ihtiyaç duyar.
 
