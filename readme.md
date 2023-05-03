@@ -12,7 +12,7 @@ Projede Discord.js, dotenv, i18next, mongoose, winston kütüphaneleri kullanıl
 
 ### Proje Nasıl Kurulur ve Çalıştırılır
 
-"git clone" komutu ile projeyi çalışma dizininize kopyasını alın 
+"git clone" komutu ile projenin kopyasını çalışma dizininize alın 
 ```sh
 git clone https://github.com/Kodluyoruz/discord-register-bot.git
 ```
