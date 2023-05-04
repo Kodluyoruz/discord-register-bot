@@ -1,35 +1,41 @@
 // TODO: If settings is not completed then it will render next select menu which is moderation channel
 
 import {
+  ButtonStyle,
   ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
+  ButtonBuilder,
+  ChannelSelectMenuBuilder,
+  ChannelType,
 } from "discord.js";
 
 export default {
   data: {
     name: "setRegChannel",
   },
-  // eslint-disable-next-line no-unused-vars
-  async execute(interaction, client) {
-    const select = new StringSelectMenuBuilder()
+  generate() {
+    return new ButtonBuilder()
+      .setCustomId("setRegChannel")
+      .setLabel("Kayıt Kanalı Ayarla")
+      .setStyle(ButtonStyle.Secondary);
+  },
+  /**
+   *
+   * @param {import("discord.js").ButtonInteraction} interaction
+   */
+  async execute(interaction) {
+    const select = new ChannelSelectMenuBuilder()
       .setCustomId("regMenu")
-      .setPlaceholder("Kayıt kanalını seçin!");
-
-    // TODO: JUST SHOW TEXT CHANNELS ONLY
-    interaction.guild.channels.cache.each((channel) => {
-      select.addOptions(
-        new StringSelectMenuOptionBuilder()
-          .setLabel(channel.name)
-          .setValue(channel.id)
-      );
-    });
+      .setPlaceholder("Kayıt kanalını seçin!")
+      .setChannelTypes(ChannelType.GuildText);
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.reply({
+    await interaction.deferUpdate({ ephemeral: true });
+
+    await interaction.editReply({
       content: "Kayıt kodunu girmek için kullanılacak kayıt odasını seçin.",
       components: [row],
+      ephemeral: true,
     });
   },
 };

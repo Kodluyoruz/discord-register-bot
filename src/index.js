@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import fs from "fs";
 
 dotenv.config();
 
-const { token, DB_URI } = process.env;
+const { DISCORD_BOT_TOKEN, MONGO_URI } = process.env;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -35,5 +35,5 @@ await client.handleEvents();
 await client.handleCommands();
 await client.handleComponents();
 
-await connect(DB_URI);
-await client.login(token);
+await mongoose.connect(MONGO_URI);
+await client.login(DISCORD_BOT_TOKEN);

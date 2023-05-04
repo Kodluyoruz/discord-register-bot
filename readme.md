@@ -1,37 +1,41 @@
 # Discord Kayıt Botu
-![Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
 
-## Proje Açıklaması
-Kodluyoruz Discord Kayıt Botu, Kullanıcılara verilen kayıt kodu ile sunucuya kayıt ve rol tanımlama yapabilen bir Discord botudur. Yeni kayıt kodları üretilebilir, log, moderasyon ve kayıt kanalları belirlenebilir.
+![banner](https://user-images.githubusercontent.com/39780/236168231-516d688e-8f15-45d5-a80f-889e0b7f0b00.png)
 
-Projede Discord.js, dotenv, i18next, mongoose, winston kütüphaneleri kullanılmıştır. [Node.js](https://nodejs.org/en/download)'in güncel sürümüne, [MongoDB](https://www.mongodb.com/) veritabanına, [Discord Bot Kaydına](docs/BotKaydi.md) ihtiyaç duyar.
+![coming soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
 
-## Başlangıç
+[Please click here for English version 🇺🇸](readme.en.md)
 
+## Proje Hakkında
 
+Discord Kayıt Botu, kullanıcılara kayıt kodu kullanarak bir sunucuya kayıt olma ve kendilerine rol atama imkanı sunan bir Discord botudur. Yeni kayıt kodları oluşturulabilir, log, moderasyon ve kayıt kanalları belirlenebilir.
+
+Proje Discord.js, dotenv, i18next, mongoose, winston kütüphanelerini kullanmaktadır. [Node.js](https://nodejs.org/en/download)'in en son sürümüne, [MongoDB](https://www.mongodb.com/) veritabanına, [Discord Bot Kaydına](docs/BotKaydi.md) ihtiyaç duyar.
+
+## Başlarken
 
 ### Proje Nasıl Kurulur ve Çalıştırılır
 
-"git clone" komutu ile projenin kopyasını çalışma dizininize alın 
-```sh
-git clone https://github.com/Kodluyoruz/discord-register-bot.git
-```
+1. **Node.js**'in LTS sürümü veya daha yüksek bir sürümünün yüklü olduğundan emin olun. Node.js yüklü değilse, aşağıdaki web sitesini ziyaret ederek indirin ve kurun: [https://nodejs.org/en/](https://nodejs.org/en/)
+2. Bu projeyi klonlayın veya proje sayfasından "Code" butonu altındaki "Download ZIP" butonuna tıklayarak projeyi cihazınıza indirin ve zip dosyasının içeriğini çalışma dizininize aktarın. Klonlamak için aşağıdaki komutu kullanın:
 
-veya githup "Code" butonuna ardından "Download ZIP" butonuna tıklayarak projeyi cihazınıza indirebilir ve zip dosyasının içeriğini çalışma dizininize aktarabilirsiniz.
+   ```bash
+   git clone https://github.com/Kodluyoruz/discord-register-bot
+   ```
 
-
-Kurulum için çalışma dizininizde terminalde aşağıdaki kodu çalıştırın.
-```sh
-npm install
-```
-Projenin çalışması için gerekli ayarlar için aşağıdaki linkten "ProjeninCalistirilmasi.md" dosyasına göz atabilirsiniz.
-#### [Proje Nasıl Çalıştırılır?](docs/ProjeninCalistirilmasi.md)
+3. Konsola `npm install` yazarak gerekli bağımlılıkları yükleyin.
+4. Konsolu açın ve projenin bulunduğu dizine gidin.
+5. `.env` dosyası oluşturun ve `TOKEN` adında bir değişken oluşturarak botunuzun token'ını atayın. Token'ınızı Discord Developer Portal'dan alabilirsiniz.
+6. MongoDB veritabanı kullanacaksanız, `MONGO_URI` adında bir değişken oluşturarak MongoDB bağlantı cümlesini atayın.
+7. Botunuzu çalıştırmak için konsolda `node .` komutunu yazın.
 
 ### Ayarlar
 
-```sh
-token=<Discord Application Bot Token>
-DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
+Projenin çalışması için gerekli ayarlar için aşağıdaki linkten "[ProjeninCalistirilmasi.md](docs/projenincalistirilmasi.md/)" dosyasına göz atabilirsiniz.
+
+```bash
+DISCORD_BOT_TOKEN=<Discord Uygulama Bot Token>
+MONGO_URI=mongodb+srv://kullanıcı:şifre@sunucu/tablo
 ```
 
 ### Gereksinimler
@@ -40,8 +44,8 @@ DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
 
 ## Özellikler
 
-- Sunucuya katılan kullanıcılara kayıt kanalında kayıt olma seçeneği sunar.
-- Kullanıcılar kayıt kanalında kayıt ol seçeneğini seçerek kendilerine verilen kayıt kodunu girerler.
+- Sunucuya katılan kullanıcılara kayıt kanalında kaydolma seçeneği sunar.
+- Kullanıcılar kayıt kanalında kaydol seçeneğini seçerek kendilerine verilen kayıt kodunu girerler.
 - Kayıt kodu sistemde mevcut ise, kullanıcıya ilgili rol atanır ve sunucunun diğer bölümlerine erişim izni verilir.
 - Kayıt kodu sistemde mevcut değilse, kullanıcıya hata mesajı gösterilir ve tekrar deneme talep edilir.
 - Moderatörler moderasyon kanalında ayarla seçeneğini seçerek rollere yeni kayıt kodları ekleyebilir veya silebilirler. Açılan menüden rol listesini seçerek kayıt kodunu girerler.
@@ -49,19 +53,20 @@ DB_URI=mongodb+srv://<kullanıcı>:<şifre>@<sunucu>/<table>
 
 ## Katkı Sağlayanlar
 
-Bilgehan Zeki Özaytaç [WildGenie](https://github.com/WildGenie)
-<br/>
-Hasan Aydoğdu [haydogdu1990](https://github.com/haydogdu1990) 
-<br/>
-Muhammed Musatafa Savar [muffafa](https://github.com/muffafa)
-<br/>
-Uveys Gurbuz [uveysg](https://github.com/uveysg)
-<br/>
-Deniz Kaparlar [denizk1](https://github.com/denizk1)
-<br/>
-Azat ESER [azateser](https://github.com/azateser)
-<br/>
+[Azat ESER](https://github.com/azateser)
+
+[Bilgehan Zeki Özaytaç](https://github.com/WildGenie)
+
+[Deniz Kaparlar](https://github.com/denizk1)
+
+[Hasan Aydoğdu](https://github.com/haydogdu1990)
+
+[Muhammed Mustafa Savar](https://github.com/muffafa)
+
+[Uveys Gurbuz](https://github.com/uveysg)
+
 ## Dökümanlar
 
 ## Lisans
 
+Bu proje [MIT lisansı](https://choosealicense.com/licenses/mit/) altında lisanslanmıştır. Bu lisansın detayları için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
