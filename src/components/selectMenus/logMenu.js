@@ -1,26 +1,44 @@
+import {
+  ActionRowBuilder,
+  ChannelSelectMenuInteraction,
+  Client,
+} from "discord.js";
 import Setting from "../../schemas/setting.js";
+import setRegChannelButton from "../buttons/setRegChannel.js";
+import setModChannelButton from "../buttons/setModChannel.js";
+import setLogChannelButton from "../buttons/setLogChannel.js";
 
 export default {
   data: {
     name: `logMenu`,
   },
+  /**
+   *
+   * @param {ChannelSelectMenuInteraction} interaction
+   * @param {Client} client
+   */
   async execute(interaction, client) {
-    // TODO: selected log channel should be saved to database
+    const inputChannel = interaction.channels.first();
 
-    Setting.setValueByKey(
-      interaction.guildId,
-      "Channel:Log",
-      interaction.values[0]
-    )
+    Setting.setValueByKey(interaction.guildId, "Channel:Log", inputChannel.id)
       .then(() => {
         client.logger.info(
-          `Ayar: ${interaction.guild.name} için işlem kaydı kanalı ayarlandı -> ${interaction.values[0]}`
+          `Ayar: ${interaction.guild.name} için işlem kaydı kanalı ayarlandı -> ${inputChannel.name}`
         );
       })
       .catch(client.logger.error);
+    await interaction.deferUpdate({ ephemeral: true });
 
-    await interaction.reply({
-      content: `Log Menu ${interaction.values[0]} selected`,
+    await interaction.editReply({
+      content: `İşlem kayıtları için ${inputChannel.name} seçildi.`,
+      ephemeral: true,
+      components: [
+        new ActionRowBuilder().addComponents([
+          setRegChannelButton.generate(),
+          setModChannelButton.generate(),
+          setLogChannelButton.generate(),
+        ]),
+      ],
     });
   },
 };

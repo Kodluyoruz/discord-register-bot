@@ -1,60 +1,40 @@
 import Code from "../../schemas/code.js";
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  Colors,
-  EmbedBuilder,
-} from "discord.js";
+import { ActionRowBuilder } from "discord.js";
+
+import downloadCodesButton from "../buttons/downloadCodes.js";
+import codesEmbed from "../embeds/codes.js";
 
 export default {
   data: {
     name: "setCodesScreen",
   },
-  // eslint-disable-next-line no-unused-vars
+  /**
+   *
+   * @param {import("discord.js").ButtonInteraction} interaction
+   * @param {Client} client
+   * @param {String} roleId
+   */
+
   async execute(interaction, client, roleId) {
-    //const codes = interaction.fields.getTextInputValue("codesInput");
-    // TODO: split codes by commas
-    // TODO: save codes into database with roleCode
-
-    // await interaction.reply({
-    //   content: `Oluştrulmak istenen kodlar: ${codes}\nAtanacak rol:${roleId}`,
-    // });
-
     const codeInput = interaction.fields
       .getTextInputValue("codesInput")
       .split(",");
 
     const codes = await Code.addCode(interaction.guildId, roleId, codeInput);
 
-    const embed = new EmbedBuilder()
-      .setColor(Colors.Blue)
-      .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
-      .setThumbnail(interaction.user.displayAvatarURL())
-      .setAuthor({
-        url: "https://github.com/Kodluyoruz/discord-register-bot",
-        iconURL: client.user.displayAvatarURL(),
-        name: `Kodluyoruz Kayıt Botu`,
-      })
-      .setURL("https://github.com/Kodluyoruz/discord-register-bot")
-      .addFields([
-        {
-          name: `TEBRİKLER KODLAR OLUŞTURULDU`,
-          value: codeInput.join("/n"), // TODO: codes will be displayed
-          inline: false,
-        },
-      ]);
+    // kaydedilen ve kaydedilemeyen kodlar
+    const addedCodes = codes.map((code) => code.codeId);
+    const notAddedCodes = codeInput.filter(
+      (code) => !addedCodes.includes(code)
+    );
 
-    const downloadsCodesButton = new ButtonBuilder() // TODO: codes can be downloaded here
-      .setCustomId("downloadCodes")
-      .setLabel("Kodları İndir")
-      .setStyle(ButtonStyle.Success);
+    await interaction.deferUpdate({ ephemeral: true });
 
-    await interaction.reply({
+    await interaction.editReply({
       components: [
-        new ActionRowBuilder().addComponents([downloadsCodesButton]),
+        new ActionRowBuilder().addComponents([downloadCodesButton.generate()]),
       ],
-      embeds: [embed],
+      embeds: [codesEmbed.generate(client, addedCodes, notAddedCodes)],
     });
   },
 };

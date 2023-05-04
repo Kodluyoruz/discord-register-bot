@@ -2,34 +2,39 @@
 
 import {
   ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
+  ButtonBuilder,
+  ChannelSelectMenuBuilder,
+  ButtonStyle,
+  ChannelType,
 } from "discord.js";
 
 export default {
   data: {
     name: "setModChannel",
   },
-  // eslint-disable-next-line no-unused-vars
-  async execute(interaction, client) {
-    const select = new StringSelectMenuBuilder()
+  generate() {
+    return new ButtonBuilder()
+      .setCustomId("setModChannel")
+      .setLabel("Moderasyon Kanalı Ayarla")
+      .setStyle(ButtonStyle.Secondary);
+  },
+  /**
+   *
+   * @param {import("discord.js").ButtonInteraction} interaction
+   */
+  async execute(interaction) {
+    const select = new ChannelSelectMenuBuilder()
       .setCustomId("modMenu")
-      .setPlaceholder("Moderasyon kanalını seçin!");
-
-    // TODO: JUST SHOW TEXT CHANNELS ONLY
-    interaction.guild.channels.cache.each((channel) => {
-      select.addOptions(
-        new StringSelectMenuOptionBuilder()
-          .setLabel(channel.name)
-          .setValue(channel.id)
-      );
-    });
+      .setPlaceholder("Moderasyon kanalını seçin!")
+      .setChannelTypes(ChannelType.GuildText);
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.reply({
+    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.editReply({
       content: "Moderasyonun yapılacağı odayı seçin.",
       components: [row],
+      ephemeral: true,
     });
   },
 };

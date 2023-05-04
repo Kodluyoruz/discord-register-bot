@@ -6,16 +6,29 @@ const codeSchema = new Schema(
     codeId: String,
     roleId: String,
     userId: String,
-    note: String,
+    userName: String,
   },
   {
     statics: {
-      addCode: function (guildId, roleId, codeIds, callback) {
+      addCode: async function (guildId, roleId, codeIds, callback) {
+        // Çakışan kodları getir
+        const allreadyExistCodes = await this.find({
+          guildId: guildId,
+          roleId: roleId,
+          codeId: { $in: codeIds },
+        }).select("codeId");
+
+        // Çakışan kodları filtrele
+        codeIds = codeIds.filter(
+          (codeId) => !allreadyExistCodes.some((c) => c.codeId === codeId)
+        );
+
         const reformattedArrayCode = codeIds.map((codeId) => ({
           guildId,
           roleId,
           codeId,
         }));
+
         return this.insertMany(reformattedArrayCode, callback);
       },
       getByCode: function (guildId, codeId, callback) {

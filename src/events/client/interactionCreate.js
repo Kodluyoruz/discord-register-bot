@@ -1,7 +1,13 @@
-import { InteractionType } from "discord.js";
+import { Client, InteractionType } from "discord.js";
 
 export default {
   name: "interactionCreate",
+  /**
+   *
+   * @param {import("discord.js").Interaction} interaction
+   * @param {Client} client
+   * @returns
+   */
   async execute(interaction, client) {
     if (interaction.isChatInputCommand()) {
       const { commands, logger } = client;
@@ -29,7 +35,7 @@ export default {
       } catch (error) {
         logger.error(error);
       }
-    } else if (interaction.isStringSelectMenu()) {
+    } else if (interaction.isAnySelectMenu()) {
       const { selectMenus, logger } = client;
       const { customId } = interaction;
       const menu = selectMenus.get(customId);
@@ -40,7 +46,7 @@ export default {
       } catch (error) {
         logger.error(error);
       }
-    } else if (interaction.type == InteractionType.ModalSubmit) {
+    } else if (interaction.type === InteractionType.ModalSubmit) {
       const { modals } = client;
       const [customId, roleId] = interaction.customId.split("-");
       const modal = modals.get(customId);

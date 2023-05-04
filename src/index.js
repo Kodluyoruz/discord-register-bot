@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import fs from "fs";
 
@@ -35,5 +35,5 @@ await client.handleEvents();
 await client.handleCommands();
 await client.handleComponents();
 
-await connect(MONGO_URI);
+await mongoose.connect(MONGO_URI);
 await client.login(DISCORD_BOT_TOKEN);

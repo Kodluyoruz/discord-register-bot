@@ -1,36 +1,38 @@
 //TODO: This will render buttons label and theri style depending on their status.
 
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import setRegChannelButton from "./setRegChannel.js";
+import setModChannelButton from "./setModChannel.js";
+import setLogChannelButton from "./setLogChannel.js";
 
 export default {
   data: {
     name: "setChannels",
   },
+  generate() {
+    return new ButtonBuilder()
+      .setCustomId("setChannels")
+      .setLabel("Ayarları Düzenle")
+      .setStyle(ButtonStyle.Secondary);
+  },
+  /**
+   *
+   * @param {import("discord.js").ButtonInteraction} interaction
+   * @param {Client} client
+   */
   // eslint-disable-next-line no-unused-vars
   async execute(interaction, client) {
-    const setRegChannelButton = new ButtonBuilder()
-      .setCustomId("setRegChannel")
-      .setLabel("Reg channel")
-      .setStyle(ButtonStyle.Secondary);
+    await interaction.deferReply({ ephemeral: true });
 
-    const setModChannelButton = new ButtonBuilder()
-      .setCustomId("setModChannel")
-      .setLabel("Mod channel")
-      .setStyle(ButtonStyle.Secondary);
-
-    const setLogChannelButton = new ButtonBuilder()
-      .setCustomId("setLogChannel")
-      .setLabel("Log channel")
-      .setStyle(ButtonStyle.Secondary);
-
-    await interaction.reply({
+    await interaction.editReply({
       components: [
         new ActionRowBuilder().addComponents([
-          setRegChannelButton,
-          setModChannelButton,
-          setLogChannelButton,
+          setRegChannelButton.generate(interaction, client),
+          setModChannelButton.generate(interaction, client),
+          setLogChannelButton.generate(interaction, client),
         ]),
       ],
+      ephemeral: true,
     });
   },
 };

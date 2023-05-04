@@ -5,19 +5,29 @@ export default {
   data: {
     name: "codeEntryScreen",
   },
+  /**
+   *
+   * @param {import("discord.js").ModalSubmitInteraction} interaction
+   * @param {import("discord.js").Client} client
+   */
   async execute(interaction, client) {
-    // TODO: CHECK IT FOR IS THIS REGISTRATION CODE IS CORRECT
-    // TODO: Save to database with name and code (also with usertag)
+    await interaction.deferReply({ ephemeral: true });
+
     const codeInput = interaction.fields.getTextInputValue("codeInput");
     const nameInput = interaction.fields.getTextInputValue("nameInput");
-    // let code = await client.db.get("code");
 
     const codeEntry = await Code.getByCode(interaction.guildId, codeInput);
 
     if (codeEntry) {
       const role = interaction.guild.roles.cache.find(
-        (r) => r.id == codeEntry.roleId
+        (r) => r.id === codeEntry.roleId
       );
+
+      const member = await interaction.guild.members.fetch(interaction.user.id);
+
+      await member.roles.add(role);
+      await member.setNickname(nameInput);
+
       const embed = new EmbedBuilder()
         .setColor(Colors.Blue)
         .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
@@ -35,12 +45,11 @@ export default {
             inline: false,
           },
         ]);
-
-      await interaction.reply({
+      await interaction.editReply({
         embeds: [embed],
       });
     } else {
-      await interaction.reply({
+      await interaction.editReply({
         content: `Kayıt kodunuz hatalı.`,
       });
     }
