@@ -1,67 +1,41 @@
-# Discord Register Bot Talimatları 
+# Discord Bot Uygulaması Talimatları
+
 ## İçindekiler
-* Discord Sunucusu Nasıl Açılır?
-* Discord Aplikasyonu Oluşturma
-* Sunucuya Aplikasyon Ekleme
+
+- [Discord Sunucusu Nasıl Açılır?](#discord-sunucusu-nasıl-açılır)
+- [Discord Uygulaması Oluşturma](#discord-uygulaması-oluşturma)
+- [Bot Hesabının Ayarlanması](#bot-hesabının-ayarlanması)
+- [Sunucuya Botun Davet Edilmesi](#sunucuya-botun-davet-edilmesi)
+
 ## Discord Sunucusu Nasıl Açılır?
-* Uygulama içerisindeki sunucu listesinin gözüktüğü sol çubuktaki **Bir sunucu ekle** ismindeki butonuna tıklanır.
 
-![gorsel1](images/gorsel1.png)
-* **Bir sunucu oluştur** isimli ekran karşınıza çıktığında isteklerinize en uygun sunucu oluşturma seçeneği seçilerek devam edilir.
+- Uygulama içerisindeki sunucu listesinin gözüktüğü sol çubuktaki **Bir sunucu ekle** ismindeki butonuna tıklanır.
+- **Bir sunucu oluştur** isimli ekran karşınıza çıktığında isteklerinize en uygun sunucu oluşturma seçeneği seçilerek devam edilir.
+- **Bize sunucundan biraz bahset** isimli ekran karşınıza çıktığında sunucunuzun kullanım amacına göre seçeneklerden biri seçilerek butona tıklanır.
+- **Sunucunu özelleştir** ekranında ise sunucu ismi ve görseli işlemleri ayarlanabilmektedir. Bu özelleştirmeler yapıldıktan sonra oluştur butonuna tıklanarak sunucu oluşturma işlemi gerçekleştirilir.
+- Discord sunucusu açılmıştır.
 
-![gorsel2](images/gorsel2.png)
-* **Bize sunucundan biraz bahset** isimli ekran karşınıza çıktığında sunucunuzun kullanım amacına göre seçeneklerden biri seçilerek butona tıklanır.
+## Discord Uygulaması Oluşturma
 
-![gorsel3](images/gorsel3.png)
-* **Sunucunu özelleştir** ekranında ise sunucu ismi ve görseli işlemleri ayarlanabilmektedir. Bu özelleştirmeler yapıldıktan sonra oluştur butonuna tıklanarak sunucu oluşturma işlemi gerçekleştirilir.
+- [Discord Developer Portal](https://discord.com/developers/applications) bağlantısına tıklayarak aplikasyon oluşturma sayfasına gidebilirsiniz. Eğer daha önceden discord hesabınıza bağlanmadıysanız hesabınıza giriş sayfasına yönlendirecektir.
+- E-posta ve şifreyi girip discord hesabınıza ulaştığınızda **Developer Portal** ismindeki discord sayfasına girmiş olacaksınız.
+- **Developer Portal** sayfasında sağ üst köşede bulunan **New Application** butonuna tıklayarak yeni bir aplikasyon oluşturabilirsiniz. Hali hazırda daha önceden oluşturmuş olduğunuz aplikasyonlar var ise sol çubukta bulunan **Aplications**'a tıklanarak listelenir.
+- **New Application** butonuna tıkladığınızda **Create An Application** penceresi açılır. Bu pencere içerisinde aplikasyonunuzun ismini yazarak ve **Create** butonuna tıklayarak aplikasyonunuzu oluşturabilirsiniz.
+- Açılan ****General Information**** kısmından uygulamanızın ismini, resmini ve açıklamasını ayarlayın.
 
-![gorsel4](images/gorsel4.png)
-* Discord sunucusu açılmıştır.
+## Bot Hesabının Ayarlanması
 
-![gorsel5](images/gorsel5.png)
+- Sol menüden **Bot** sekmesine tıklayın. Botunuzun ismini ve resmini ayarlayın.
+- **Reset Token** butonuna tıklayıp **Token** kısmından botunuzun tokenini kopyalayın.  Bu tokeni uygulamamızın `.env` dosyası içinde `DISCORD_BOT_TOKEN` olarak kaydedilmesi gerekmektedir.
+- Dilerseniz **PUBLIC BOT** özelliği açabilirsiniz. Bu özellik botunuzun herkes tarafından davet edilebilir olmasını sağlar. Bu özelliği açarsanız, botunuzun davet URL’sini paylaştığınız herkes botunuzu kendi sunucularına ekleyebilir.
+- **Privileged Gateway Intents** kısmından **PRESENCE INTENT**, **SERVER MEMBERS INTENT** ve **MESSAGE CONTENT INTENT** özelliklerini açın. Bu özellikler botunuzun sunucudaki kullanıcıların durumlarını, üyelerini ve mesaj içeriklerini almasını sağlar.
 
----
-## Discord Aplikasyonu Oluşturma
-* https://discord.com/developers/applications bağlantısına tıklayarak aplikasyon oluşturma sayfasına gidebiilirsiniz. Eğer daha önceden discord hesabınıza bağlanmadıysanız hesabınıza giriş sayfasına yönlendirecektir.
+## Sunucuya Botun Davet Edilmesi
 
-![gorsel6](images/gorsel6.png)
-* E-posta ve şifreyi girip discord hesabınıza ulaştığınızda **Developer Portal** ismindeki discord sayfasına girmiş olacaksınız.
-
-![gorsel7](images/gorsel7.png)
-* **Developer Portal** sayfasında sağ üst köşede bulunan **New Application** butonuna tıklayarak yeni bir aplikasyon oluşturabilirsiniz. Hali hazırda daha önceden oluşturmuş olduğunuz aplikasyonlar var ise sol çubukta bulunan **Aplications**'a tıklanarak listelenir.
-
-![gorsel16](images/gorsel16.png)
-* **New Application** butonuna tıkladığınızda **Create An Application** penceresi açılır. Bu pencere içerisinde aplikasyonunuzun ismini yazarak ve Discord'un aplikasyon sözleşmesini kabul ederek aplikasyon oluşturabilirsiniz.
-
-![gorsel8](images/gorsel8.png)
-* Aplikasyonunuzu oluşturduktan sonra oluşturduğunuz aplikasyonun sayfasına gitmiş olursunuz. Farklı bir aplikasyon sayfasına gitmek için de sayfa içerisinde sol çubukta bulunan **Selected App** içerisinden farklı bir aplikasyon sayfasına gidebilirsiniz.
-![gorsel17](images/gorsel17.png)
-* Bunun haricinde diğer bir yöntem ise; aynı çubuk içerisinde bulunan **Back to Applications** yazısına tıklayarak **Aplications** sayfasına dönmek ve burada listelenen aplikasyonlardan bir seçim yapmak.
-
-![gorsel16](images/gorsel16.png)
-
----
-## Sunucuya Aplikasyon Ekleme
-* Aplikasyonlar içerisinden bir aplikasyon seçildikten sonra aplikasyonun ayarlarının ve özelleştirmelerinin yapılabileceği bir sayfa karşınıza çıkar.
-
-![gorsel20](images/gorsel20.png)
-* Sayfa içerisinde sol çubukta bulunan **OAuth2** içerisindeki **Url Generator** butonuna tıkladığınızda **OAuth2 URL Generator** sayfasına geçmiş olursunuz.
-
-![gorsel18](images/gorsel18.png)
-* Bu sayfa içerisinde **Scopes** ismindeki alan içerisindeki **bot** kutucuğunu işaretlerseniz daha öncesinde gözükmeyen **Bot Permissions** bölgesinin açıldığı gözükecektir.
-
-![gorsel8](images/gorsel19.png)
-* **Scopes** bölgesindeki **applications.commands** kutucuğu ve **Bot Permissions** bölgesindeki **Administrator** kutucuğu işaretlenirse sayfanın en aşağısında **Generated Url** içerisinde link gözükecektir.
-
-![gorsel9](images/gorsel9.png)
-![gorsel10](images/gorsel10.png)
-* Bu linkin sonunda bulunan **Copy** butonuna tıklayarak link kopyalanabilir.
-* Tarayıcıdan bu linki girdiğinizde sunucuya aplikasyon ekleme sayfasına yönlendirilirsiniz. 
-
-![gorsel11](images/gorsel11.png)
-* Bu sayfa içerisineki **Sunucuya Ekle** içerisinden sunucu seçerek ve sonrasında **Yetkilendir** butonuna tıklayarak sunucuya aplikasyon ekleme işi gerçekleşmiş olur.
-
-![gorsel12](images/gorsel12.png)
-![gorsel13](images/gorsel13.png)
-![gorsel14](images/gorsel14.png)
-![gorsel15](images/gorsel15.png)
+- Bot hesabınızı oluşturduktan sonra sol menüden **OAuth2** sekmesine tıklayın.
+- **Authorization Method** kısmından **In-app Authorization** seçeneğini seçin. Bu seçenek botunuzu davet etmek için bir URL oluşturur.
+- **Scopes** kısmından **bot** ve **applications.commands** seçeneklerini işaretleyin. Bu seçenekler botunuzun sunucuya katılmasını ve komutları kullanmasını sağlar.
+- **Bot Permissions** kısmından botunuzun sunucuda sahip olmasını istediğiniz izinleri seçin. Örneğin, **Administrator** seçeneğini işaretlerseniz botunuz sunucuda her şeyi yapabilir. Dilerseniz sadece botun ihtiyaç duyacağı özellikleri aktive edebilirsiniz. Eksik ayarların botun çalışmasını engelleyeceğini unutmayın.
+- OAuth2 sekmesinin altındaki URL Generator sekmesine tıklayın. Yeni açılan sekmede tekrar **Scopes** kısmından **bot** ve **applications.commands** seçeneklerini işaretleyin.  **Bot Permissions** kısmından **Administrator** seçeneğini işaretleyin. **GENERATED URL** altında oluşan URL’yi kopyalayın ve yeni bir sekmede açın.
+- Açılan sayfada botunuzu davet etmek istediğiniz sunucuyu seçin ve **Authorize** butonuna tıklayın.
+- Botunuz sunucunuza başarıyla davet edilmiştir.
