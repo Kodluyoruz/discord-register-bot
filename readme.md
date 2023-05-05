@@ -21,7 +21,7 @@ Botun çalışması için [Discord Developer Portal](https://discord.com/develop
 
 ### Proje Nasıl Kurulur ve Çalıştırılır
 
-Projenin kullanımı hakkında daha fazla bilgi için [Projenin Çalıştırılması](docs/projenincalistirilmasi.md) dokümanına göz atabilirsiniz.
+Projenin kullanımı ve çalıştırılması hakkında daha fazla bilgi için [Projenin Kurulumu ve Çalıştırılması](docs/ProjeninCalistirilmasi.md) dokümanına göz atabilirsiniz.
 
 **Node.js**'in LTS sürümü veya daha yüksek bir sürümünün yüklü olduğundan emin olun. Node.js yüklü değilse, aşağıdaki web sitesini ziyaret ederek indirin ve kurun: [https://nodejs.org/en/](https://nodejs.org/en/)
 
@@ -54,20 +54,18 @@ Botunuzu çalıştırmak için konsolda `node .` komutunu yazın.
   - [Discord Sunucusu Nasıl Açılır?](docs/BotKaydi.md#discord-sunucusu-nas%C4%B1l-a%C3%A7%C4%B1l%C4%B1r)
   - [Discord Uygulaması Oluşturma](docs/BotKaydi.md#discord-uygulamas%C4%B1-olu%C5%9Fturma)
   - [Bot Hesabının Ayarlanması](docs/BotKaydi.md#bot-hesab%C4%B1n%C4%B1n-ayarlanmas%C4%B1)
-  - [Sunucuya Botun Davet Edilmesi](/docs/BotKaydi.md#sunucuya-botun-davet-edilmesi)
-- [Projenin Çalıştırılması](docs/docs/ProjeninCalistirilmasi.md#gereksinimler)
-  - [Gereksinimler](docs/docs/ProjeninCalistirilmasi.md#gereksinimler)
-  - [Kurulum ve Yapılandırma](docs/docs/ProjeninCalistirilmasi.md#kurulum)
-  - [Çalıştırma ve Kullanım](docs/docs/ProjeninCalistirilmasi.md#baslatma)
+  - [Sunucuya Botun Davet Edilmesi](docs/BotKaydi.md#sunucuya-botun-davet-edilmesi)
+- [Projenin Çalıştırılması](docs/ProjeninCalistirilmasi.md#gereksinimler)
+  - [Gereksinimler](docs/ProjeninCalistirilmasi.md#gereksinimler)
+  - [Kurulum ve Yapılandırma](docs/ProjeninCalistirilmasi.md#kurulum)
+  - [Çalıştırma ve Kullanım](docs/ProjeninCalistirilmasi.md#baslatma)
 
 ## Özellikler
 
-- Sunucuya katılan kullanıcılara kayıt kanalında kaydolma seçeneği sunar.
-- Kullanıcılar kayıt kanalında kaydol seçeneğini seçerek kendilerine verilen kayıt kodunu girerler.
-- Kayıt kodu sistemde mevcut ise, kullanıcıya ilgili rol atanır ve sunucunun diğer bölümlerine erişim izni verilir.
-- Kayıt kodu sistemde mevcut değilse, kullanıcıya hata mesajı gösterilir ve tekrar deneme talep edilir.
-- Moderatörler moderasyon kanalında ayarla seçeneğini seçerek rollere yeni kayıt kodları ekleyebilir veya silebilirler. Açılan menüden rol listesini seçerek kayıt kodunu girerler.
-- Yönetici botu ilk kurduğunda /ayarlar komutunu kullanarak log, moderasyon ve kayıt kanallarını belirler.
+- Kayıt kodu verilen katılımcılar ayarlanan kayıt kanalındaki menü yardımıyla sisteme kolayca kayıt olabilirler.
+- Kayıt kodu sistemde mevcut ise kullanıcıya ilgili rol atanır ve rolün sağladığı özellikler kullanılır hale gelir.
+- Moderatörler moderasyon kanalında ayarla seçeneğini seçerek rollere mevcut kayıt kodlarını ekleyebilir veya yeni kod oluşturmasını sağlayabilirler.
+- Yönetici botun çalıştırılmasından sonra /ayarlar komutunu kullanarak log, moderasyon ve kayıt kanallarını belirler. Kanal ayarları daha sonradan moderasyon kanalındaki menüden kolaylıkla güncellenebilir.
 
 ## Katkı Sağlayanlar
 
