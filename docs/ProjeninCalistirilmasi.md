@@ -1,45 +1,39 @@
-# Proje Nasıl Çalıştırılır?
-* Terminal üzerinden **git clone "https://github.com/Kodluyoruz/discord-register-bot.git"** komutunu çalıştırarak repo local'e indirilir. 
+# Projeyi Çalıştırma
 
-![gorsel21](images/gorsel21.png)
-* **cd discord-register-code** komutu kullanılarak projenin bulunduğu klasöre geçilir.
-* **code .** komutu kullanılarak proje Visual Studio Code'ta açılır.
+Bu dosyada, Discord Kayıt Botu projesini nasıl kuracağınız, yapılandıracağınız ve başlatacağınız hakkında ayrıntılı talimatlar bulacaksınız.
 
-![gorsel22](images/gorsel22.png)
-* Visual Studio Code'ta ilk açıldığında proje main branch'indedir. 
+## Gereksinimler
 
-![gorsel23](images/gorsel23.png)
-* Branch değiştirmek için code editörünün sol alt tarafında yazılı bulunan **main** yazısına tıklanarak editör içerisinde branch isimlerinin olduğu bir pencere açılır.
+- [Node.js](https://nodejs.org/) v16.x veya daha yeni bir sürümü
+- [MongoDB](https://www.mongodb.com/) hesabı
+- [Discord Uygulama Kaydı ve Discord Bot Token'ı](BotKaydi.md)
 
-![gorsel24](images/gorsel24.png)
-* Bu pencere içerisinde **origin/development** isimli branch seçilerek. Branch değişikliği yapılmış olunur.
+## Kurulum
 
-![gorsel25](images/gorsel25.png)
-* Editör içerisinden veya daha önce kullandığınız terminal ekranından **npm install** komutu çalıştırılarak proje kütüphaneleri indirilir.
+1. Bu projeyi klonlayın veya zip dosyası olarak indirin.
+2. Projeyi yerel bir dizine açın.
+3. Konsolu açın ve projenin bulunduğu dizine gidin.
+4. Konsola `npm install` yazarak gerekli paketleri yükleyin.
 
-![gorsel31](images/gorsel31.png)
-* **.env** isimli bir dosya açarak **.env.sample** dosyasının içerisindekiler kopyalanır.
+## Yapılandırma
 
-![gorsel26](images/gorsel26.png)
-* **https://discord.com/developers/applications** sayfasına giriş yaptığınızda daha önce oluşturmuş olduğunuz aplikasyonlara ulaşabilirsiniz.
+1. `.env.sample` dosyasının adını `.env` olarak değiştirin.
+2. Discord Bot Token'ınızı `DISCORD_BOT_TOKEN` alanına ekleyin.
+3. MongoDB bağlantı dizesini `MONGO_URI` alanına ekleyin.
 
-![gorsel16](images/gorsel16.png)
-* Bu sayfa içerisinden aplikasyon seçerek tıklayınız.
+## Başlatma
 
-![gorsel27](images/gorsel27.png)
-* Aplikasyon sayfasına girdiğinizde sol çubuktaki **Bot** butonuna tıklanarak sayfa içerisinde **Reset Token** butonuna tıklanarak token oluşturulur. 
+1. Konsolu açın ve projenin bulunduğu dizine gidin.
+2. Konsola `node .` yazarak projeyi başlatın.
 
-![gorsel28](images/gorsel28.png)
-* Oluşturulan token altında bulunan **Copy** butonuna tıklanarak token kopyalanır.
+## Komutlar
 
-![gorsel29](images/gorsel29.png)
-* Kopyalanan token **.env** içerisindeki token değişkeninin yanına yapıştırılır.
+- `/ayarlar`: Uygulama kanala bağlandıktan sonra kanalların ayarlanması için gerekli ayar menüsünü açar.
+- `/kurulum`: Ayarlar yapıldıktan sonra rollerin tanımlanması ve kanal ayarlarının değiştirilmesi için menünün açılmasını sağlar.
+- `/ayarlar kayıtkanal: #kanal logkanal: #kanal modkanal: #kanal`: ~~Kayıt, log ve moderasyon kanalının ayarlanmasını sağlar.~~
 
-![gorsel30](images/gorsel30.png)
-* Terminal ekranından **node .** komutu çalıştırılarak proje ayağa kaldırılmış olur.
+## Menüler
 
-![gorsel32](images/gorsel32.png)
-* Bot sunucuda aktifleşmiş ve ilk mesajını göndermiş olur. **Kayıt olmak için tıkla** butonuna tıklayarak botun **Selam Dünya!** yazdırılması sağlanır.
-
-![gorsel33](images/gorsel33.png)
-![gorsel34](images/gorsel34.png)
+- **Ayar ve Kurulum Menüleri**: Uygulama için gerekli kanal ayarları ve roller için gerekli kod tanımlamalarının yapılmasını sağlar.
+- **Kayıt Menüsü**: Kullanıcının rol kaydının yapılması için gerekli kodu girmesini ve kullanıcı takma adının düzenlenmesini sağlar.
+- **Kayıt İşlem Menüleri**: ~~Yöneticilerin kaydolan kullanıcıları takip etmesini ve gerekli durumlarda müdahale etmesini sağlar.~~
