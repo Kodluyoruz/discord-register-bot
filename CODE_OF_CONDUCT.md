@@ -26,19 +26,23 @@ Projemize katkıda bulunan herkes, cinsiyet temelli eşitsizliği ortaya koyabil
 
 Projemize katkıda bulunan herkes, bir diğer kişiyi bilmediği bir konu yüzünden yargılamamalı ve kırmamaya özen göstermelidir. Herkesin farklı bilgi seviyeleri ve tecrübeleri olabilir. Bu nedenle, projemize katkıda bulunan herkes, birbirine yardımcı olmak ve birlikte öğrenmek için açık fikirli olmalıdır.
 
-### 5. Soru Sormaktan Çekinmemek
+### 5. Bilgi Paylaşımı ve Öğretme Yaklaşımı
+
+Projemize katkıda bulunan herkes, bilgi paylaşımı ve öğretme yaklaşımında, "bilmeyene öğretmek" ilkesine bağlı kalmalıdır. Projemize katılan öğrencilerin her biri farklı ilgi, tecrübe ve bilgi seviyelerine sahip olabilir. Bu nedenle, projemize katkıda bulunan herkes, başarılı öğrencilerin yanı sıra odaklanmakta zorluk çeken, motivasyonunu kaybetmiş ya da kaybetme aşamasına gelmiş gençlere de özel bir ilgi göstermelidir.
+
+### 6. Soru Sormaktan Çekinmemek
 
 Projemize katkıda bulunan herkes, soru sorma özgürlüğüne sahiptir ve istedikleri zaman istedikleri soruyu sormaktan çekinmemelidirler. Aynı zamanda, sorulara açık ve anlaşılır bir şekilde cevap vermek, projemizin gelişimine katkı sağlamak açısından önemlidir.
 
-### 6. Olumlu ve Yapıcı Olmak
+### 7. Olumlu ve Yapıcı Olmak
 
 Projemize katkıda bulunan herkes, eleştirilerini yapıcı bir şekilde sunmalı ve olumlu bir tutum sergilemelidir. Olumsuz eleştiriler yerine, projeye katkı sağlayabilecek öneriler sunmak ve bu önerilerin tartışılmasına katkıda bulunmak daha faydalı olacaktır.
 
-### 7. Gizlilik ve Telif Haklarına Saygı Göstermek
+### 8. Gizlilik ve Telif Haklarına Saygı Göstermek
 
 Projemize katkıda bulunan herkes, projenin gizliliği ve telif haklarına saygı göstermelidir. Projemize katkıda bulunanların, projemizde kullanılan materyallerin telif haklarına uygun olmasını sağlamak amacıyla, yalnızca açık kaynak lisansları kullanmaları gerekmektedir.
 
-### 8. Kabul Edilemez Davranışlar
+### 9. Kabul Edilemez Davranışlar
 
 Projemize katkıda bulunan herkes, aşağıdaki davranışları sergilememelidir:
 
