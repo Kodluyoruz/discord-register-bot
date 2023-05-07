@@ -10,26 +10,46 @@ const codeSchema = new Schema(
   },
   {
     statics: {
-      addCode: async function (guildId, roleId, codeIds, callback) {
+      addCodes: async function (guildId, roleId, codes, callback) {
         // Çakışan kodları getir
         const allreadyExistCodes = await this.find({
           guildId: guildId,
           roleId: roleId,
-          codeId: { $in: codeIds },
+          codeId: { $in: codes.map((code) => code.codeId) },
         }).select("codeId");
 
         // Çakışan kodları filtrele
-        codeIds = codeIds.filter(
-          (codeId) => !allreadyExistCodes.some((c) => c.codeId === codeId)
+        const codeIds = codes.filter(
+          (code) => !allreadyExistCodes.some((c) => c.codeId === code.codeId)
         );
 
-        const reformattedArrayCode = codeIds.map((codeId) => ({
+        // Çakışan kodların isimlerini güncelle
+        allreadyExistCodes.forEach((c) => {
+          if (codes.some((code) => code.codeId === c.codeId)) {
+            c.userName = codes.find(
+              (code) => code.codeId === c.codeId
+            ).userName;
+          }
+        });
+        this.bulkSave(allreadyExistCodes);
+
+        const reformattedArrayCode = codeIds.map((code) => ({
           guildId,
           roleId,
-          codeId,
+          ...code,
         }));
 
-        return this.insertMany(reformattedArrayCode, callback);
+        const inserted = await this.insertMany(reformattedArrayCode, callback);
+        return { inserted: inserted, updated: allreadyExistCodes };
+      },
+      getByRole: function (guildId, roleId, callback) {
+        return this.find(
+          {
+            guildId: guildId,
+            roleId: roleId,
+          },
+          callback
+        );
       },
       getByCode: function (guildId, codeId, callback) {
         return this.findOne({ guildId: guildId, codeId: codeId }, callback);

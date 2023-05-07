@@ -1,7 +1,6 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonInteraction,
   ButtonStyle,
   RoleSelectMenuBuilder,
 } from "discord.js";
@@ -18,7 +17,7 @@ export default {
   },
   /**
    *
-   * @param {ButtonInteraction} interaction
+   * @param {import("discord.js").ButtonInteraction} interaction
    */
   async execute(interaction) {
     const select = new RoleSelectMenuBuilder()

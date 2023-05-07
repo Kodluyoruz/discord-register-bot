@@ -10,7 +10,11 @@ export default {
       .setLabel("Kodları İndir")
       .setStyle(ButtonStyle.Success);
   },
-  // eslint-disable-next-line no-unused-vars
+  /**
+   *
+   * @param {import("discord.js").ButtonInteraction} interaction
+   */
+
   async execute(interaction) {
     await interaction.reply({
       content: `Kodlar indirildi!`,

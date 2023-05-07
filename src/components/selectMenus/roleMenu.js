@@ -1,4 +1,7 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ActionRowBuilder } from "discord.js";
+import setRegisterCodesButton from "../buttons/setRegisterCodes.js";
+import createNewRegisterCodesButton from "../buttons/createNewRegisterCodes.js";
+import getRegisterCodesButton from "../buttons/getRegisterCodes.js";
 
 export default {
   data: {
@@ -8,25 +11,17 @@ export default {
    * Executes the Select
    * @param {import("discord.js").RoleSelectMenuInteraction} interaction
    */
-  async execute(interaction) {
-    const inputRole = interaction.roles.first();
-    const setRegisterCodesButton = new ButtonBuilder()
-      .setCustomId(`setRegisterCodes-${inputRole.id}`)
-      .setLabel(`${inputRole.name} Rolü İçin Mevcut Kodları Gir`)
-      .setStyle(ButtonStyle.Success);
-
-    const createNewRegisterCodesButton = new ButtonBuilder()
-      .setCustomId(`createNewRegisterCodes-${inputRole.id}`)
-      .setLabel(`${inputRole.name} Rolü İçin Kod Üret`)
-      .setStyle(ButtonStyle.Success);
+  async execute(interaction, client) {
+    const role = interaction.roles.first();
 
     await interaction.deferUpdate({ ephemeral: true });
 
     await interaction.editReply({
       components: [
         new ActionRowBuilder().addComponents([
-          setRegisterCodesButton,
-          createNewRegisterCodesButton,
+          setRegisterCodesButton.generate(interaction, client, role),
+          createNewRegisterCodesButton.generate(interaction, client, role),
+          getRegisterCodesButton.generate(interaction, client, role),
         ]),
       ],
       ephemeral: true,

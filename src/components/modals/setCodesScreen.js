@@ -11,22 +11,40 @@ export default {
   /**
    *
    * @param {import("discord.js").ButtonInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    * @param {String} roleId
    */
-
   async execute(interaction, client, roleId) {
-    const codeInput = interaction.fields
-      .getTextInputValue("codesInput")
-      .split(",");
+    const codeInputText = interaction.fields.getTextInputValue("codesInput");
 
-    const codes = await Code.addCode(interaction.guildId, roleId, codeInput);
+    const codeInput = codeInputText.split("\n").map((code) => {
+      let codeParts = code.split("\t");
+      return {
+        codeId: codeParts[0].trim(),
+        userName: codeParts[1]?.trim(),
+        // roleName: codeParts[2]?.trim(),
+      };
+    });
+
+    // // rol isimleriyle eşleşen rolidleri maple
+    // const codeList = codeInput.map((code) => {
+    //   const inputRoleId = code.roleName
+    //     ? interaction.guild.roles.cache.find(
+    //         (role) => role.name === code.roleName
+    //       )?.id | roleId
+    //     : roleId;
+    //   return {
+    //     codeId: code.codeId,
+    //     userName: code.userName,
+    //     roleId: inputRoleId,
+    //   };
+    // });
+
+    const codes = await Code.addCodes(interaction.guildId, roleId, codeInput);
 
     // kaydedilen ve kaydedilemeyen kodlar
-    const addedCodes = codes.map((code) => code.codeId);
-    const notAddedCodes = codeInput.filter(
-      (code) => !addedCodes.includes(code)
-    );
+    const addedCodes = codes.inserted.map((code) => code.codeId);
+    const notAddedCodes = codes.updated.map((code) => code.codeId);
 
     await interaction.deferUpdate({ ephemeral: true });
 

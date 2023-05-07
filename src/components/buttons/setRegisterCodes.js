@@ -11,10 +11,10 @@ export default {
   data: {
     name: "setRegisterCodes",
   },
-  generate() {
+  generate(interaction, client, role) {
     return new ButtonBuilder()
-      .setCustomId("setRegisterCodes")
-      .setLabel("Kaydı Gerçekleştir")
+      .setCustomId(`setRegisterCodes-${role.id}`)
+      .setLabel(`${role.name} için Kod Gir`)
       .setStyle(ButtonStyle.Success);
   },
   /**

@@ -26,8 +26,14 @@ export default {
       codeInput.push(Math.floor(100000000 + Math.random() * 900000000));
     }
 
-    const codes = await Code.addCode(interaction.guildId, roleId, codeInput);
-    const addedCodes = codes.map((code) => code.codeId);
+    const codes = await Code.addCodes(
+      interaction.guildId,
+      roleId,
+      codeInput.map((code) => ({
+        codeId: code,
+      }))
+    );
+    const addedCodes = codes.inserted.map((code) => code.codeId);
 
     await interaction.reply({
       components: [
