@@ -37,7 +37,7 @@ git clone https://github.com/Kodluyoruz/discord-register-bot
 
 Konsola `npm install` yazarak gerekli bağımlılıkları yükleyin.
 
-`.env` dosyası oluşturun ve `TOKEN` adında bir değişken oluşturarak botunuzun token'ını atayın. Token'ınızı Discord Developer Portal'dan alabilirsiniz.
+`.env` dosyası oluşturun ve `DISCORD_BOT_TOKEN` adında bir değişken oluşturarak botunuzun token'ını atayın. Token'ınızı Discord Developer Portal'dan alabilirsiniz.
 MongoDB veritabanı için, `MONGO_URI` adında bir değişken oluşturarak MongoDB bağlantı cümlesini atayın.
 Ayar dosyanızı aşağıdaki gibi oluşturabilirsiniz:
 
@@ -80,6 +80,10 @@ Botunuzu çalıştırmak için konsolda `node .` komutunu yazın.
 [Muhammed Mustafa Savar](https://github.com/muffafa)
 
 [Uveys Gurbuz](https://github.com/uveysg)
+
+## Davranış Kuralları
+
+Bu toplulukta herkes için güvenli ve saygılı bir ortam sağlamak için [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) dosyasındaki kurallara uymanızı rica ederiz.
 
 ## Katkıda Bulunma
 
