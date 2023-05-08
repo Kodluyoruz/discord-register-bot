@@ -4,7 +4,7 @@
 
 ![coming soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
 
-[English version 🇺🇸](https://www.notion.so/wildgenie/readme.en.md)
+[English version 🇺🇸](readme.en.md)
 
 ## Proje Hakkında
 
