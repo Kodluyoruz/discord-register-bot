@@ -1,5 +1,3 @@
-import { ActionRowBuilder } from "discord.js";
-
 import Setting from "../../schemas/setting.js";
 
 export default {

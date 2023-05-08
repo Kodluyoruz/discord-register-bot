@@ -8,18 +8,34 @@
     "start": "node .",
     "dev": "nodemon .",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kodluyoruz/discord-register-bot"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "discord-register-bot"
+  ],
+  "bugs": {
+    "url": "https://github.com/Kodluyoruz/discord-register-bot/issues"
+  },
   "author": "Kodluyoruz",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "prettier": "2.8.8"
   },
   "dependencies": {
     "discord-api-types": "^0.37.41",

@@ -4,7 +4,6 @@ import {
   ChannelSelectMenuBuilder,
   ChannelType,
   ButtonStyle,
-  StringSelectMenuOptionBuilder,
 } from "discord.js";
 
 export default {

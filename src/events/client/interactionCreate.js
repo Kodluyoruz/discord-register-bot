@@ -1,11 +1,11 @@
-import { Client, InteractionType } from "discord.js";
+import { InteractionType } from "discord.js";
 
 export default {
   name: "interactionCreate",
   /**
    *
    * @param {import("discord.js").Interaction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    * @returns
    */
   async execute(interaction, client) {

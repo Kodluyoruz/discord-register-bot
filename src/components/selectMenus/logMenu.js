@@ -1,8 +1,5 @@
-import {
-  ActionRowBuilder,
-  ChannelSelectMenuInteraction,
-  Client,
-} from "discord.js";
+import { ActionRowBuilder } from "discord.js";
+
 import Setting from "../../schemas/setting.js";
 import setRegChannelButton from "../buttons/setRegChannel.js";
 import setModChannelButton from "../buttons/setModChannel.js";
@@ -14,8 +11,8 @@ export default {
   },
   /**
    *
-   * @param {ChannelSelectMenuInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").ChannelSelectMenuInteraction} interaction
+   * @param {import("discord.js").Client} client
    */
   async execute(interaction, client) {
     const inputChannel = interaction.channels.first();
