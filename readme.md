@@ -2,8 +2,6 @@
 
 ![banner](https://user-images.githubusercontent.com/39780/236168231-516d688e-8f15-45d5-a80f-889e0b7f0b00.png)
 
-![coming soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)
-
 [English version 🇺🇸](readme.en.md)
 
 ## Proje Hakkında
