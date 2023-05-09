@@ -1,0 +1,48 @@
+{
+  "name": "kodluyoruz-discord-bot",
+  "version": "0.0.1",
+  "description": "Kodluyoruz Discord Kayıt Botu [Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kodluyoruz/discord-register-bot"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "discord-register-bot"
+  ],
+  "bugs": {
+    "url": "https://github.com/Kodluyoruz/discord-register-bot/issues"
+  },
+  "author": "Kodluyoruz",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^2.0.22",
+    "prettier": "2.8.8"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.37.41",
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3",
+    "i18next": "^22.4.15",
+    "mongoose": "^7.1.0",
+    "winston": "^3.8.2"
+  }
+}
