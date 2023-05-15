@@ -1,7 +1,7 @@
 import Code from "../../schemas/code.js";
 import { ActionRowBuilder } from "discord.js";
 
-import downloadsCodesButton from "../buttons/downloadCodes.js";
+import downloadCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
 
 export default {
@@ -21,25 +21,29 @@ export default {
       interaction.fields.getTextInputValue("codeNumberInput")
     );
 
-    const codeInput = [];
+    const codeInputIds = [];
     for (let i = 0; i < codeCount; i++) {
-      codeInput.push(Math.floor(100000000 + Math.random() * 900000000));
+      codeInputIds.push(Math.floor(100000000 + Math.random() * 900000000));
     }
 
-    const codes = await Code.addCodes(
-      interaction.guildId,
-      roleId,
-      codeInput.map((code) => ({
-        codeId: code,
-      }))
-    );
-    const addedCodes = codes.inserted.map((code) => code.codeId);
+    const { updatedCodes, newCodes, updatedUsers } =
+      await Code.addOrUpdateGuildCodes(
+        interaction.guildId,
+        codeInputIds.map((code) => ({
+          codeId: code,
+          roleIds: [roleId],
+        }))
+      );
 
-    await interaction.reply({
+    await interaction.deferUpdate({ ephemeral: true });
+
+    await interaction.editReply({
       components: [
-        new ActionRowBuilder().addComponents([downloadsCodesButton.generate()]),
+        new ActionRowBuilder().addComponents([downloadCodesButton.generate()]),
       ],
-      embeds: [codesEmbed.generate(client, addedCodes, [])],
+      embeds: [
+        await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
+      ],
     });
   },
 };

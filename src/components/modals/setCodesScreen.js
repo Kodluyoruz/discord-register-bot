@@ -1,5 +1,5 @@
 import Code from "../../schemas/code.js";
-import { ActionRowBuilder } from "discord.js";
+import { ActionRowBuilder, Colors, EmbedBuilder } from "discord.js";
 
 import downloadCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
@@ -21,30 +21,32 @@ export default {
       let codeParts = code.split("\t");
       return {
         codeId: codeParts[0].trim(),
-        userName: codeParts[1]?.trim(),
-        // roleName: codeParts[2]?.trim(),
+        roleIds: [roleId],
+        data: {
+          userName: codeParts[1]?.trim(),
+        },
       };
     });
 
-    // // rol isimleriyle eşleşen rolidleri maple
-    // const codeList = codeInput.map((code) => {
-    //   const inputRoleId = code.roleName
-    //     ? interaction.guild.roles.cache.find(
-    //         (role) => role.name === code.roleName
-    //       )?.id | roleId
-    //     : roleId;
-    //   return {
-    //     codeId: code.codeId,
-    //     userName: code.userName,
-    //     roleId: inputRoleId,
-    //   };
-    // });
+    const { updatedCodes, newCodes, updatedUsers } =
+      await Code.addOrUpdateGuildCodes(interaction.guildId, codeInput);
 
-    const codes = await Code.addCodes(interaction.guildId, roleId, codeInput);
+    for (const code of updatedUsers) {
+      const member = await interaction.guild.members.fetch(code.userId);
 
-    // kaydedilen ve kaydedilemeyen kodlar
-    const addedCodes = codes.inserted.map((code) => code.codeId);
-    const notAddedCodes = codes.updated.map((code) => code.codeId);
+      const { addedRoleIds, removedRoleIds } = code;
+
+      const addedRoles = addedRoleIds.map((roleId) =>
+        interaction.guild.roles.cache.get(roleId)
+      );
+
+      const removedRoles = removedRoleIds.map((roleId) =>
+        interaction.guild.roles.cache.get(roleId)
+      );
+
+      member.roles.add(addedRoles);
+      member.roles.remove(removedRoles);
+    }
 
     await interaction.deferUpdate({ ephemeral: true });
 
@@ -52,7 +54,9 @@ export default {
       components: [
         new ActionRowBuilder().addComponents([downloadCodesButton.generate()]),
       ],
-      embeds: [codesEmbed.generate(client, addedCodes, notAddedCodes)],
+      embeds: [
+        await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
+      ],
     });
   },
 };

@@ -16,16 +16,22 @@ export default {
     const codeInput = interaction.fields.getTextInputValue("codeInput");
     const nameInput = interaction.fields.getTextInputValue("nameInput");
 
-    const codeEntry = await Code.getByCode(interaction.guildId, codeInput);
+    const codeEntry = await Code.getByCodeId(interaction.guildId, codeInput);
 
-    if (codeEntry) {
-      const role = interaction.guild.roles.cache.find(
-        (r) => r.id === codeEntry.roleId
+    if (codeEntry && !codeEntry.userId) {
+      const roles = codeEntry.roleIds.map((roleId) =>
+        interaction.guild.roles.cache.get(roleId)
       );
 
       const member = await interaction.guild.members.fetch(interaction.user.id);
 
-      await member.roles.add(role);
+      await Code.updateCodeUserId(
+        interaction.guildId,
+        codeInput,
+        interaction.user.id
+      );
+
+      await member.roles.add(roles);
       await member.setNickname(nameInput);
 
       const embed = new EmbedBuilder()
@@ -41,12 +47,18 @@ export default {
         .addFields([
           {
             name: `TEBRİKLER ${nameInput}`,
-            value: `@${role.name} rolü başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
+            value: `${roles
+              .map((role) => `<@&${role.id}>`)
+              .join(", ")} rolleri başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
             inline: false,
           },
         ]);
       await interaction.editReply({
         embeds: [embed],
+      });
+    } else if (codeEntry && codeEntry.userId) {
+      await interaction.editReply({
+        content: `Bu kod kullanılmış.`,
       });
     } else {
       await interaction.editReply({
