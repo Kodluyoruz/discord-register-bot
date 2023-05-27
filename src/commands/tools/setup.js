@@ -1,6 +1,6 @@
 // TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
 
-import { ActionRowBuilder, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
 
 import setupEmbed from "../../components/embeds/settings.js";
 import setRoleButton from "../../components/buttons/setRole.js";
@@ -10,8 +10,13 @@ import documentButton from "../../components/buttons/links/document.js";
 export default {
   data: new SlashCommandBuilder()
     .setName("kurulum")
-    .setDescription("Kurulum menüsünü açar."),
-
+    .setDescription("Kurulum menüsünü açar.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+  /**
+   *
+   * @param {import("discord.js").Integration} interaction
+   * @param {import("discord.js").Client} client
+   */
   async execute(interaction, client) {
     await interaction.reply({
       components: [
