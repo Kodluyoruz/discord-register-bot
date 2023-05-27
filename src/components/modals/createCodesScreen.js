@@ -11,7 +11,7 @@ export default {
 
   /**
    * @param {import("discord.js").ModalSubmitInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    * @param {String} roleId
    */
   async execute(interaction, client, roleId) {

@@ -44,8 +44,8 @@ export default {
         interaction.guild.roles.cache.get(roleId)
       );
 
-      member.roles.add(addedRoles);
-      member.roles.remove(removedRoles);
+      await member.roles.add(addedRoles);
+      await member.roles.remove(removedRoles);
     }
 
     await interaction.deferUpdate({ ephemeral: true });
