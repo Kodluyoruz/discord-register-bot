@@ -25,7 +25,9 @@ export default {
       }
 
       if (addedRoleIds.length > 0) {
-        parts.push(`:ballot_box_with_check: ${mapRoleIdsToMentions(addedRoleIds)}`);
+        parts.push(
+          `:ballot_box_with_check: ${mapRoleIdsToMentions(addedRoleIds)}`
+        );
       }
 
       if (removedRoleIds.length > 0) {
@@ -62,9 +64,29 @@ export default {
         `**${newGuildCodes.length}** yeni kod eklendi, **${updatedGuildCodes.length}** kod güncellendi, **${updatedGuildUsers.length}** kullanıcı güncellendi.`
       );
 
-    addFieldIfNotEmpty(embed, `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${newGuildCodes.length})`, Array.from(newGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY));
-    addFieldIfNotEmpty(embed, `Güncellenen Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildCodes.length)}/${updatedGuildCodes.length})`, Array.from(updatedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY));
-    addFieldIfNotEmpty(embed, `Güncellenen Kullanıcılar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildUsers.length)}/${updatedGuildUsers.length})`, Array.from(updatedGuildUsers).slice(0, MAX_ITEMS_TO_DISPLAY));
+    addFieldIfNotEmpty(
+      embed,
+      `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${
+        newGuildCodes.length
+      })`,
+      Array.from(newGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
+    addFieldIfNotEmpty(
+      embed,
+      `Güncellenen Kodlar (${Math.min(
+        MAX_ITEMS_TO_DISPLAY,
+        updatedGuildCodes.length
+      )}/${updatedGuildCodes.length})`,
+      Array.from(updatedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
+    addFieldIfNotEmpty(
+      embed,
+      `Güncellenen Kullanıcılar (${Math.min(
+        MAX_ITEMS_TO_DISPLAY,
+        updatedGuildUsers.length
+      )}/${updatedGuildUsers.length})`,
+      Array.from(updatedGuildUsers).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
 
     return embed;
   },

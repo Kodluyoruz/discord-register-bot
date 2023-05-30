@@ -24,7 +24,7 @@ export default {
         interaction.guild.roles.cache.get(roleId)
       );
 
-      const member = await interaction.guild.members.fetch(interaction.user.id);
+      const member = interaction.guild.members.cache.get(interaction.user.id) || await interaction.guild.members.fetch(interaction.user.id);
 
       await Code.updateCodeUserId(
         interaction.guildId,

@@ -33,8 +33,9 @@ export default {
       .setRequired(true)
       .setStyle(TextInputStyle.Short);
 
-    const userName = interaction.guild.members.cache.get(
-      interaction.user.id
+    const userName = (
+      interaction.guild.members.cache.get(interaction.user.id) ||
+      (await interaction.guild.members.fetch(interaction.user.id))
     ).displayName;
 
     const textNameInput = new TextInputBuilder()
