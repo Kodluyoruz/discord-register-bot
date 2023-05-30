@@ -1,8 +1,8 @@
 import Code from "../../schemas/code.js";
-import { ActionRowBuilder } from "discord.js";
+import { AttachmentBuilder } from "discord.js";
 
-import downloadCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
+import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
@@ -21,38 +21,55 @@ export default {
       let codeParts = code.split("\t");
       return {
         codeId: codeParts[0].trim(),
-        userName: codeParts[1]?.trim(),
-        // roleName: codeParts[2]?.trim(),
+        roleIds: [roleId],
+        data: {
+          userName: codeParts[1]?.trim(),
+        },
       };
     });
 
-    // // rol isimleriyle eşleşen rolidleri maple
-    // const codeList = codeInput.map((code) => {
-    //   const inputRoleId = code.roleName
-    //     ? interaction.guild.roles.cache.find(
-    //         (role) => role.name === code.roleName
-    //       )?.id | roleId
-    //     : roleId;
-    //   return {
-    //     codeId: code.codeId,
-    //     userName: code.userName,
-    //     roleId: inputRoleId,
-    //   };
-    // });
+    const { updatedCodes, newCodes, updatedUsers } =
+      await Code.addOrUpdateGuildCodes(interaction.guildId, codeInput);
 
-    const codes = await Code.addCodes(interaction.guildId, roleId, codeInput);
+    for (const code of updatedUsers) {
+      const member = await interaction.guild.members.fetch(code.userId);
 
-    // kaydedilen ve kaydedilemeyen kodlar
-    const addedCodes = codes.inserted.map((code) => code.codeId);
-    const notAddedCodes = codes.updated.map((code) => code.codeId);
+      const { addedRoleIds, removedRoleIds } = code;
+
+      const addedRoles = addedRoleIds.map((roleId) =>
+        interaction.guild.roles.cache.get(roleId)
+      );
+
+      const removedRoles = removedRoleIds.map((roleId) =>
+        interaction.guild.roles.cache.get(roleId)
+      );
+
+      await member.roles.add(addedRoles);
+      await member.roles.remove(removedRoles);
+    }
 
     await interaction.deferUpdate({ ephemeral: true });
 
+    const csv = generateCsv(
+      client,
+      interaction.guild,
+      newCodes,
+      updatedCodes,
+      updatedUsers
+    );
+
+    const dateString = new Date().toISOString().split("T")[0];
+
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+      name: `${interaction.guild.name}_${dateString}_codes.csv`,
+      description: "Exported codes",
+    });
+
     await interaction.editReply({
-      components: [
-        new ActionRowBuilder().addComponents([downloadCodesButton.generate()]),
+      embeds: [
+        await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
       ],
-      embeds: [codesEmbed.generate(client, addedCodes, notAddedCodes)],
+      files: [csvAttachment],
     });
   },
 };
