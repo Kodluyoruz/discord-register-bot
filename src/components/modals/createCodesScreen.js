@@ -38,7 +38,7 @@ export default {
 
     await interaction.deferUpdate({ ephemeral: true });
 
-    const csv = generateCsv(client, newCodes, updatedCodes, updatedUsers);
+    const csv = generateCsv(client, interaction.guild, newCodes, updatedCodes, updatedUsers);
 
     const dateString = new Date().toISOString().split("T")[0];
 
