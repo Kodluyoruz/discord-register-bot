@@ -30,8 +30,8 @@ export default {
 
     const textInput = new TextInputBuilder()
       .setCustomId("codesInput")
-      .setLabel("Kodları virgül ile ayırarak girin.") // TODO:  Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3 FAZLA UZUN OLUYOR
-      .setPlaceholder("Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3")
+      .setLabel("Kodları satırlara ayırarak girin.") // TODO:  Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3 FAZLA UZUN OLUYOR
+      .setPlaceholder("kodluyoruz1\nkodluyoruz2\nkodluyoruz3")
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
 

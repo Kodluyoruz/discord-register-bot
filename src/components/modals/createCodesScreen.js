@@ -1,8 +1,9 @@
 import Code from "../../schemas/code.js";
-import { ActionRowBuilder } from "discord.js";
+import { AttachmentBuilder } from "discord.js";
 
-import downloadsCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
+
+import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
@@ -11,7 +12,7 @@ export default {
 
   /**
    * @param {import("discord.js").ModalSubmitInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    * @param {String} roleId
    */
   async execute(interaction, client, roleId) {
@@ -21,25 +22,42 @@ export default {
       interaction.fields.getTextInputValue("codeNumberInput")
     );
 
-    const codeInput = [];
+    const codeInputIds = [];
     for (let i = 0; i < codeCount; i++) {
-      codeInput.push(Math.floor(100000000 + Math.random() * 900000000));
+      codeInputIds.push(Math.floor(100000000 + Math.random() * 900000000));
     }
 
-    const codes = await Code.addCodes(
-      interaction.guildId,
-      roleId,
-      codeInput.map((code) => ({
-        codeId: code,
-      }))
-    );
-    const addedCodes = codes.inserted.map((code) => code.codeId);
+    const { updatedCodes, newCodes, updatedUsers } =
+      await Code.addOrUpdateGuildCodes(
+        interaction.guildId,
+        codeInputIds.map((code) => ({
+          codeId: code,
+          roleIds: [roleId],
+        }))
+      );
 
-    await interaction.reply({
-      components: [
-        new ActionRowBuilder().addComponents([downloadsCodesButton.generate()]),
+    await interaction.deferUpdate({ ephemeral: true });
+
+    const csv = generateCsv(client, newCodes, updatedCodes, updatedUsers);
+
+    const dateString = new Date().toISOString().split("T")[0];
+
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+      name: `${interaction.guild.name}_${dateString}_codes.csv`,
+      description: "Exported codes",
+    });
+
+    await interaction.editReply({
+      embeds: [
+        await codesEmbed.generate(
+          client,
+          interaction.guild,
+          updatedCodes,
+          newCodes,
+          updatedUsers
+        ),
       ],
-      embeds: [codesEmbed.generate(client, addedCodes, [])],
+      files: [csvAttachment],
     });
   },
 };
