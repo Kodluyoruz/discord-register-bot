@@ -129,7 +129,13 @@ const codeSchema = new Schema(
 
             const newGuildCode = new this(newCode);
             newGuildCode.save();
-            newCodes.push(newCode);
+            newCodes.push({
+              codeId,
+              addedRoleIds: roleIds.slice(),
+              removedRoleIds: [],
+              notUpdatedRoleIds: [],
+              data,
+            });
           }
         }
 
@@ -138,6 +144,33 @@ const codeSchema = new Schema(
           updatedCodes,
           newCodes,
           updatedUsers,
+        };
+      },
+      getByRoleId: async function (guildId, roleId) {
+        const guildCodes = await this.find({ guildId, roleIds: roleId });
+        const unusedCodes = [];
+        const usersCodes = [];
+
+        for (const code of guildCodes) {
+          const codeData = {
+            codeId: code.codeId,
+            addedRoleIds: code.roleIds.slice(),
+            removedRoleIds: [],
+            notUpdatedRoleIds: [],
+            data: code.data,
+            userId: code.userId,
+          };
+
+          if (code.userId) {
+            usersCodes.push(codeData);
+          } else {
+            unusedCodes.push(codeData);
+          }
+        }
+
+        return {
+          usersCodes,
+          unusedCodes,
         };
       },
     },

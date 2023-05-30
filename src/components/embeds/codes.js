@@ -25,7 +25,7 @@ export default {
       const newCodesString = newCodes
         .map(
           (code) =>
-            `\`${code.codeId}\` (${code.roleIds
+            `\`${code.codeId}\` (${code.addedRoleIds
               .map((roleId) => `<@&${roleId}>`)
               .join(", ")})`
         )

@@ -1,8 +1,8 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { AttachmentBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
 import Code from "../../schemas/code.js";
-import downloadsCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
+import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
@@ -15,16 +15,31 @@ export default {
       .setStyle(ButtonStyle.Success);
   },
   async execute(interaction, client, roleId) {
-    const codes = await Code.getByRole(interaction.guildId, roleId);
+    const { usersCodes, unusedCodes } = await Code.getByRoleId(
+      interaction.guildId,
+      roleId
+    );
 
-    // kaydedilen ve kaydedilemeyen kodlar
-    const addedCodes = codes.map((code) => code.codeId);
+    await interaction.deferUpdate({ ephemeral: true });
 
-    await interaction.reply({
-      components: [
-        new ActionRowBuilder().addComponents([downloadsCodesButton.generate()]),
-      ],
-      embeds: [codesEmbed.generate(client, addedCodes, [])],
+    const csv = generateCsv(
+      client,
+      interaction.guild,
+      unusedCodes,
+      [],
+      usersCodes
+    );
+
+    const dateString = new Date().toISOString().split("T")[0];
+
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+      name: `${interaction.guild.name}_${dateString}_codes.csv`,
+      description: "Exported codes",
+    });
+
+    await interaction.editReply({
+      embeds: [await codesEmbed.generate(client, [], unusedCodes, usersCodes)],
+      files: [csvAttachment],
     });
   },
 };

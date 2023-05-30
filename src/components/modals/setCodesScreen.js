@@ -1,8 +1,8 @@
 import Code from "../../schemas/code.js";
-import { ActionRowBuilder, Colors, EmbedBuilder } from "discord.js";
+import { AttachmentBuilder } from "discord.js";
 
-import downloadCodesButton from "../buttons/downloadCodes.js";
 import codesEmbed from "../embeds/codes.js";
+import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
@@ -50,13 +50,26 @@ export default {
 
     await interaction.deferUpdate({ ephemeral: true });
 
+    const csv = generateCsv(
+      client,
+      interaction.guild,
+      newCodes,
+      updatedCodes,
+      updatedUsers
+    );
+
+    const dateString = new Date().toISOString().split("T")[0];
+
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+      name: `${interaction.guild.name}_${dateString}_codes.csv`,
+      description: "Exported codes",
+    });
+
     await interaction.editReply({
-      components: [
-        new ActionRowBuilder().addComponents([downloadCodesButton.generate()]),
-      ],
       embeds: [
         await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
       ],
+      files: [csvAttachment],
     });
   },
 };

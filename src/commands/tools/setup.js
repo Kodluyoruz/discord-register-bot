@@ -1,6 +1,10 @@
 // TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
 
-import { ActionRowBuilder, SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
+import {
+  ActionRowBuilder,
+  SlashCommandBuilder,
+  PermissionFlagsBits,
+} from "discord.js";
 
 import setupEmbed from "../../components/embeds/settings.js";
 import setRoleButton from "../../components/buttons/setRole.js";

@@ -32,8 +32,10 @@ export default {
         interaction.user.id
       );
 
-      await member.roles.add(roles);
-      await member.setNickname(nameInput);
+      // TODO: check permision
+
+      await member.roles.add(roles).catch(() => {});
+      await member.setNickname(nameInput).catch(() => {});
 
       const embed = new EmbedBuilder()
         .setColor(Colors.Blue)
@@ -87,11 +89,10 @@ export default {
               },
             ]);
           await channel.send({
-            embeds: [embed],
+            embeds: [logEmbed],
           });
         }
       });
-
     } else if (codeEntry && codeEntry.userId) {
       await interaction.editReply({
         content: `Bu kod kullanılmış.`,
