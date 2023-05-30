@@ -2,78 +2,71 @@ import { Colors, EmbedBuilder } from "discord.js";
 
 export default {
   data: {
-    name: `codes`,
+    name: "codes",
   },
-  async generate(client, updatedCodes, newCodes, updatedUsers) {
-    // Discord embed'i oluşturulur
+  async generate(client, updatedGuildCodes, newGuildCodes, updatedGuildUsers) {
+    function mapRoleIdsToMentions(roleIds) {
+      return roleIds.map((roleId) => `<@&${roleId}>`).join(", ");
+    }
+
+    function generateGuildCodeString({
+      codeId,
+      userId = "",
+      addedRoleIds = [],
+      removedRoleIds = [],
+      notUpdatedRoleIds = [],
+    }) {
+      const parts = [`\`${codeId}\``];
+
+      if (userId) {
+        parts.push(`<@${userId}>`);
+      }
+
+      if (addedRoleIds.length > 0) {
+        parts.push(
+          `:ballot_box_with_check: ${mapRoleIdsToMentions(addedRoleIds)}`
+        );
+      }
+
+      if (removedRoleIds.length > 0) {
+        parts.push(`:no_entry_sign: ${mapRoleIdsToMentions(removedRoleIds)}`);
+      }
+
+      if (notUpdatedRoleIds.length > 0) {
+        parts.push(`:warning: ${mapRoleIdsToMentions(notUpdatedRoleIds)}`);
+      }
+
+      return parts.join(" ");
+    }
+
+    function addFieldIfNotEmpty(embed, name, data) {
+      if (data.length > 0) {
+        embed.addFields({
+          name: name,
+          value: data.map(generateGuildCodeString).join("\n"),
+        });
+      }
+    }
+
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
       .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
       .setThumbnail(client.user.displayAvatarURL())
       .setAuthor({
+        name: "Kodluyoruz Kayıt Botu",
+        iconURL: client.user.displayAvatarURL(),
         url: "https://github.com/Kodluyoruz/discord-register-bot",
         iconURL: client.user.displayAvatarURL(),
         name: `Kodluyoruz Kayıt Botu`,
       })
       .setTitle("Guild Code Güncellendi!")
       .setDescription(
-        `**${newCodes.length}** yeni kod eklendi, **${updatedCodes.length}** kod güncellendi, **${updatedUsers.length}** kullanıcı güncellendi.`
+        `**${newGuildCodes.length}** yeni kod eklendi, **${updatedGuildCodes.length}** kod güncellendi, **${updatedGuildUsers.length}** kullanıcı güncellendi.`
       );
 
-    // Güncellenen ve yeni eklenen kodlar embed içinde ayrı ayrı listelenir
-    if (newCodes.length > 0) {
-      const newCodesString = newCodes
-        .map(
-          (code) =>
-            `\`${code.codeId}\` (${code.addedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")})`
-        )
-        .join("\n");
-      embed.addFields({ name: "Yeni Kodlar", value: newCodesString });
-    }
-    if (updatedCodes.length > 0) {
-      const updatedCodesString = updatedCodes
-        .map(
-          (code) =>
-            `\`${code.codeId}\` (:ballot_box_with_check: ${code.addedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")}, :no_entry_sign:: ${code.removedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")}, :warning: ${code.notUpdatedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")})`
-        )
-        .join("\n");
-      embed.addFields({
-        name: "Güncellenen Kodlar",
-        value: updatedCodesString,
-      });
-    }
-
-    // Kullanıcı güncellemeleri ile ilgili bir mesaj gösterilir
-    if (updatedUsers.length > 0) {
-      const updatedUsersString = updatedUsers
-        .map(
-          (code) =>
-            `\`${code.codeId}\` <@${
-              code.userId
-            }> (:ballot_box_with_check: ${code.addedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")}, :no_entry_sign:: ${code.removedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")}, :warning: ${code.notUpdatedRoleIds
-              .map((roleId) => `<@&${roleId}>`)
-              .join(", ")})`
-        )
-        .join("\n");
-      embed.addFields({
-        name: "Güncellenen Kullanıcılar",
-        value: updatedUsersString,
-      });
-
-      // Kullanıcıdan gerekli kodları almak ve eklemek için gerekli kodları burada yazabilirsiniz.
-    }
+    addFieldIfNotEmpty(embed, "Yeni Kodlar", newGuildCodes);
+    addFieldIfNotEmpty(embed, "Güncellenen Kodlar", updatedGuildCodes);
+    addFieldIfNotEmpty(embed, "Güncellenen Kullanıcılar", updatedGuildUsers);
 
     return embed;
   },
