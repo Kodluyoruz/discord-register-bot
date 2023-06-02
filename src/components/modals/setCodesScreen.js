@@ -32,7 +32,7 @@ export default {
       await Code.addOrUpdateGuildCodes(interaction.guildId, codeInput);
 
     for (const code of updatedUsers) {
-      const member = await interaction.guild.members.fetch(code.userId);
+      const member = interaction.guild.members.cache.get(code.userId) || await interaction.guild.members.fetch(code.userId);
 
       const { addedRoleIds, removedRoleIds } = code;
 
@@ -50,7 +50,7 @@ export default {
 
     await interaction.deferUpdate({ ephemeral: true });
 
-    const csv = generateCsv(
+    const csv = await generateCsv(
       client,
       interaction.guild,
       newCodes,

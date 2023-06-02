@@ -22,7 +22,7 @@ export default {
 
     await interaction.deferUpdate({ ephemeral: true });
 
-    const csv = generateCsv(
+    const csv = await generateCsv(
       client,
       interaction.guild,
       unusedCodes,

@@ -1,5 +1,7 @@
 import { Colors, EmbedBuilder } from "discord.js";
 
+const MAX_ITEMS_TO_DISPLAY = 10;
+
 export default {
   data: {
     name: "codes",
@@ -56,17 +58,35 @@ export default {
         name: "Kodluyoruz Kayıt Botu",
         iconURL: client.user.displayAvatarURL(),
         url: "https://github.com/Kodluyoruz/discord-register-bot",
-        iconURL: client.user.displayAvatarURL(),
-        name: `Kodluyoruz Kayıt Botu`,
       })
       .setTitle("Guild Code Güncellendi!")
       .setDescription(
         `**${newGuildCodes.length}** yeni kod eklendi, **${updatedGuildCodes.length}** kod güncellendi, **${updatedGuildUsers.length}** kullanıcı güncellendi.`
       );
 
-    addFieldIfNotEmpty(embed, "Yeni Kodlar", newGuildCodes);
-    addFieldIfNotEmpty(embed, "Güncellenen Kodlar", updatedGuildCodes);
-    addFieldIfNotEmpty(embed, "Güncellenen Kullanıcılar", updatedGuildUsers);
+    addFieldIfNotEmpty(
+      embed,
+      `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${
+        newGuildCodes.length
+      })`,
+      Array.from(newGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
+    addFieldIfNotEmpty(
+      embed,
+      `Güncellenen Kodlar (${Math.min(
+        MAX_ITEMS_TO_DISPLAY,
+        updatedGuildCodes.length
+      )}/${updatedGuildCodes.length})`,
+      Array.from(updatedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
+    addFieldIfNotEmpty(
+      embed,
+      `Güncellenen Kullanıcılar (${Math.min(
+        MAX_ITEMS_TO_DISPLAY,
+        updatedGuildUsers.length
+      )}/${updatedGuildUsers.length})`,
+      Array.from(updatedGuildUsers).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
 
     return embed;
   },
