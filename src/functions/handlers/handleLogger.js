@@ -14,9 +14,11 @@ export default (client) => {
         new transports.File({
           filename: "logs/error.log",
           level: "error",
+          maxsize: 2097152,
         }),
         new transports.File({
           filename: "logs/combined.log",
+          maxsize: 2097152,
         }),
       ],
     });
