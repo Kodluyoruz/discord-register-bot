@@ -61,13 +61,12 @@ export default {
       })
       .setTitle("Guild Code Güncellendi!")
       .setDescription(
-        `**${newGuildCodes.length}** yeni kod eklendi, **${updatedGuildCodes.length}** kod güncellendi, **${updatedGuildUsers.length}** kullanıcı güncellendi.`
+        `**${newGuildCodes?.length}** yeni kod eklendi, **${updatedGuildCodes?.length}** kod güncellendi, **${updatedGuildUsers?.length}** kullanıcı güncellendi.`
       );
 
     addFieldIfNotEmpty(
       embed,
-      `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${
-        newGuildCodes.length
+      `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${newGuildCodes.length
       })`,
       Array.from(newGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
     );

@@ -36,7 +36,7 @@ async function generateCsv(
   ];
 
   /**
-   * @param {{ addedRoleIds: string[]; removedRoleIds: string[]; notUpdatedRoleIds: string[]; userId: string; codeId: string; }} code
+   * @param {{ addedRoleIds: string[]; removedRoleIds: string[]; notUpdatedRoleIds: string[]; userId: string; codeId: string; data: { userName: string} }} code
    */
   async function getRowData(code) {
     const addedRoles = getRoleNames(
@@ -56,10 +56,11 @@ async function generateCsv(
     );
 
     const member = code.userId
-      ? discordGuild.members.cache.get(code.userId) || await discordGuild.members.fetch(code.userId)
+      ? discordGuild.members.cache.get(code.userId) ||
+      (await discordGuild.members.fetch(code.userId))
       : null;
     const userTag = member?.user.tag || "";
-    const userName = member?.displayName || "";
+    const userName = member?.displayName || code.data?.userName || "";
 
     return [
       code.codeId,

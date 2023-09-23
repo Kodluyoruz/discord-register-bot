@@ -1,9 +1,9 @@
-import Code from "../../schemas/code.js";
 import { AttachmentBuilder } from "discord.js";
+import Code from "../../schemas/code.js";
 
 import codesEmbed from "../embeds/codes.js";
 
-import generateCsv from "../../helpers/cvs.js";
+import generateCsv from "../../helpers/csv.js";
 
 export default {
   data: {
@@ -55,13 +55,7 @@ export default {
 
     await interaction.editReply({
       embeds: [
-        await codesEmbed.generate(
-          client,
-          interaction.guild,
-          updatedCodes,
-          newCodes,
-          updatedUsers
-        ),
+        await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
       ],
       files: [csvAttachment],
     });

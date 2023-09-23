@@ -1,8 +1,8 @@
-import Code from "../../schemas/code.js";
 import { AttachmentBuilder } from "discord.js";
+import Code from "../../schemas/code.js";
 
+import generateCsv from "../../helpers/csv.js";
 import codesEmbed from "../embeds/codes.js";
-import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
@@ -32,7 +32,9 @@ export default {
       await Code.addOrUpdateGuildCodes(interaction.guildId, codeInput);
 
     for (const code of updatedUsers) {
-      const member = interaction.guild.members.cache.get(code.userId) || await interaction.guild.members.fetch(code.userId);
+      const member =
+        interaction.guild.members.cache.get(code.userId) ||
+        (await interaction.guild.members.fetch(code.userId));
 
       const { addedRoleIds, removedRoleIds } = code;
 

@@ -1,8 +1,8 @@
 import { AttachmentBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
+import generateCsv from "../../helpers/csv.js";
 import Code from "../../schemas/code.js";
 import codesEmbed from "../embeds/codes.js";
-import generateCsv from "../../helpers/cvs.js";
 
 export default {
   data: {
