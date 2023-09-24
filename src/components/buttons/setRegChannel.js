@@ -1,9 +1,8 @@
 // TODO: If settings is not completed then it will render next select menu which is moderation channel
-
 import {
-  ButtonStyle,
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChannelSelectMenuBuilder,
   ChannelType,
 } from "discord.js";
@@ -30,7 +29,7 @@ export default {
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
 
     await interaction.editReply({
       content: "Kayıt kodunu girmek için kullanılacak kayıt odasını seçin.",

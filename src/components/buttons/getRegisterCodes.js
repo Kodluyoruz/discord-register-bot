@@ -1,8 +1,8 @@
 import { AttachmentBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
-import generateCsv from "../../helpers/csv.js";
-import Code from "../../schemas/code.js";
-import codesEmbed from "../embeds/codes.js";
+import codesEmbed from "#components/embeds/codes";
+import generateCsv from "#helpers/csv";
+import Code from "#schemas/code";
 
 export default {
   data: {
@@ -15,20 +15,11 @@ export default {
       .setStyle(ButtonStyle.Success);
   },
   async execute(interaction, client, roleId) {
-    const { usersCodes, unusedCodes } = await Code.getByRoleId(
-      interaction.guildId,
-      roleId
-    );
+    const { usersCodes, unusedCodes } = await Code.getByRoleId(interaction.guildId, roleId);
 
     await interaction.deferUpdate({ ephemeral: true });
 
-    const csv = await generateCsv(
-      client,
-      interaction.guild,
-      unusedCodes,
-      [],
-      usersCodes
-    );
+    const csv = await generateCsv(client, interaction.guild, unusedCodes, [], usersCodes);
 
     const dateString = new Date().toISOString().split("T")[0];
 

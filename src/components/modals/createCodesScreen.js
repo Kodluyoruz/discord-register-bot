@@ -1,9 +1,8 @@
 import { AttachmentBuilder } from "discord.js";
-import Code from "../../schemas/code.js";
 
-import codesEmbed from "../embeds/codes.js";
-
-import generateCsv from "../../helpers/csv.js";
+import codesEmbed from "#components/embeds/codes";
+import generateCsv from "#helpers/csv";
+import Code from "#schemas/code";
 
 export default {
   data: {
@@ -16,35 +15,32 @@ export default {
    * @param {String} roleId
    */
   async execute(interaction, client, roleId) {
-    // TODO: check if code number input is valid (is it a number?)
-
-    const codeCount = parseInt(
-      interaction.fields.getTextInputValue("codeNumberInput")
-    );
-
-    const codeInputIds = [];
-    for (let i = 0; i < codeCount; i++) {
-      codeInputIds.push(Math.floor(100000000 + Math.random() * 900000000));
+    if (!interaction.inCachedGuild()) {
+      interaction.reply({
+        content: "Bu komut sadece sunucularda kullanılabilir",
+        ephemeral: true,
+      });
+      return;
     }
 
-    const { updatedCodes, newCodes, updatedUsers } =
-      await Code.addOrUpdateGuildCodes(
-        interaction.guildId,
-        codeInputIds.map((code) => ({
-          codeId: code,
-          roleIds: [roleId],
-        }))
-      );
+    const codeCount = parseInt(interaction.fields.getTextInputValue("codeNumberInput"), 10);
 
-    await interaction.deferUpdate({ ephemeral: true });
+    const codeInputIds = [];
+    for (let i = 0; i < codeCount; i += 1) {
+      codeInputIds.push(Math.floor(100_000_000 + Math.random() * 900_000_000));
+    }
 
-    const csv = await generateCsv(
-      client,
-      interaction.guild,
-      newCodes,
-      updatedCodes,
-      updatedUsers
+    const { updatedCodes, newCodes, updatedUsers } = await Code.addOrUpdateGuildCodes(
+      interaction.guildId,
+      codeInputIds.map((code) => ({
+        codeId: code,
+        roleIds: [roleId],
+      }))
     );
+
+    await interaction.deferReply({ ephemeral: true });
+
+    const csv = await generateCsv(client, interaction.guild, newCodes, updatedCodes, updatedUsers);
 
     const dateString = new Date().toISOString().split("T")[0];
 
@@ -54,9 +50,7 @@ export default {
     });
 
     await interaction.editReply({
-      embeds: [
-        await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers),
-      ],
+      embeds: [await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers)],
       files: [csvAttachment],
     });
   },

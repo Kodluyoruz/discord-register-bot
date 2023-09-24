@@ -1,9 +1,9 @@
-//TODO: This will render buttons label and theri style depending on their status.
-
+// TODO: This will render buttons label and theri style depending on their status.
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import setRegChannelButton from "./setRegChannel.js";
-import setModChannelButton from "./setModChannel.js";
-import setLogChannelButton from "./setLogChannel.js";
+
+import setLogChannelButton from "#components/buttons/setLogChannel";
+import setModChannelButton from "#components/buttons/setModChannel";
+import setRegChannelButton from "#components/buttons/setRegChannel";
 
 export default {
   data: {
@@ -18,7 +18,7 @@ export default {
   /**
    *
    * @param {import("discord.js").ButtonInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    */
   // eslint-disable-next-line no-unused-vars
   async execute(interaction, client) {

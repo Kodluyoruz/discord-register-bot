@@ -1,7 +1,7 @@
 {
   "name": "kodluyoruz-discord-bot",
-  "version": "0.0.1",
-  "description": "Kodluyoruz Discord Kayıt Botu [Coming Soon](https://img.shields.io/badge/Status-Coming%20Soon-blue)",
+  "version": "0.1.1",
+  "description": "Kodluyoruz Discord Kayıt Botu",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -11,6 +11,13 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "imports": {
+    "#components/*": "./src/components/*.js",
+    "#events/*": "./src/events/*.js",
+    "#fuctions/*": "./src/functions/*.js",
+    "#helpers/*": "./src/helpers/*.js",
+    "#schemas/*": "./src/schemas/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,22 +34,24 @@
   "author": "Kodluyoruz",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.39.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^15.7.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "eslint": "^8.50.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^2.0.22",
-    "prettier": "2.8.8"
+    "nodemon": "^3.0.1",
+    "prettier": "^2.8.8"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.41",
-    "discord.js": "^14.9.0",
-    "dotenv": "^16.0.3",
-    "i18next": "^22.4.15",
-    "mongoose": "^7.1.0",
-    "winston": "^3.8.2"
+    "discord-api-types": "^0.37.57",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "i18next": "^23.5.1",
+    "mongoose": "^7.5.2",
+    "winston": "^3.10.0"
   }
 }

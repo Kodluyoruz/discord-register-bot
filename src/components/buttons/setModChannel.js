@@ -1,10 +1,9 @@
 // TODO: If settings is not completed then it will render next select menu which is log channel
-
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  ChannelSelectMenuBuilder,
   ButtonStyle,
+  ChannelSelectMenuBuilder,
   ChannelType,
 } from "discord.js";
 
@@ -30,7 +29,7 @@ export default {
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
     await interaction.editReply({
       content: "Moderasyonun yapılacağı odayı seçin.",
       components: [row],

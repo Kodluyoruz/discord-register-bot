@@ -11,31 +11,21 @@ export default (client) => {
       switch (folder) {
         case "client":
           for (const file of eventFiles) {
-            const event = (await import(`../../events/${folder}/${file}`))
-              .default;
+            const event = (await import(`../../events/${folder}/${file}`)).default;
             if (event.once) {
-              client.once(event.name, (...args) =>
-                event.execute(...args, client)
-              );
+              client.once(event.name, (...args) => event.execute(...args, client));
             } else {
-              client.on(event.name, (...args) =>
-                event.execute(...args, client)
-              );
+              client.on(event.name, (...args) => event.execute(...args, client));
             }
           }
           break;
         case "mongo":
           for (const file of eventFiles) {
-            const event = (await import(`../../events/${folder}/${file}`))
-              .default;
+            const event = (await import(`../../events/${folder}/${file}`)).default;
             if (event.once) {
-              mongoose.connection.once(event.name, (...args) =>
-                event.execute(...args, client)
-              );
+              mongoose.connection.once(event.name, (...args) => event.execute(...args, client));
             } else {
-              mongoose.connection.on(event.name, (...args) =>
-                event.execute(...args, client)
-              );
+              mongoose.connection.on(event.name, (...args) => event.execute(...args, client));
             }
           }
           break;

@@ -1,10 +1,10 @@
 import {
   ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-  ButtonBuilder,
-  ButtonStyle,
 } from "discord.js";
 
 export default {
@@ -22,9 +22,15 @@ export default {
    * @param {import("discord.js").ButtonInteraction} interaction
    */
   async execute(interaction) {
-    const modal = new ModalBuilder()
-      .setCustomId("codeEntryScreen")
-      .setTitle("Kayıt Kodu");
+    if (!interaction.inGuild() || !interaction.guild) {
+      await interaction.reply({
+        content: "Bu komut sunucularda kullanılabilir!",
+        ephemeral: true,
+      });
+      return;
+    }
+
+    const modal = new ModalBuilder().setCustomId("codeEntryScreen").setTitle("Kayıt Kodu");
 
     const textCodeInput = new TextInputBuilder()
       .setCustomId("codeInput")

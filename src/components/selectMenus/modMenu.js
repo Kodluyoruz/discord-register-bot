@@ -1,12 +1,13 @@
 import { ActionRowBuilder } from "discord.js";
-import Setting from "../../schemas/setting.js";
-import setRegChannelButton from "../buttons/setRegChannel.js";
-import setModChannelButton from "../buttons/setModChannel.js";
-import setLogChannelButton from "../buttons/setLogChannel.js";
-import documentButton from "../buttons/links/document.js";
-import setRoleButton from "../buttons/setRole.js";
-import setChannelsButton from "../buttons/setChannels.js";
-import setupEmbed from "../embeds/settings.js";
+
+import documentButton from "#components/buttons/links/document";
+import setChannelsButton from "#components/buttons/setChannels";
+import setLogChannelButton from "#components/buttons/setLogChannel";
+import setModChannelButton from "#components/buttons/setModChannel";
+import setRegChannelButton from "#components/buttons/setRegChannel";
+import setRoleButton from "#components/buttons/setRole";
+import setupEmbed from "#components/embeds/settings";
+import Setting from "#schemas/setting";
 
 export default {
   data: {
@@ -19,18 +20,27 @@ export default {
    */
   async execute(interaction, client) {
     const inputChannel = await interaction.channels.first();
-    Setting.setValueByKey(
-      interaction.guildId,
-      "Channel:Moderation",
-      inputChannel.id
-    )
+    if (interaction.inCachedGuild()) {
+      await interaction.reply({
+        content: "Bu komutu sadece sunucularda kullanabilirsiniz.",
+        ephemeral: true,
+      });
+      return;
+    }
+
+    if (!inputChannel) {
+      interaction.editReply("Bir kanal seçmelisiniz.");
+      return;
+    }
+
+    Setting.setValueByKey(interaction.guildId, "Channel:Moderation", inputChannel.id)
       .then(() => {
         client.logger.info(
           `Ayar: ${interaction.guild.name} için moderasyon kanalı ayarlandı -> ${inputChannel.name}`
         );
       })
       .catch(client.logger.error);
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
 
     await inputChannel.send({
       components: [
