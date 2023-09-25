@@ -20,9 +20,9 @@ export default {
    */
   async execute(interaction, client) {
     const inputChannel = await interaction.channels.first();
-    if (interaction.inCachedGuild()) {
+    if (!interaction.inCachedGuild()) {
       await interaction.reply({
-        content: "Bu komutu sadece sunucularda kullanabilirsiniz.",
+        content: "Bu komut sadece sunucularda kullanılabilir",
         ephemeral: true,
       });
       return;

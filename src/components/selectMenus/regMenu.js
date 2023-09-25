@@ -17,9 +17,9 @@ export default {
    * @param {import("discord.js").Client} client
    */
   async execute(interaction, client) {
-    if (interaction.inCachedGuild()) {
+    if (!interaction.inCachedGuild()) {
       await interaction.reply({
-        content: "Bu komutu sadece sunucularda kullanabilirsiniz.",
+        content: "Bu komut sadece sunucularda kullanılabilir",
         ephemeral: true,
       });
       return;
