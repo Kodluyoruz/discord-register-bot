@@ -27,7 +27,7 @@ const client = new Client({
 
 client.thumbnailUrl =
   THUMBNAIL_URL ||
-  "https://cdn.discordapp.com/attachments/1091296968879386725/1155376210583506954/Kodluyoruz.png";
+  "https://github-production-user-asset-6210df.s3.amazonaws.com/39780/241442229-32cc8ae6-4423-4a4a-927f-bfaa34950035.png";
 
 client.commands = new Collection();
 client.buttons = new Collection();
