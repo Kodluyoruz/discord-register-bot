@@ -68,7 +68,7 @@ const codeSchema = new Schema(
 
         let needConfirm = !confirm;
 
-        codes.forEach(async (code) => {
+        for (const code of codes) {
           const { codeId, roleIds, data } = code;
 
           const existingGuildCode = await this.findOne({
@@ -129,7 +129,7 @@ const codeSchema = new Schema(
             notUpdatedRoleIds: [],
             data,
           });
-        });
+        }
 
         return {
           needConfirm,
