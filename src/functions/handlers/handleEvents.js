@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 
 export default (client) => {
   client.handleEvents = async () => {
-    const eventFolders = fs.readdirSync(`./src/events`);
+    const eventFolders = fs
+      .readdirSync(`./src/events`)
+      .filter((folder) => fs.statSync(`./src/events/${folder}`).isDirectory());
     for (const folder of eventFolders) {
       const eventFiles = fs
         .readdirSync(`./src/events/${folder}`)

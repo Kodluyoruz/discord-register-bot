@@ -38,7 +38,9 @@ client.commandArray = [];
 client.logger = logger;
 
 client.logger.info("Fonksiyon: fonksiyonlar yükleniyor");
-const functionFolders = await fs.promises.readdir(`./src/functions`);
+const functionFolders = await fs.promises
+  .readdir(`./src/functions`)
+  .then((f) => f.filter((folder) => fs.statSync(`./src/functions/${folder}`).isDirectory()));
 
 for (const folder of functionFolders) {
   client.logger.info(`Fonksiyon: └── ${folder} klasörü işleniyor`);
