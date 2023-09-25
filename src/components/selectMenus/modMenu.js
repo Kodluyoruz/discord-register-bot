@@ -50,7 +50,7 @@ export default {
           setChannelsButton.generate(),
         ]),
       ],
-      embeds: [setupEmbed.generate(client)],
+      embeds: [setupEmbed.generate(client.user?.displayAvatarURL(), client.thumbnailUrl)],
     });
 
     await interaction.editReply({

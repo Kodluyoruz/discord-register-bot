@@ -42,7 +42,7 @@ export default {
 
     await inputChannel.send({
       components: [new ActionRowBuilder().addComponents([registerButton.generate()])],
-      embeds: [registerEmbed.generate(client.user?.displayAvatarURL())],
+      embeds: [registerEmbed.generate(client.user?.displayAvatarURL(), client.thumbnailUrl)],
     });
 
     await interaction.editReply({
