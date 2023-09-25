@@ -1,9 +1,9 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChannelSelectMenuBuilder,
   ChannelType,
-  ButtonStyle,
 } from "discord.js";
 
 export default {
@@ -28,7 +28,7 @@ export default {
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
     await interaction.editReply({
       content: "Logların düşeceği odayı seçin.",
       components: [row],

@@ -20,7 +20,7 @@ export default {
   /**
    *
    * @param {import("discord.js").ButtonInteraction} interaction
-   * @param {Client} client
+   * @param {import("discord.js").Client} client
    * @param {String} roleId
    */
   async execute(interaction, client, roleId) {
@@ -31,7 +31,9 @@ export default {
     const textInput = new TextInputBuilder()
       .setCustomId("codesInput")
       .setLabel("Kodları satırlara ayırarak girin.") // TODO:  Örnek: kodluyoruz1, kodluyoruz2, kodluyoruz3 FAZLA UZUN OLUYOR
-      .setPlaceholder("kodluyoruz1\nkodluyoruz2\nkodluyoruz3")
+      .setPlaceholder(
+        "kodluyoruz1\nkodluyoruz2\n\nyada\n\nkodluyoruz1\tJhon Doe\nkodluyoruz2\tJane Doe"
+      )
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
 

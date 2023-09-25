@@ -1,4 +1,9 @@
 {
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "printWidth": 100,
+  "singleQuote": false,
+  "importOrder": ["discord.js", "<THIRD_PARTY_MODULES>", "^#(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
