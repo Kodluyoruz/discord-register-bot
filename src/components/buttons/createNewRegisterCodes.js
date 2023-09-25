@@ -1,10 +1,10 @@
 import {
   ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-  ButtonStyle,
-  ButtonBuilder,
 } from "discord.js";
 
 export default {

@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const codeSchema = new Schema(
   {
@@ -26,15 +26,12 @@ const codeSchema = new Schema(
   {
     timestamps: true,
     statics: {
-      updateCodeUserId: async function (guildId, codeId, newUserId) {
-        const updateResult = await this.updateOne(
-          { guildId, codeId },
-          { userId: newUserId }
-        );
+      async updateCodeUserId(guildId, codeId, newUserId) {
+        const updateResult = await this.updateOne({ guildId, codeId }, { userId: newUserId });
 
-        return updateResult.nModified === 1;
+        return updateResult.modifiedCount === 1;
       },
-      getByCodeId: async function (guildId, codeId) {
+      async getByCodeId(guildId, codeId) {
         const code = await this.findOne({ guildId, codeId });
         if (code) {
           const { roleIds, userId, data } = code;
@@ -43,36 +40,38 @@ const codeSchema = new Schema(
         return null;
       },
       /**
+       * @typedef {Object} UserCodeData
+       * @property {string} codeId - The ID of the code.
+       * @property {Array<string>} addedRoleIds - The IDs of the roles added to the user.
+       * @property {Array<string>} removedRoleIds - The IDs of the roles removed from the user.
+       * @property {Array<string>} notUpdatedRoleIds - The IDs of the roles that were not updated.
+       * @property {{userName: string | undefined}} [data] - The data of the code.
+       * @property {string} [userId] - The ID of the user.
+       */
+
+      /**
        * Adds or updates guild codes.
        *
        * @async
        * @function
        * @param {string} guildId - The ID of the guild to update codes for.
-       * @param {Array} codes - An array of codes to add or update.
+       * @param {Array<{codeId: string, roleIds: Array<string>, data: {userName: string}}>} codes - The codes to add or update.
        * @param {boolean} [confirm=true] - Whether to confirm the changes.
        * @param {boolean} [addRoles=true] - Whether to add roles.
-       * @returns {Object} An object containing the results of the operation.
-       *    @property {boolean} needConfirm - Whether confirmation is needed.
-       *    @property {Array} updatedCodes - An array of updated codes.
-       *    @property {Array} newCodes - An array of new codes.
-       *    @property {Array} updatedUsers - An array of updated users.
+       * @returns {Promise<{needConfirm: boolean, updatedCodes: Array<UserCodeData>, newCodes: Array<UserCodeData>, updatedUsers: Array<UserCodeData>}>} - The result of the operation.
        */
-      addOrUpdateGuildCodes: async function (
-        guildId,
-        codes,
-        confirm = true,
-        addRoles = true
-      ) {
+      async addOrUpdateGuildCodes(guildId, codes, confirm = true, addRoles = true) {
         const updatedCodes = [];
+        /** @type {Array<UserCodeData>} */
         const newCodes = [];
         const updatedUsers = [];
 
         let needConfirm = !confirm;
 
-        for (const code of codes) {
+        codes.forEach(async (code) => {
           const { codeId, roleIds, data } = code;
 
-          let existingGuildCode = await this.findOne({
+          const existingGuildCode = await this.findOne({
             guildId,
             codeId,
           });
@@ -80,9 +79,7 @@ const codeSchema = new Schema(
           if (existingGuildCode) {
             const oldRoleIds = existingGuildCode.roleIds.slice();
             const newRoleIds = roleIds.slice();
-            const addedRoleIds = newRoleIds.filter(
-              (id) => !oldRoleIds.includes(id)
-            );
+            const addedRoleIds = newRoleIds.filter((id) => !oldRoleIds.includes(id));
             const removedRoleIds = addRoles
               ? []
               : oldRoleIds.filter((id) => !newRoleIds.includes(id));
@@ -91,11 +88,7 @@ const codeSchema = new Schema(
             );
 
             // addRoles seçeneği varsa mevcut rolleri silme
-            if (addRoles) {
-              existingGuildCode.roleIds = oldRoleIds.concat(addedRoleIds);
-            } else {
-              existingGuildCode.roleIds = newRoleIds;
-            }
+            existingGuildCode.roleIds = addRoles ? oldRoleIds.concat(addedRoleIds) : newRoleIds;
 
             existingGuildCode.data = data;
 
@@ -119,25 +112,24 @@ const codeSchema = new Schema(
             } else {
               needConfirm = true;
             }
-          } else {
-            const newCode = {
-              guildId,
-              codeId,
-              roleIds,
-              data,
-            };
-
-            const newGuildCode = new this(newCode);
-            newGuildCode.save();
-            newCodes.push({
-              codeId,
-              addedRoleIds: roleIds.slice(),
-              removedRoleIds: [],
-              notUpdatedRoleIds: [],
-              data,
-            });
           }
-        }
+          const newCode = {
+            guildId,
+            codeId,
+            roleIds,
+            data,
+          };
+
+          const newGuildCode = new this(newCode);
+          newGuildCode.save();
+          newCodes.push({
+            codeId,
+            addedRoleIds: roleIds.slice(),
+            removedRoleIds: [],
+            notUpdatedRoleIds: [],
+            data,
+          });
+        });
 
         return {
           needConfirm,
@@ -146,18 +138,30 @@ const codeSchema = new Schema(
           updatedUsers,
         };
       },
-      getByRoleId: async function (guildId, roleId) {
+      /**
+       * Gets guild codes by role ID.
+       *
+       * @async
+       * @function
+       * @param {string} guildId - The ID of the guild to get codes for.
+       * @param {string} roleId - The ID of the role to get codes for.
+       * @returns {Promise<{usersCodes: Array<UserCodeData>, unusedCodes: Array<UserCodeData>}>} - The result of the operation.
+       */
+      async getByRoleId(guildId, roleId) {
         const guildCodes = await this.find({ guildId, roleIds: roleId });
         const unusedCodes = [];
         const usersCodes = [];
 
-        for (const code of guildCodes) {
+        guildCodes.forEach((code) => {
+          /** @type {UserCodeData} */
           const codeData = {
             codeId: code.codeId,
             addedRoleIds: code.roleIds.slice(),
             removedRoleIds: [],
             notUpdatedRoleIds: [],
-            data: code.data,
+            data: {
+              userName: code.data?.userName,
+            },
             userId: code.userId,
           };
 
@@ -166,7 +170,7 @@ const codeSchema = new Schema(
           } else {
             unusedCodes.push(codeData);
           }
-        }
+        });
 
         return {
           usersCodes,

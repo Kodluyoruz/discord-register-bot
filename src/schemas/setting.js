@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const settingSchema = new Schema(
   {
@@ -8,22 +8,17 @@ const settingSchema = new Schema(
   },
   {
     statics: {
-      getValueByKey: function (guildId, key, callback) {
-        return this.findOne({ guildId: guildId, key: key }, callback);
+      getValueByKey(guildId, key) {
+        return this.findOne({ guildId, key });
       },
-      setValueByKey: function (guildId, key, value, callback) {
-        return this.findOneAndUpdate(
-          { guildId: guildId, key: key },
-          { value: value },
-          { upsert: true },
-          callback
-        );
+      setValueByKey(guildId, key, value) {
+        return this.findOneAndUpdate({ guildId, key }, { value }, { upsert: true });
       },
-      getAllData: function () {
+      getAllData() {
         return this.find();
       },
-      getAllDataByFilter: function (filter = {}, callback) {
-        return this.find(filter, callback);
+      getAllDataByFilter(filter = {}) {
+        return this.find(filter);
       },
     },
   }

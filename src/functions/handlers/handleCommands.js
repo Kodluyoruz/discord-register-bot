@@ -11,9 +11,8 @@ export default (client) => {
 
       const { commands, commandArray } = client;
       for (const file of commandFiles) {
-        const command = (await import(`../../commands/${folder}/${file}`))
-          .default;
-        commands.set(command.data.name, command);
+        const command = (await import(`../../commands/${folder}/${file}`)).default;
+        await commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
         logger.info(`Komut: ${command.data.name} yüklendi`);
       }

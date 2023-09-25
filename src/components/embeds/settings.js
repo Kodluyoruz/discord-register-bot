@@ -4,14 +4,14 @@ export default {
   data: {
     name: "settings",
   },
-  generate(client) {
+  generate(iconUrl, thumbnailUrl) {
     return new EmbedBuilder()
       .setColor(Colors.Blue)
-      .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
-      .setThumbnail(client.user.displayAvatarURL())
+      .setImage(thumbnailUrl) // TODO: Resim figmadaki resimle değiştirilecek
+      .setThumbnail(iconUrl)
       .setAuthor({
         url: "https://github.com/Kodluyoruz/discord-register-bot",
-        iconURL: client.user.displayAvatarURL(),
+        iconURL: iconUrl,
         name: `Kodluyoruz Kayıt Botu`,
       })
       .setURL("https://github.com/Kodluyoruz/discord-register-bot")

@@ -25,9 +25,7 @@ export default {
       }
 
       if (addedRoleIds.length > 0) {
-        parts.push(
-          `:ballot_box_with_check: ${mapRoleIdsToMentions(addedRoleIds)}`
-        );
+        parts.push(`:ballot_box_with_check: ${mapRoleIdsToMentions(addedRoleIds)}`);
       }
 
       if (removedRoleIds.length > 0) {
@@ -44,7 +42,7 @@ export default {
     function addFieldIfNotEmpty(embed, name, data) {
       if (data.length > 0) {
         embed.addFields({
-          name: name,
+          name,
           value: data.map(generateGuildCodeString).join("\n"),
         });
       }
@@ -52,7 +50,7 @@ export default {
 
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
-      .setImage(client.user.displayAvatarURL()) // TODO: Resim figmadaki resimle değiştirilecek
+      .setImage(client.thumbnailUrl) // TODO: Resim figmadaki resimle değiştirilecek
       .setThumbnail(client.user.displayAvatarURL())
       .setAuthor({
         name: "Kodluyoruz Kayıt Botu",
@@ -61,7 +59,7 @@ export default {
       })
       .setTitle("Guild Code Güncellendi!")
       .setDescription(
-        `**${newGuildCodes.length}** yeni kod eklendi, **${updatedGuildCodes.length}** kod güncellendi, **${updatedGuildUsers.length}** kullanıcı güncellendi.`
+        `**${newGuildCodes?.length}** yeni kod eklendi, **${updatedGuildCodes?.length}** kod güncellendi, **${updatedGuildUsers?.length}** kullanıcı güncellendi.`
       );
 
     addFieldIfNotEmpty(
@@ -73,18 +71,16 @@ export default {
     );
     addFieldIfNotEmpty(
       embed,
-      `Güncellenen Kodlar (${Math.min(
-        MAX_ITEMS_TO_DISPLAY,
+      `Güncellenen Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildCodes.length)}/${
         updatedGuildCodes.length
-      )}/${updatedGuildCodes.length})`,
+      })`,
       Array.from(updatedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
     );
     addFieldIfNotEmpty(
       embed,
-      `Güncellenen Kullanıcılar (${Math.min(
-        MAX_ITEMS_TO_DISPLAY,
+      `Güncellenen Kullanıcılar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildUsers.length)}/${
         updatedGuildUsers.length
-      )}/${updatedGuildUsers.length})`,
+      })`,
       Array.from(updatedGuildUsers).slice(0, MAX_ITEMS_TO_DISPLAY)
     );
 

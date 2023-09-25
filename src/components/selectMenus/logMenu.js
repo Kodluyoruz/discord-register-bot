@@ -1,9 +1,9 @@
 import { ActionRowBuilder } from "discord.js";
 
-import Setting from "../../schemas/setting.js";
-import setRegChannelButton from "../buttons/setRegChannel.js";
-import setModChannelButton from "../buttons/setModChannel.js";
-import setLogChannelButton from "../buttons/setLogChannel.js";
+import setLogChannelButton from "#components/buttons/setLogChannel";
+import setModChannelButton from "#components/buttons/setModChannel";
+import setRegChannelButton from "#components/buttons/setRegChannel";
+import Setting from "#schemas/setting";
 
 export default {
   data: {
@@ -17,6 +17,14 @@ export default {
   async execute(interaction, client) {
     const inputChannel = interaction.channels.first();
 
+    if (!interaction.inCachedGuild()) {
+      interaction.reply({
+        content: "Bu komut sadece sunucularda kullanılabilir",
+        ephemeral: true,
+      });
+      return;
+    }
+
     Setting.setValueByKey(interaction.guildId, "Channel:Log", inputChannel.id)
       .then(() => {
         client.logger.info(
@@ -24,7 +32,7 @@ export default {
         );
       })
       .catch(client.logger.error);
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
 
     await interaction.editReply({
       content: `İşlem kayıtları için ${inputChannel.name} seçildi.`,

@@ -1,15 +1,9 @@
-// TODO: It will be merged with settings.js and it will be render depend of settings. This command will be removed
+import { ActionRowBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
-import {
-  ActionRowBuilder,
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-} from "discord.js";
-
-import setupEmbed from "../../components/embeds/settings.js";
-import setRoleButton from "../../components/buttons/setRole.js";
-import setChannelsButton from "../../components/buttons/setChannels.js";
-import documentButton from "../../components/buttons/links/document.js";
+import documentButton from "#components/buttons/links/document";
+import setChannelsButton from "#components/buttons/setChannels";
+import setRoleButton from "#components/buttons/setRole";
+import setupEmbed from "#components/embeds/settings";
 
 export default {
   data: new SlashCommandBuilder()
@@ -17,11 +11,15 @@ export default {
     .setDescription("Kurulum menüsünü açar.")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   /**
-   *
-   * @param {import("discord.js").Integration} interaction
+   * Executes the Command
+   * @param {import("discord.js").CommandInteraction} interaction
    * @param {import("discord.js").Client} client
    */
   async execute(interaction, client) {
+    if (!client.user) {
+      return;
+    }
+    const iconUrl = client.user.displayAvatarURL();
     await interaction.reply({
       components: [
         new ActionRowBuilder().addComponents([
@@ -31,7 +29,7 @@ export default {
         ]),
       ],
       ephemeral: true,
-      embeds: [setupEmbed.generate(client, interaction)],
+      embeds: [setupEmbed.generate(iconUrl, client.thumbnailUrl)],
     });
   },
 };
