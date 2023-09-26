@@ -28,9 +28,9 @@ const codeSchema = new Schema(
     statics: {
       async updateCodeUserId(guildId, codeId, newUserId) {
         const updateResult = await this.updateOne({ guildId, codeId }, { userId: newUserId });
-
         return updateResult.modifiedCount === 1;
       },
+
       async getByCodeId(guildId, codeId) {
         const code = await this.findOne({ guildId, codeId });
         if (code) {
@@ -58,40 +58,32 @@ const codeSchema = new Schema(
        * @param {Array<{codeId: string, roleIds: Array<string>, data: {userName: string}}>} codes - The codes to add or update.
        * @param {boolean} [confirm=true] - Whether to confirm the changes.
        * @param {boolean} [addRoles=true] - Whether to add roles.
-       * @returns {Promise<{needConfirm: boolean, updatedCodes: Array<UserCodeData>, newCodes: Array<UserCodeData>, updatedUsers: Array<UserCodeData>}>} - The result of the operation.
+       * @returns {Promise<{needConfirm: boolean, updatedCodes: Array<UserCodeData>, newCodes: Array<UserCodeData>, updatedUsers: Array<UserCodeData>, duplicatedCodes: Array<UserCodeData>}>} - The result of the operation.
        */
-      async addOrUpdateGuildCodes(guildId, codes, confirm = true, addRoles = true) {
+      async addOrUpdateGuildCodes(guildId, codes) {
         const updatedCodes = [];
-        /** @type {Array<UserCodeData>} */
         const newCodes = [];
         const updatedUsers = [];
-
-        let needConfirm = !confirm;
-
+        const existingGuildCodes = await this.find({
+          guildId,
+          codeId: { $in: codes.map((code) => code.codeId) },
+        });
+        const newGuildCodes = [];
         for (const code of codes) {
           const { codeId, roleIds, data } = code;
-
-          const existingGuildCode = await this.findOne({
-            guildId,
-            codeId,
-          });
-
+          const existingGuildCode = existingGuildCodes.find(
+            (guildCode) => guildCode.codeId === codeId
+          );
           if (existingGuildCode) {
-            const oldRoleIds = existingGuildCode.roleIds.slice();
-            const newRoleIds = roleIds.slice();
+            const oldRoleIds = existingGuildCode.roleIds;
+            const newRoleIds = roleIds;
             const addedRoleIds = newRoleIds.filter((id) => !oldRoleIds.includes(id));
-            const removedRoleIds = addRoles
-              ? []
-              : oldRoleIds.filter((id) => !newRoleIds.includes(id));
+            const removedRoleIds = oldRoleIds.filter((id) => !newRoleIds.includes(id));
             const notUpdatedRoleIds = oldRoleIds.filter(
               (id) => !newRoleIds.includes(id) && !addedRoleIds.includes(id)
             );
-
-            // addRoles seçeneği varsa mevcut rolleri silme
-            existingGuildCode.roleIds = addRoles ? oldRoleIds.concat(addedRoleIds) : newRoleIds;
-
+            existingGuildCode.roleIds = oldRoleIds.concat(addedRoleIds);
             existingGuildCode.data = data;
-
             const updatedCode = {
               codeId,
               addedRoleIds,
@@ -100,43 +92,20 @@ const codeSchema = new Schema(
               data,
               userId: existingGuildCode.userId,
             };
-
-            if (existingGuildCode.userId) {
-              updatedUsers.push(updatedCode);
-            } else {
-              updatedCodes.push(updatedCode);
-            }
-
-            if (confirm) {
-              existingGuildCode.save();
-            } else {
-              needConfirm = true;
-            }
+            (existingGuildCode.userId ? updatedUsers : updatedCodes).push(updatedCode);
+          } else {
+            newGuildCodes.push({ guildId, codeId, roleIds, data });
+            newCodes.push({
+              codeId,
+              addedRoleIds: roleIds,
+              removedRoleIds: [],
+              notUpdatedRoleIds: [],
+              data,
+            });
           }
-          const newCode = {
-            guildId,
-            codeId,
-            roleIds,
-            data,
-          };
-
-          const newGuildCode = new this(newCode);
-          newGuildCode.save();
-          newCodes.push({
-            codeId,
-            addedRoleIds: roleIds.slice(),
-            removedRoleIds: [],
-            notUpdatedRoleIds: [],
-            data,
-          });
         }
-
-        return {
-          needConfirm,
-          updatedCodes,
-          newCodes,
-          updatedUsers,
-        };
+        await Promise.all([this.bulkSave(existingGuildCodes), this.bulkInsert(newGuildCodes)]);
+        return { updatedCodes, newCodes, updatedUsers };
       },
       /**
        * Gets guild codes by role ID.
