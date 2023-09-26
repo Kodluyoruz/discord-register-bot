@@ -1,6 +1,6 @@
 export default {
   name: "disconnected",
   execute(client) {
-    client.logger.info("Veritabanı: bağlantısı devredışı");
+    client.logger.warn("Veritabanı: bağlantısı devredışı");
   },
 };
