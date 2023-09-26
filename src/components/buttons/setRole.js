@@ -34,7 +34,7 @@ export default {
     const roleSelectEmbed = new EmbedBuilder()
       .setImage(client.thumbnailUrl)
       .setAuthor({
-        url: "https://github.com/Kodluyoruz/discord-register-bot",
+        url: client.documentUrl,
         iconURL: client.user.displayAvatarURL(),
         name: `Kodluyoruz Kayıt Botu`,
       })

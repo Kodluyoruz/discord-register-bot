@@ -29,7 +29,7 @@ export default {
         ]),
       ],
       ephemeral: true,
-      embeds: [setupEmbed.generate(iconUrl, client.thumbnailUrl)],
+      embeds: [setupEmbed.generate(iconUrl, client.thumbnailUrl, client.documentUrl)],
     });
   },
 };

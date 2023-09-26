@@ -71,7 +71,7 @@ export default {
       .setAuthor({
         name: "Kodluyoruz Kayıt Botu",
         iconURL: client.user.displayAvatarURL(),
-        url: "https://github.com/Kodluyoruz/discord-register-bot",
+        url: client.documentUrl,
       })
       .setTitle("Kod Listesi!")
       .setDescription(description);

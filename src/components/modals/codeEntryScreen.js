@@ -58,11 +58,11 @@ export default {
         .setImage(client.thumbnailUrl) // TODO: Resim figmadaki resimle değiştirilecek
         .setThumbnail(interaction.user.displayAvatarURL())
         .setAuthor({
-          url: "https://github.com/Kodluyoruz/discord-register-bot",
+          url: client.documentUrl,
           iconURL: client.user.displayAvatarURL(),
           name: `Kodluyoruz Kayıt Botu`,
         })
-        .setURL("https://github.com/Kodluyoruz/discord-register-bot")
+        .setURL(client.documentUrl)
         .addFields([
           {
             name: `TEBRİKLER ${nameInput}`,
