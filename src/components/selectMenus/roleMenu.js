@@ -16,16 +16,17 @@ export default {
   async execute(interaction, client) {
     const role = interaction.roles.first();
 
-    await interaction.deferReply({ ephemeral: true });
+    const roleEmbed = await interaction.deferUpdate({ fetchReply: true });
+
+    const codeButtonsRow = new ActionRowBuilder().addComponents([
+      setRegisterCodesButton.generate(interaction, client, role),
+      createNewRegisterCodesButton.generate(interaction, client, role),
+      getRegisterCodesButton.generate(interaction, client, role),
+    ]);
 
     await interaction.editReply({
-      components: [
-        new ActionRowBuilder().addComponents([
-          setRegisterCodesButton.generate(interaction, client, role),
-          createNewRegisterCodesButton.generate(interaction, client, role),
-          getRegisterCodesButton.generate(interaction, client, role),
-        ]),
-      ],
+      content: `Seçilen rol: ${role.name}`,
+      components: [roleEmbed.components[0], codeButtonsRow],
       ephemeral: true,
     });
   },

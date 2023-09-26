@@ -12,7 +12,7 @@ export default {
   generate() {
     return new ButtonBuilder()
       .setCustomId("setChannels")
-      .setLabel("Ayarları Düzenle")
+      .setLabel("Kanal Ayarları")
       .setStyle(ButtonStyle.Secondary);
   },
   /**

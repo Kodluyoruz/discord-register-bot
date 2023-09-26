@@ -1,7 +1,7 @@
 import { Colors, EmbedBuilder } from "discord.js";
 
+import { userRoleLog } from "#helpers/guildLogger";
 import Code from "#schemas/code";
-import Setting from "#schemas/setting";
 
 export default {
   data: {
@@ -56,7 +56,7 @@ export default {
       const embed = new EmbedBuilder()
         .setColor(Colors.Blue)
         .setImage(client.thumbnailUrl) // TODO: Resim figmadaki resimle değiştirilecek
-        .setThumbnail(client.user.displayAvatarURL())
+        .setThumbnail(interaction.user.displayAvatarURL())
         .setAuthor({
           url: "https://github.com/Kodluyoruz/discord-register-bot",
           iconURL: client.user.displayAvatarURL(),
@@ -68,7 +68,7 @@ export default {
             name: `TEBRİKLER ${nameInput}`,
             value: `${roles
               .map((role) => `<@&${role.id}>`)
-              .join(", ")} rolleri başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
+              .join(", ")} rolleri başarı ile tanımlandı.`, // TODO: user role should be shown here
             inline: false,
           },
         ]);
@@ -76,55 +76,8 @@ export default {
         embeds: [embed],
       });
 
-      const { guild } = interaction;
+      userRoleLog(client, interaction.guild, interaction.user.displayAvatarURL(), nameInput, roles);
 
-      Setting.getValueByKey(guild.id, "Channel:Log").then(async (setting) => {
-        if (!setting) {
-          return;
-        }
-        const channel = guild.channels.cache.find((c) => c.id === setting.value);
-
-        if (!channel) {
-          client.logger.error(
-            `Ayarlar: Channel:Log ayarı olan ${setting.value} kanalı bulunamadı.`
-          );
-          return;
-        }
-        if (!channel.isTextBased()) {
-          client.logger.error(
-            `Ayarlar: Channel:Log ayarı olan ${setting.value} kanalı metin kanalı değil.`
-          );
-          return;
-        }
-
-        if (!client.user) {
-          return;
-        }
-
-        // TODO: Log kanalına gönderilen embedler güncellencek
-        const logEmbed = new EmbedBuilder()
-          .setColor(Colors.Blue)
-          .setImage(client.thumbnailUrl) // TODO: Resim figmadaki resimle değiştirilecek
-          .setThumbnail(client.user.displayAvatarURL())
-          .setAuthor({
-            url: "https://github.com/Kodluyoruz/discord-register-bot",
-            iconURL: client.user.displayAvatarURL(),
-            name: `Kodluyoruz Kayıt Botu`,
-          })
-          .setURL("https://github.com/Kodluyoruz/discord-register-bot")
-          .addFields([
-            {
-              name: `Güncellenen Rol ${nameInput}`,
-              value: `${roles
-                .map((role) => `<@&${role.id}>`)
-                .join(", ")} rolleri başarı ile tanımlandı. Bu rolde ......`, // TODO: user role should be shown here
-              inline: false,
-            },
-          ]);
-        await channel.send({
-          embeds: [logEmbed],
-        });
-      });
       return;
     }
     if (codeEntry?.userId) {

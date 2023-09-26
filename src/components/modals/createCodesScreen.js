@@ -38,7 +38,7 @@ export default {
       }))
     );
 
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     const csv = await generateCsv(client, interaction.guild, newCodes, updatedCodes, updatedUsers);
 

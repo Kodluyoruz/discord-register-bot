@@ -43,18 +43,22 @@ async function generateCsv(
     "CODE_ID",
     "USER_TAG",
     "USER_NAME",
-    "ADDED_ROLE_IDS",
+    "ROLE_IDS",
     "REMOVED_ROLE_IDS",
-    "NOT_UPDATED_ROLE_IDS",
+    "EXSISTED_ROLE_IDS",
   ];
 
   /**
    * @param {UserCodeData} code
    */
-  async function getRowData(code) {
-    const addedRoles = getRoleNames(code.addedRoleIds, discordGuild, arraySeparator);
-    const removedRoles = getRoleNames(code.removedRoleIds, discordGuild, arraySeparator);
-    const notUpdatedRoles = getRoleNames(code.notUpdatedRoleIds, discordGuild, arraySeparator);
+  const getRowData = async (code) => {
+    const addedRoles = getRoleNames(code.addedRoleIds || [], discordGuild, arraySeparator);
+    const removedRoles = getRoleNames(code.removedRoleIds || [], discordGuild, arraySeparator);
+    const notUpdatedRoles = getRoleNames(
+      code.notUpdatedRoleIds || [],
+      discordGuild,
+      arraySeparator
+    );
 
     const member = code.userId
       ? discordGuild.members.cache.get(code.userId) ||
@@ -64,7 +68,7 @@ async function generateCsv(
     const userName = member?.displayName || code.data?.userName || "";
 
     return [code.codeId, userTag, userName, addedRoles, removedRoles, notUpdatedRoles];
-  }
+  };
 
   const rows = await Promise.all([
     ...newCodeList.map(getRowData),

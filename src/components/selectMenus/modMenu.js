@@ -40,7 +40,7 @@ export default {
         );
       })
       .catch(client.logger.error);
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     await inputChannel.send({
       components: [
