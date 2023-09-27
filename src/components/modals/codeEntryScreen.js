@@ -76,7 +76,7 @@ export default {
         embeds: [embed],
       });
 
-      userRoleLog(client, interaction.guild, interaction.user.displayAvatarURL(), nameInput, roles);
+      userRoleLog(client, interaction.guild, member, roles);
 
       return;
     }

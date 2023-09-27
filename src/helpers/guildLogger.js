@@ -2,9 +2,10 @@ import { Colors, EmbedBuilder } from "discord.js";
 
 import Setting from "#schemas/setting";
 
-async function userRoleLog(client, guild, userAvatar, name, roles) {
+async function userRoleLog(client, guild, member, roles) {
   Setting.getValueByKey(guild.id, "Channel:Log").then(async (setting) => {
     if (!setting) {
+      client.logger.error(`Ayarlar: Channel:Log ayarı bulunamadı.`);
       return;
     }
     const channel = guild.channels.cache.find((c) => c.id === setting.value);
@@ -27,11 +28,13 @@ async function userRoleLog(client, guild, userAvatar, name, roles) {
     // TODO: Log kanalına gönderilen embedler güncellencek
     const logEmbed = new EmbedBuilder()
       .setColor(Colors.Blue)
-      .setThumbnail(userAvatar)
+      .setThumbnail(member.displayAvatarURL())
       .addFields([
         {
-          name: `${name} Kullanıcısı Kayıt Oldu`,
-          value: `${roles.map((role) => `<@&${role.id}>`).join(", ")} rolleri kullanıcıya atandı`, // TODO: user role should be shown here
+          name: `${member.displayName} Kullanıcısı Kayıt Oldu`,
+          value: `${member} kullanıcına şu roller atandı:\n${roles
+            .map((role) => `<@&${role.id}>`)
+            .join(", ")}`, // TODO: user role should be shown here
           inline: false,
         },
       ]);
