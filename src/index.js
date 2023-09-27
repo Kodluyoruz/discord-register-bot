@@ -8,6 +8,8 @@ import logger from "#helpers/logger";
 
 dotenv.config();
 
+process.noDeprecation = true;
+
 const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL, DOCUMENT_URL } = process.env;
 const client = new Client({
   intents: [
