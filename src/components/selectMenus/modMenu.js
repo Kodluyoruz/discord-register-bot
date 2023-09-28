@@ -45,7 +45,7 @@ export default {
     await inputChannel.send({
       components: [
         new ActionRowBuilder().addComponents([
-          documentButton.generate(),
+          documentButton.generate(client.documentUrl),
           setRoleButton.generate(),
           setChannelsButton.generate(),
         ]),
