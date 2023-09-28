@@ -66,7 +66,7 @@ export default {
         new ActionRowBuilder().addComponents([
           setRegChannelButton.generate(),
           setModChannelButton.generate(),
-          setLogChannelButton.generate(),
+          setLogChannelButton.generate(client.documentUrl),
         ]),
       ],
     });
