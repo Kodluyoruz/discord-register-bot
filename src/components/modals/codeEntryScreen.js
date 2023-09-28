@@ -28,7 +28,7 @@ export default {
     await interaction.deferReply({ ephemeral: true });
 
     const codeInput = interaction.fields.getTextInputValue("codeInput");
-    const nameInput = interaction.fields.getTextInputValue("nameInput");
+    const nameInput = client.nameInput ? interaction.fields.getTextInputValue("nameInput") : "";
 
     const codeEntry = await Code.getByCodeId(interaction.guildId, codeInput);
 
