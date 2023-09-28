@@ -21,7 +21,7 @@ export default {
    *
    * @param {import("discord.js").ButtonInteraction} interaction
    */
-  async execute(interaction) {
+  async execute(interaction, client) {
     if (!interaction.inGuild() || !interaction.guild) {
       await interaction.reply({
         content: "Bu komut sunucularda kullanılabilir!",
@@ -37,6 +37,7 @@ export default {
       .setLabel("Kayıt Kodunuz")
       .setPlaceholder("1000023456789")
       .setRequired(true)
+      .setMaxLength(20)
       .setStyle(TextInputStyle.Short);
 
     const userName = (
@@ -50,11 +51,17 @@ export default {
       .setPlaceholder("John Doe")
       .setValue(userName)
       .setRequired(false)
+      .setMaxLength(255)
       .setStyle(TextInputStyle.Short);
 
     const codeActionRow = new ActionRowBuilder().addComponents(textCodeInput);
     const nameActionRow = new ActionRowBuilder().addComponents(textNameInput);
-    modal.addComponents(codeActionRow, nameActionRow);
+
+    modal.addComponents(codeActionRow);
+
+    if (client.nameInput) {
+      modal.addComponents(nameActionRow);
+    }
 
     await interaction.showModal(modal);
   },

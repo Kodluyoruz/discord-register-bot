@@ -49,9 +49,13 @@ export default {
       await Code.updateCodeUserId(interaction.guildId, codeInput, interaction.user.id);
 
       // TODO: check permision
-
       await member.roles.add(roles).catch(client.logger.error);
-      await member.setNickname(nameInput).catch(client.logger.error);
+
+      if (codeEntry.data?.userName) {
+        await member.setNickname(codeEntry.data?.userName).catch(client.logger.error);
+      } else if (nameInput) {
+        await member.setNickname(nameInput).catch(client.logger.error);
+      }
 
       const embed = new EmbedBuilder()
         .setColor(Colors.Blue)

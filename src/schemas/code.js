@@ -83,8 +83,8 @@ const codeSchema = new Schema(
               .filter((roleId) => !addedRoleIds.includes(roleId))
               .concat(existingRoleIds.filter((roleId) => !roleIds.includes(roleId)));
 
-            if (data) {
-              existingGuildCode.data.set(data);
+            if (existData?.userName) {
+              existingGuildCode.data.set(existData);
             }
 
             const updatedCode = {
