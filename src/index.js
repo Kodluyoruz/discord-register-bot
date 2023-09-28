@@ -10,7 +10,8 @@ dotenv.config();
 
 process.noDeprecation = true;
 
-const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL, DOCUMENT_URL, NAME_INPUT } = process.env;
+const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL, DOCUMENT_URL, NAME_INPUT, CREATE_CODE } =
+  process.env;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -34,6 +35,7 @@ client.thumbnailUrl =
 client.documentUrl = DOCUMENT_URL || "https://github.com/Kodluyoruz/discord-register-bot";
 
 client.nameInput = NAME_INPUT === "1" ? 1 : 0;
+client.createCode = CREATE_CODE === "1" ? 1 : 0;
 
 client.commands = new Collection();
 client.buttons = new Collection();

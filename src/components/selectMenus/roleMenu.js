@@ -18,11 +18,15 @@ export default {
 
     const roleEmbed = await interaction.deferUpdate({ fetchReply: true });
 
-    const codeButtonsRow = new ActionRowBuilder().addComponents([
-      setRegisterCodesButton.generate(interaction, client, role),
-      createNewRegisterCodesButton.generate(interaction, client, role),
-      getRegisterCodesButton.generate(interaction, client, role),
-    ]);
+    const codeButtonsRow = new ActionRowBuilder();
+
+    codeButtonsRow.addComponents(setRegisterCodesButton.generate(interaction, client, role));
+    if (client.createCode) {
+      codeButtonsRow.addComponents(
+        createNewRegisterCodesButton.generate(interaction, client, role)
+      );
+    }
+    codeButtonsRow.addComponents(getRegisterCodesButton.generate(interaction, client, role));
 
     await interaction.editReply({
       content: `Seçilen rol: ${role.name}`,
