@@ -42,6 +42,7 @@ async function generateCsv(
   const headers = [
     "CODE_ID",
     "USER_TAG",
+    "USER_ID",
     "USER_NAME",
     "ROLE_IDS",
     "REMOVED_ROLE_IDS",
@@ -65,9 +66,10 @@ async function generateCsv(
         (await discordGuild.members.fetch(code.userId))
       : null;
     const userTag = member?.user.tag || "";
+    const userId = member?.id || "";
     const userName = member?.displayName || code.data?.userName || "";
 
-    return [code.codeId, userTag, userName, addedRoles, removedRoles, notUpdatedRoles];
+    return [code.codeId, userTag, userId, userName, addedRoles, removedRoles, notUpdatedRoles];
   };
 
   const rows = await Promise.all([
