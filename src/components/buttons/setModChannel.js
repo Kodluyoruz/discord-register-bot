@@ -29,7 +29,7 @@ export default {
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
     await interaction.editReply({
       content: "Moderasyonun yapılacağı odayı seçin.",
       components: [row],

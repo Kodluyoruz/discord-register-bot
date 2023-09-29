@@ -17,7 +17,7 @@ export default {
   async execute(interaction, client, roleId) {
     const { usersCodes, unusedCodes } = await Code.getByRoleId(interaction.guildId, roleId);
 
-    await interaction.deferUpdate({ ephemeral: true });
+    await interaction.deferUpdate();
 
     const csv = await generateCsv(client, interaction.guild, unusedCodes, [], usersCodes);
 

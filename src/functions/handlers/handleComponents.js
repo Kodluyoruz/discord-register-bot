@@ -1,12 +1,14 @@
-import { readdirSync } from "fs";
+import fs from "fs";
 
 export default (client) => {
   client.handleComponents = async () => {
-    const componentFolders = readdirSync(`./src/components`);
+    const componentFolders = fs
+      .readdirSync(`./src/components`)
+      .filter((folder) => fs.statSync(`./src/components/${folder}`).isDirectory());
     for (const folder of componentFolders) {
-      const componentFiles = readdirSync(`./src/components/${folder}`).filter((file) =>
-        file.endsWith(".js")
-      );
+      const componentFiles = fs
+        .readdirSync(`./src/components/${folder}`)
+        .filter((file) => file.endsWith(".js"));
 
       const { buttons, selectMenus, modals } = client;
 

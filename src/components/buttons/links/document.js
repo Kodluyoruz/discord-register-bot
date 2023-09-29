@@ -4,10 +4,10 @@ export default {
   data: {
     name: "document",
   },
-  generate() {
+  generate(documentUrl) {
     return new ButtonBuilder()
       .setLabel("Dökümantasyon")
-      .setURL("https://github.com/Kodluyoruz/discord-register-bot")
+      .setURL(documentUrl)
       .setStyle(ButtonStyle.Link);
   },
 };

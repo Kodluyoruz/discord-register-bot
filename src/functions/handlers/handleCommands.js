@@ -3,7 +3,9 @@ import fs from "fs";
 export default (client) => {
   client.handleCommands = async () => {
     const { logger } = client;
-    const commandFolders = fs.readdirSync("./src/commands");
+    const commandFolders = fs
+      .readdirSync("./src/commands")
+      .filter((folder) => fs.statSync(`./src/commands/${folder}`).isDirectory());
     for (const folder of commandFolders) {
       const commandFiles = fs
         .readdirSync(`./src/commands/${folder}`)

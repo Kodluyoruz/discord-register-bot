@@ -17,9 +17,9 @@ export default {
    * @param {import("discord.js").Client} client
    */
   async execute(interaction, client) {
-    if (interaction.inCachedGuild()) {
+    if (!interaction.inCachedGuild()) {
       await interaction.reply({
-        content: "Bu komutu sadece sunucularda kullanabilirsiniz.",
+        content: "Bu komut sadece sunucularda kullanılabilir",
         ephemeral: true,
       });
       return;
@@ -38,11 +38,17 @@ export default {
         );
       })
       .catch(client.logger.error);
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     await inputChannel.send({
       components: [new ActionRowBuilder().addComponents([registerButton.generate()])],
-      embeds: [registerEmbed.generate(client.user?.displayAvatarURL())],
+      embeds: [
+        registerEmbed.generate(
+          client.user?.displayAvatarURL(),
+          client.thumbnailUrl,
+          client.documentUrl
+        ),
+      ],
     });
 
     await interaction.editReply({

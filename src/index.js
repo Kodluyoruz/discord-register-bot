@@ -8,7 +8,10 @@ import logger from "#helpers/logger";
 
 dotenv.config();
 
-const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL } = process.env;
+process.noDeprecation = true;
+
+const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL, DOCUMENT_URL, NAME_INPUT, CREATE_CODE } =
+  process.env;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -27,7 +30,12 @@ const client = new Client({
 
 client.thumbnailUrl =
   THUMBNAIL_URL ||
-  "https://cdn.discordapp.com/attachments/1091296968879386725/1155376210583506954/Kodluyoruz.png";
+  "https://github-production-user-asset-6210df.s3.amazonaws.com/39780/241442229-32cc8ae6-4423-4a4a-927f-bfaa34950035.png";
+
+client.documentUrl = DOCUMENT_URL || "https://github.com/Kodluyoruz/discord-register-bot";
+
+client.nameInput = NAME_INPUT === "1" ? 1 : 0;
+client.createCode = CREATE_CODE === "1" ? 1 : 0;
 
 client.commands = new Collection();
 client.buttons = new Collection();
@@ -38,7 +46,9 @@ client.commandArray = [];
 client.logger = logger;
 
 client.logger.info("Fonksiyon: fonksiyonlar yükleniyor");
-const functionFolders = await fs.promises.readdir(`./src/functions`);
+const functionFolders = await fs.promises
+  .readdir(`./src/functions`)
+  .then((f) => f.filter((folder) => fs.statSync(`./src/functions/${folder}`).isDirectory()));
 
 for (const folder of functionFolders) {
   client.logger.info(`Fonksiyon: └── ${folder} klasörü işleniyor`);

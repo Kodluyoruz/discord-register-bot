@@ -47,6 +47,22 @@ export default {
         });
       }
     }
+    // add description if not empty
+    let description = [];
+    if (newGuildCodes.length > 0) {
+      description.push(`**${newGuildCodes.length}** kod`);
+    }
+    if (updatedGuildCodes.length > 0) {
+      description.push(`**${updatedGuildCodes.length}** güncellenen kod`);
+    }
+    if (updatedGuildUsers.length > 0) {
+      description.push(`**${updatedGuildUsers.length}** kullanıcı`);
+    }
+    if (description.length > 0) {
+      description = description.join(", ").concat(".");
+    } else {
+      description = "Tanımlı kod bulunamadı.";
+    }
 
     const embed = new EmbedBuilder()
       .setColor(Colors.Blue)
@@ -55,18 +71,14 @@ export default {
       .setAuthor({
         name: "Kodluyoruz Kayıt Botu",
         iconURL: client.user.displayAvatarURL(),
-        url: "https://github.com/Kodluyoruz/discord-register-bot",
+        url: client.documentUrl,
       })
-      .setTitle("Guild Code Güncellendi!")
-      .setDescription(
-        `**${newGuildCodes?.length}** yeni kod eklendi, **${updatedGuildCodes?.length}** kod güncellendi, **${updatedGuildUsers?.length}** kullanıcı güncellendi.`
-      );
+      .setTitle("Kod Listesi!")
+      .setDescription(description);
 
     addFieldIfNotEmpty(
       embed,
-      `Yeni Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${
-        newGuildCodes.length
-      })`,
+      `Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, newGuildCodes.length)}/${newGuildCodes.length})`,
       Array.from(newGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
     );
     addFieldIfNotEmpty(
@@ -78,7 +90,7 @@ export default {
     );
     addFieldIfNotEmpty(
       embed,
-      `Güncellenen Kullanıcılar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildUsers.length)}/${
+      `Kullanıcılar (${Math.min(MAX_ITEMS_TO_DISPLAY, updatedGuildUsers.length)}/${
         updatedGuildUsers.length
       })`,
       Array.from(updatedGuildUsers).slice(0, MAX_ITEMS_TO_DISPLAY)

@@ -32,7 +32,7 @@ export default {
         );
       })
       .catch(client.logger.error);
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     await interaction.editReply({
       content: `İşlem kayıtları için ${inputChannel.name} seçildi.`,

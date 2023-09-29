@@ -2,6 +2,7 @@ import { AttachmentBuilder } from "discord.js";
 
 import codesEmbed from "#components/embeds/codes";
 import generateCsv from "#helpers/csv";
+import { userRoleLog } from "#helpers/guildLogger";
 import Code from "#schemas/code";
 
 /**
@@ -64,16 +65,12 @@ export default {
           return;
         }
 
-        const { addedRoleIds, removedRoleIds } = code;
+        const { addedRoleIds = [], notUpdatedRoleIds = [] } = code;
 
         /**
          * @type {import("discord.js").Role[]}
          */
         const addedRoles = [];
-        /**
-         * @type {import("discord.js").Role[]}
-         */
-        const removedRoles = [];
 
         addedRoleIds.forEach((r) => {
           const role = interaction.guild.roles.cache.get(r);
@@ -82,19 +79,30 @@ export default {
           }
         });
 
-        removedRoleIds.forEach((r) => {
+        notUpdatedRoleIds.forEach((r) => {
           const role = interaction.guild.roles.cache.get(r);
-          if (role) {
-            removedRoles.push(role);
+          if (role && !member.roles.cache.has(r)) {
+            addedRoles.push(role);
           }
         });
 
+        if (!addedRoles.length) {
+          return;
+        }
+
+        userRoleLog(
+          client,
+          interaction.guild,
+          member.displayAvatarURL(),
+          member.displayName,
+          addedRoles
+        );
+
         await member.roles.add(addedRoles);
-        await member.roles.remove(removedRoles);
       })
     );
 
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     const csv = await generateCsv(client, interaction.guild, newCodes, updatedCodes, updatedUsers);
 

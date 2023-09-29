@@ -42,7 +42,7 @@ export default {
                 const channel = guild.channels.cache.find((c) => c.id === setting.value);
                 logger.info(`Ayarlar: ${guild.name} için işlem kaydı kanalı -> ${channel.name}`);
               } else {
-                logger.info(`Ayarlar: ${guild.name} için işlem kaydı kanalı ayarlanmamış`);
+                logger.warn(`Ayarlar: ${guild.name} için işlem kaydı kanalı ayarlanmamış`);
               }
             })
             .catch(logger.error);
@@ -53,7 +53,7 @@ export default {
                 const channel = guild.channels.cache.find((c) => c.id === setting.value);
                 logger.info(`Ayarlar: ${guild.name} için kayıt kanalı -> ${channel.name}`);
               } else {
-                logger.info(`Ayarlar: ${guild.name} için kayıt kanalı ayarlanmamış`);
+                logger.warn(`Ayarlar: ${guild.name} için kayıt kanalı ayarlanmamış`);
               }
             })
             .catch(logger.error);
@@ -64,7 +64,7 @@ export default {
                 const channel = guild.channels.cache.find((c) => c.id === setting.value);
                 logger.info(`Ayarlar: ${guild.name} için moderasyon kanalı -> ${channel.name}`);
               } else {
-                logger.info(`Ayarlar: ${guild.name} için moderasyon kanalı ayarlanmamış`);
+                logger.warn(`Ayarlar: ${guild.name} için moderasyon kanalı ayarlanmamış`);
               }
             })
             .catch(logger.error);

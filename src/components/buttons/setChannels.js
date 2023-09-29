@@ -1,5 +1,5 @@
 // TODO: This will render buttons label and theri style depending on their status.
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
 import setLogChannelButton from "#components/buttons/setLogChannel";
 import setModChannelButton from "#components/buttons/setModChannel";
@@ -12,7 +12,7 @@ export default {
   generate() {
     return new ButtonBuilder()
       .setCustomId("setChannels")
-      .setLabel("Ayarları Düzenle")
+      .setLabel("Kanal Ayarları")
       .setStyle(ButtonStyle.Secondary);
   },
   /**
@@ -24,7 +24,18 @@ export default {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
 
+    const channelSetEmbed = new EmbedBuilder()
+      .setImage(client.thumbnailUrl)
+      .setAuthor({
+        url: client.documentUrl,
+        iconURL: client.user.displayAvatarURL(),
+        name: `Kodluyoruz Kayıt Botu`,
+      })
+      .setTitle("Kanal Ayarları")
+      .setDescription("İşlemlerin yapılacağı kanalları seçiniz.");
+
     await interaction.editReply({
+      embeds: [channelSetEmbed],
       components: [
         new ActionRowBuilder().addComponents([
           setRegChannelButton.generate(interaction, client),

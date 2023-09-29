@@ -20,9 +20,9 @@ export default {
    */
   async execute(interaction, client) {
     const inputChannel = await interaction.channels.first();
-    if (interaction.inCachedGuild()) {
+    if (!interaction.inCachedGuild()) {
       await interaction.reply({
-        content: "Bu komutu sadece sunucularda kullanabilirsiniz.",
+        content: "Bu komut sadece sunucularda kullanılabilir",
         ephemeral: true,
       });
       return;
@@ -40,17 +40,23 @@ export default {
         );
       })
       .catch(client.logger.error);
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferUpdate();
 
     await inputChannel.send({
       components: [
         new ActionRowBuilder().addComponents([
-          documentButton.generate(),
+          documentButton.generate(client.documentUrl),
           setRoleButton.generate(),
           setChannelsButton.generate(),
         ]),
       ],
-      embeds: [setupEmbed.generate(client)],
+      embeds: [
+        setupEmbed.generate(
+          client.user?.displayAvatarURL(),
+          client.thumbnailUrl,
+          client.documentUrl
+        ),
+      ],
     });
 
     await interaction.editReply({
@@ -60,7 +66,7 @@ export default {
         new ActionRowBuilder().addComponents([
           setRegChannelButton.generate(),
           setModChannelButton.generate(),
-          setLogChannelButton.generate(),
+          setLogChannelButton.generate(client.documentUrl),
         ]),
       ],
     });

@@ -23,13 +23,13 @@ export default {
     await interaction.reply({
       components: [
         new ActionRowBuilder().addComponents([
-          documentButton.generate(),
+          documentButton.generate(client.documentUrl),
           setRoleButton.generate(),
           setChannelsButton.generate(),
         ]),
       ],
       ephemeral: true,
-      embeds: [setupEmbed.generate(iconUrl, client.thumbnailUrl)],
+      embeds: [setupEmbed.generate(iconUrl, client.thumbnailUrl, client.documentUrl)],
     });
   },
 };

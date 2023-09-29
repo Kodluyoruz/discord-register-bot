@@ -6,15 +6,37 @@ export default createLogger({
     format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.stack || info.message}`)
   ),
   transports: [
-    new transports.Console(),
-    new transports.File({
-      filename: "logs/error.log",
-      level: "error",
-      maxsize: 2_097_152,
+    new transports.Console({
+      format: format.combine(
+        format.colorize({
+          all: true,
+          colors: {
+            info: "green",
+            error: "red",
+            warn: "yellow",
+            debug: "blue",
+          },
+        })
+      ),
     }),
     new transports.File({
+      level: "error",
+      filename: "logs/error.log",
+      maxsize: 5242880, // 5MB
+      maxFiles: 5,
+    }),
+    new transports.File({
+      level: "info",
       filename: "logs/combined.log",
-      maxsize: 2_097_152,
+      maxsize: 5242880, // 5MB
+      maxFiles: 5,
+    }),
+  ],
+  exceptionHandlers: [
+    new transports.File({
+      filename: "logs/exceptions.log",
+      maxsize: 5242880, // 5MB
+      maxFiles: 5,
     }),
   ],
 });
