@@ -60,7 +60,7 @@ export default {
           return;
         }
 
-        const { addedRoleIds = [], notUpdatedRoleIds = [] } = code;
+        const { addedRoleIds = [], notUpdatedRoleIds = [], codeId } = code;
 
         /**
          * @type {import("discord.js").Role[]}
@@ -90,7 +90,8 @@ export default {
           interaction.guild,
           member.displayAvatarURL(),
           member.displayName,
-          addedRoles
+          addedRoles,
+          codeId
         );
 
         await member.roles.add(addedRoles);

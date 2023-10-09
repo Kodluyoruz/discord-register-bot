@@ -1,4 +1,4 @@
-import { ActivityType, Client, Collection, GatewayIntentBits } from "discord.js";
+import { ActivityType, Client, Collection, GatewayIntentBits, Options } from "discord.js";
 
 import dotenv from "dotenv";
 import fs from "fs";
@@ -10,8 +10,15 @@ dotenv.config();
 
 process.noDeprecation = true;
 
-const { DISCORD_BOT_TOKEN, MONGO_URI, THUMBNAIL_URL, DOCUMENT_URL, NAME_INPUT, CREATE_CODE } =
-  process.env;
+const {
+  DISCORD_BOT_TOKEN,
+  MONGO_URI,
+  THUMBNAIL_URL,
+  DOCUMENT_URL,
+  NAME_INPUT,
+  CREATE_CODE,
+  MEMBER_CACHE_SIZE,
+} = process.env;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -26,6 +33,9 @@ const client = new Client({
       },
     ],
   },
+  makeCache: Options.cacheWithLimits({
+    GuildMemberManager: MEMBER_CACHE_SIZE || 2000,
+  }),
 });
 
 client.thumbnailUrl =

@@ -81,7 +81,7 @@ export default {
         embeds: [embed],
       });
 
-      userRoleLog(client, interaction.guild, member, roles);
+      userRoleLog(client, interaction.guild, member, roles, codeEntry.codeId);
 
       return;
     }

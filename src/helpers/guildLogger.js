@@ -2,7 +2,7 @@ import { Colors, EmbedBuilder } from "discord.js";
 
 import Setting from "#schemas/setting";
 
-async function userRoleLog(client, guild, member, roles) {
+async function userRoleLog(client, guild, member, roles, codeId) {
   Setting.getValueByKey(guild.id, "Channel:Log").then(async (setting) => {
     if (!setting) {
       client.logger.error(`Ayarlar: Channel:Log ayarı bulunamadı.`);
@@ -32,7 +32,7 @@ async function userRoleLog(client, guild, member, roles) {
       .addFields([
         {
           name: `${member.displayName} Kullanıcısı Kayıt Oldu`,
-          value: `${member} kullanıcına şu roller atandı:\n${roles
+          value: `${member} ${codeId} kullanarak kayıt oldu.\nKullanıya şu roller atandı:\n${roles
             .map((role) => `<@&${role.id}>`)
             .join(", ")}`, // TODO: user role should be shown here
           inline: false,
