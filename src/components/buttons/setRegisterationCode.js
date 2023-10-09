@@ -34,8 +34,8 @@ export default {
 
     const textCodeInput = new TextInputBuilder()
       .setCustomId("codeInput")
-      .setLabel("Kayıt Kodunuz")
-      .setPlaceholder("1000023456789")
+      .setLabel("Kayıt Kodunuz (Örneğin: 124xxxxxxx123)")
+      .setPlaceholder("Bu alana sadece size verilen kayıt kodunu yazınız!")
       .setRequired(true)
       .setMaxLength(20)
       .setStyle(TextInputStyle.Short);
