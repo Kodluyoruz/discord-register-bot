@@ -35,7 +35,7 @@ const codeSchema = new Schema(
         const code = await this.findOne({ guildId, codeId });
         if (code) {
           const { roleIds, userId, data } = code;
-          return { roleIds, userId, data };
+          return { codeId, roleIds, userId, data };
         }
         return null;
       },
