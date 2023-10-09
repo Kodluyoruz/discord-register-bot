@@ -1,4 +1,4 @@
-import { PermissionFlagsBits, SlashCommandBuilder, AttachmentBuilder } from "discord.js";
+import { AttachmentBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 import fs from "fs/promises";
 
@@ -54,7 +54,7 @@ export default {
         }
         const member =
           interaction.guild.members.cache.get(code.userId) ||
-          (await interaction.guild.members.fetch(code.userId));
+          (await interaction.guild.members.fetch(code.userId).catch(() => null));
 
         if (!member) {
           return;

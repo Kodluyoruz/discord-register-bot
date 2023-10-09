@@ -40,10 +40,11 @@ export default {
       .setMaxLength(20)
       .setStyle(TextInputStyle.Short);
 
+    // TODO: verileri interaction.member'dan çek!
     const userName = (
       interaction.guild.members.cache.get(interaction.user.id) ||
-      (await interaction.guild.members.fetch(interaction.user.id))
-    ).displayName;
+      (await interaction.guild.members.fetch(interaction.user.id).catch(() => null))
+    )?.displayName;
 
     const textNameInput = new TextInputBuilder()
       .setCustomId("nameInput")

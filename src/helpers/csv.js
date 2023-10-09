@@ -63,7 +63,7 @@ async function generateCsv(
 
     const member = code.userId
       ? discordGuild.members.cache.get(code.userId) ||
-        (await discordGuild.members.fetch(code.userId))
+        (await discordGuild.members.fetch(code.userId).catch(() => null))
       : null;
     const userTag = member?.user.tag || "";
     const userId = member?.id || "";

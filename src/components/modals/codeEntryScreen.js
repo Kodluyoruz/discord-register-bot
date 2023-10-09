@@ -42,9 +42,10 @@ export default {
         }
       });
 
+      // TODO: verileri interaction.member'dan çek!
       const member =
         interaction.guild.members.cache.get(interaction.user.id) ||
-        (await interaction.guild.members.fetch(interaction.user.id));
+        (await interaction.guild.members.fetch(interaction.user.id).catch(() => null));
 
       await Code.updateCodeUserId(interaction.guildId, codeInput, interaction.user.id);
 
