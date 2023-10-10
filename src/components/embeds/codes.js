@@ -6,7 +6,13 @@ export default {
   data: {
     name: "codes",
   },
-  async generate(client, updatedGuildCodes, newGuildCodes, updatedGuildUsers) {
+  async generate(
+    client,
+    updatedGuildCodes,
+    newGuildCodes,
+    updatedGuildUsers,
+    removedGuildCodes = []
+  ) {
     function mapRoleIdsToMentions(roleIds) {
       return roleIds.map((roleId) => `<@&${roleId}>`).join(", ");
     }
@@ -55,6 +61,9 @@ export default {
     if (updatedGuildCodes.length > 0) {
       description.push(`**${updatedGuildCodes.length}** güncellenen kod`);
     }
+    if (removedGuildCodes.length > 0) {
+      description.push(`**${removedGuildCodes.length}** silinen kod`);
+    }
     if (updatedGuildUsers.length > 0) {
       description.push(`**${updatedGuildUsers.length}** kullanıcı`);
     }
@@ -87,6 +96,13 @@ export default {
         updatedGuildCodes.length
       })`,
       Array.from(updatedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
+    );
+    addFieldIfNotEmpty(
+      embed,
+      `Silinen Kodlar (${Math.min(MAX_ITEMS_TO_DISPLAY, removedGuildCodes.length)}/${
+        removedGuildCodes.length
+      })`,
+      Array.from(removedGuildCodes).slice(0, MAX_ITEMS_TO_DISPLAY)
     );
     addFieldIfNotEmpty(
       embed,

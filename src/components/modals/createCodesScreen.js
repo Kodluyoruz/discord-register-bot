@@ -1,5 +1,7 @@
 import { AttachmentBuilder } from "discord.js";
 
+import { Buffer } from "node:buffer";
+
 import codesEmbed from "#components/embeds/codes";
 import generateCsv from "#helpers/csv";
 import Code from "#schemas/code";
@@ -44,7 +46,7 @@ export default {
 
     const dateString = new Date().toISOString().split("T")[0];
 
-    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv, "utf8"), {
       name: `${interaction.guild.name}_${dateString}_codes.csv`,
       description: "Exported codes",
     });

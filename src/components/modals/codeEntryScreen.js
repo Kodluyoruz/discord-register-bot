@@ -45,17 +45,29 @@ export default {
       // TODO: verileri interaction.member'dan çek!
       const member =
         interaction.guild.members.cache.get(interaction.user.id) ||
-        (await interaction.guild.members.fetch(interaction.user.id).catch(() => null));
+        (await interaction.guild.members.fetch(interaction.user.id).catch(() => {}));
 
       await Code.updateCodeUserId(interaction.guildId, codeInput, interaction.user.id);
 
       // TODO: check permision
-      await member.roles.add(roles).catch(client.logger.error);
+      try {
+        await member.roles.add(roles);
+      } catch (e) {
+        client.logger.error(e);
+      }
 
       if (codeEntry.data?.userName) {
-        await member.setNickname(codeEntry.data?.userName).catch(client.logger.error);
+        try {
+          await member.setNickname(codeEntry.data?.userName);
+        } catch (e) {
+          client.logger.error(e);
+        }
       } else if (nameInput) {
-        await member.setNickname(nameInput).catch(client.logger.error);
+        try {
+          await member.setNickname(nameInput);
+        } catch (e) {
+          client.logger.error(e);
+        }
       }
 
       const embed = new EmbedBuilder()
@@ -81,7 +93,7 @@ export default {
         embeds: [embed],
       });
 
-      userRoleLog(client, interaction.guild, member, roles, codeEntry.codeId);
+      await userRoleLog(client, interaction.guild, member, roles, codeEntry.codeId);
 
       return;
     }

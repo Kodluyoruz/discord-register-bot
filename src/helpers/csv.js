@@ -32,9 +32,10 @@ function getRoleNames(roleIds, discordGuild, arraySeparator) {
 async function generateCsv(
   discordClient,
   discordGuild,
-  newCodeList,
-  updatedCodeList,
-  updatedUserList,
+  newCodeList = [],
+  updatedCodeList = [],
+  updatedUserList = [],
+  deletedCodeList = [],
   options = {}
 ) {
   const { delimiter = ",", quoteChar = '"', arraySeparator = "|" } = options;
@@ -72,6 +73,7 @@ async function generateCsv(
   const rows = await Promise.all([
     ...newCodeList.map(getRowData),
     ...updatedCodeList.map(getRowData),
+    ...deletedCodeList.map(getRowData),
     ...updatedUserList.map(getRowData),
   ]);
 

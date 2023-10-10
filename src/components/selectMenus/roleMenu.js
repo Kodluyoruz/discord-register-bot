@@ -1,6 +1,7 @@
 import { ActionRowBuilder } from "discord.js";
 
 import createNewRegisterCodesButton from "#components/buttons/createNewRegisterCodes";
+import deleteRegisterCodesButton from "#components/buttons/deleteRegisterCodes";
 import getRegisterCodesButton from "#components/buttons/getRegisterCodes";
 import setRegisterCodesButton from "#components/buttons/setRegisterCodes";
 
@@ -27,6 +28,7 @@ export default {
       );
     }
     codeButtonsRow.addComponents(getRegisterCodesButton.generate(interaction, client, role));
+    codeButtonsRow.addComponents(deleteRegisterCodesButton.generate(interaction, client, role));
 
     await interaction.editReply({
       content: `Seçilen rol: ${role.name}`,

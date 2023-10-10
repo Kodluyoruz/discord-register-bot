@@ -9,13 +9,13 @@ import {
 
 export default {
   data: {
-    name: "setRegisterCodes",
+    name: "deleteRegisterCodes",
   },
   generate(interaction, client, role) {
     return new ButtonBuilder()
-      .setCustomId(`setRegisterCodes-${role.id}`)
-      .setLabel(`${role.name} İçin Kod Gir`)
-      .setStyle(ButtonStyle.Success);
+      .setCustomId(`deleteRegisterCodes-${role.id}`)
+      .setLabel(`Kod Sil`)
+      .setStyle(ButtonStyle.Danger);
   },
   /**
    *
@@ -25,8 +25,8 @@ export default {
    */
   async execute(interaction, client, roleId) {
     const modal = new ModalBuilder()
-      .setCustomId(`setCodesScreen-${roleId}`)
-      .setTitle("Mevcut kodları gir");
+      .setCustomId(`deleteCodesScreen-${roleId}`)
+      .setTitle("Silinecek kodları gir");
 
     const textInput = new TextInputBuilder()
       .setCustomId("codesInput")

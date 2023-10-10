@@ -8,17 +8,11 @@ const settingSchema = new Schema(
   },
   {
     statics: {
-      getValueByKey(guildId, key) {
-        return this.findOne({ guildId, key });
+      async getValueByKey(guildId, key) {
+        return this.findOne({ guildId, key }).lean();
       },
-      setValueByKey(guildId, key, value) {
-        return this.findOneAndUpdate({ guildId, key }, { value }, { upsert: true });
-      },
-      getAllData() {
-        return this.find();
-      },
-      getAllDataByFilter(filter = {}) {
-        return this.find(filter);
+      async setValueByKey(guildId, key, value) {
+        return this.findOneAndUpdate({ guildId, key }, { value }, { upsert: true }).lean();
       },
     },
   }

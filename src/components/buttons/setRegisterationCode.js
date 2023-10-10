@@ -43,7 +43,7 @@ export default {
     // TODO: verileri interaction.member'dan çek!
     const userName = (
       interaction.guild.members.cache.get(interaction.user.id) ||
-      (await interaction.guild.members.fetch(interaction.user.id).catch(() => null))
+      (await interaction.guild.members.fetch(interaction.user.id).catch(() => {}))
     )?.displayName;
 
     const textNameInput = new TextInputBuilder()

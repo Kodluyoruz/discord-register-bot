@@ -1,42 +1,44 @@
 import { createLogger, format, transports } from "winston";
 
+const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_FILES = 5;
+
 export default createLogger({
   format: format.combine(
-    format.timestamp({ format: "DD-MM-YYYY HH:mm:ss" }),
-    format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.stack || info.message}`)
+    format.timestamp({
+      format: "YYYY-MM-DD HH:mm:ss",
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.printf(
+      (info) =>
+        `${info.timestamp} ${info.level}: ${info.message} ${info.stack ? `\n${info.stack}` : ""}`
+    )
   ),
   transports: [
-    new transports.Console({
-      format: format.combine(
-        format.colorize({
-          all: true,
-          colors: {
-            info: "green",
-            error: "red",
-            warn: "yellow",
-            debug: "blue",
-          },
-        })
-      ),
-    }),
+    new transports.Console(),
     new transports.File({
-      level: "error",
       filename: "logs/error.log",
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
+      level: "error",
+      maxsize: MAX_SIZE,
+      maxFiles: MAX_FILES,
     }),
-    new transports.File({
-      level: "info",
-      filename: "logs/combined.log",
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
-    }),
+    new transports.File({ filename: "logs/combined.log", maxsize: MAX_SIZE, maxFiles: MAX_FILES }),
   ],
   exceptionHandlers: [
+    new transports.Console(),
     new transports.File({
       filename: "logs/exceptions.log",
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
+      maxsize: MAX_SIZE,
+      maxFiles: MAX_FILES,
+    }),
+  ],
+  rejectionHandlers: [
+    new transports.Console(),
+    new transports.File({
+      filename: "logs/rejections.log",
+      maxsize: MAX_SIZE,
+      maxFiles: MAX_FILES,
     }),
   ],
 });

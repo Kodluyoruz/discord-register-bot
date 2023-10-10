@@ -111,6 +111,38 @@ const codeSchema = new Schema(
 
         return { updatedCodes, newCodes, updatedUsers };
       },
+      async deleteGuildCodes(guildId, codes) {
+        const deletedCodes = [];
+        const deletedUsers = [];
+
+        const existingGuildCodes = await this.find({
+          guildId,
+          codeId: { $in: codes.map((code) => code.codeId) },
+        });
+
+        for (const code of codes) {
+          const { codeId } = code;
+          const existingGuildCode = existingGuildCodes.find(
+            (guildCode) => guildCode.codeId === codeId
+          );
+
+          if (existingGuildCode) {
+            const { roleIds, userId } = existingGuildCode;
+
+            const deletedCode = {
+              codeId,
+              removedRoleIds: roleIds,
+              userId,
+            };
+
+            (userId ? deletedUsers : deletedCodes).push(deletedCode);
+          }
+        }
+
+        await this.deleteMany({ guildId, codeId: { $in: codes.map((code) => code.codeId) } });
+
+        return { deletedCodes, deletedUsers };
+      },
       /**
        * Gets guild codes by role ID.
        *

@@ -19,7 +19,7 @@ import Code from "#schemas/code";
 
 export default {
   data: {
-    name: "setCodesScreen",
+    name: "deleteCodesScreen",
   },
   /**
    *
@@ -27,7 +27,7 @@ export default {
    * @param {import("discord.js").Client} client
    * @param {String} roleId
    */
-  async execute(interaction, client, roleId) {
+  async execute(interaction, client) {
     if (!interaction.inCachedGuild()) {
       interaction.reply({
         content: "Bu komut sadece sunucularda kullanılabilir",
@@ -42,19 +42,15 @@ export default {
       const codeParts = code.split("\t");
       return {
         codeId: codeParts[0].trim(),
-        roleIds: [roleId],
-        data: {
-          userName: codeParts[1]?.trim(),
-        },
       };
     });
 
-    const { updatedCodes, newCodes, updatedUsers } = await Code.addOrUpdateGuildCodes(
+    const { deletedCodes, deletedUsers } = await Code.deleteGuildCodes(
       interaction.guildId,
       codeInput
     );
 
-    for (const code of updatedUsers) {
+    for (const code of deletedUsers) {
       if (!code.userId) {
         continue;
       }
@@ -66,34 +62,23 @@ export default {
         continue;
       }
 
-      const { addedRoleIds = [], notUpdatedRoleIds = [], codeId } = code;
+      const { removedRoleIds = [], codeId } = code;
 
       /**
        * @type {import("discord.js").Role[]}
        */
-      const addedRoles = [];
+      const deletedRoles = [];
 
-      addedRoleIds.forEach((r) => {
+      removedRoleIds.forEach((r) => {
         const role = interaction.guild.roles.cache.get(r);
         if (role) {
-          addedRoles.push(role);
+          deletedRoles.push(role);
         }
       });
 
-      notUpdatedRoleIds.forEach((r) => {
-        const role = interaction.guild.roles.cache.get(r);
-        if (role && !member.roles.cache.has(r)) {
-          addedRoles.push(role);
-        }
-      });
-
-      if (!addedRoles.length) {
-        continue;
-      }
-
-      await userRoleLog(client, interaction.guild, member, addedRoles, codeId, "admin-add");
+      await userRoleLog(client, interaction.guild, member, deletedRoles, codeId, "admin-delete");
       try {
-        await member.roles.add(addedRoles);
+        await member.roles.remove(deletedRoles);
       } catch (e) {
         client.logger.error(e);
       }
@@ -101,7 +86,7 @@ export default {
 
     await interaction.deferUpdate();
 
-    const csv = await generateCsv(client, interaction.guild, newCodes, updatedCodes, updatedUsers);
+    const csv = await generateCsv(client, interaction.guild, [], [], deletedUsers, deletedCodes);
 
     const dateString = new Date().toISOString().split("T")[0];
 
@@ -111,7 +96,7 @@ export default {
     });
 
     await interaction.editReply({
-      embeds: [await codesEmbed.generate(client, updatedCodes, newCodes, updatedUsers)],
+      embeds: [await codesEmbed.generate(client, [], [], deletedUsers, deletedCodes)],
       files: [csvAttachment],
     });
   },

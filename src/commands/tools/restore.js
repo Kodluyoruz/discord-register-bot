@@ -1,6 +1,7 @@
 import { AttachmentBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 import fs from "fs/promises";
+import { Buffer } from "node:buffer";
 
 import codesEmbed from "#components/embeds/codes";
 import generateCsv from "#helpers/csv";
@@ -54,7 +55,7 @@ export default {
         }
         const member =
           interaction.guild.members.cache.get(code.userId) ||
-          (await interaction.guild.members.fetch(code.userId).catch(() => null));
+          (await interaction.guild.members.fetch(code.userId).catch(() => {}));
 
         if (!member) {
           return;
@@ -85,7 +86,7 @@ export default {
           return;
         }
 
-        userRoleLog(
+        await userRoleLog(
           client,
           interaction.guild,
           member.displayAvatarURL(),
@@ -94,7 +95,11 @@ export default {
           codeId
         );
 
-        await member.roles.add(addedRoles);
+        try {
+          await member.roles.add(addedRoles);
+        } catch (e) {
+          client.logger.error(e);
+        }
       })
     );
 
@@ -102,7 +107,7 @@ export default {
 
     const dateString = new Date().toISOString().split("T")[0];
 
-    const csvAttachment = new AttachmentBuilder(Buffer.from(csv), {
+    const csvAttachment = new AttachmentBuilder(Buffer.from(csv, "utf8"), {
       name: `${interaction.guild.name}_${dateString}_codes.csv`,
       description: "Exported codes",
     });
