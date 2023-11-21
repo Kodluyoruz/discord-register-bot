@@ -18,7 +18,7 @@ export default {
       .addFields([
         {
           name: `Kayıt Ol`,
-          value: `Kayıt işlemini tamamlamak için kayıdı gerçekleştir butonuna tıkladıktan sonra bu sunucuya katılmanızı sağlayan mailinde size verilen kodu, açılacak olan pencereye giriniz. :warning: Lütfen kodu girerken başında ve sonunda boşluk olmadığına emin olun!`,
+          value: `Kayıt işlemini tamamlamak için kayıdı gerçekleştir butonuna tıkladıktan sonra, bu sunucuya katılmanızı sağlayan mailde size verilen kodu, açılacak olan pencereye giriniz.\n\n:warning: Lütfen kodu girerken başında ve sonunda boşluk olmadığından emin olun!`,
           inline: false,
         },
       ]);
