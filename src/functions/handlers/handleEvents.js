@@ -8,7 +8,7 @@ const isJs = (file = "") => file.endsWith(".js");
 const isDir = (dir) => fs.statSync(path.join(EVENTS_PATH, dir)).isDirectory();
 
 export default (client) => {
-  const methods = { client, mongo };
+  const methods = { client, mongo: mongo.connection };
   client.handleEvents = async () => {
     const eventFolders = fs.readdirSync(EVENTS_PATH).filter(isDir);
     for (const folder of eventFolders) {
