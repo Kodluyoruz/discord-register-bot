@@ -1,6 +1,6 @@
 import { Colors, EmbedBuilder } from "discord.js";
 
-const MAX_ITEMS_TO_DISPLAY = 10;
+const MAX_ITEMS_TO_DISPLAY = 5;
 
 export default {
   data: {
