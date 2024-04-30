@@ -1,38 +1,25 @@
-import fs from "fs";
-import mongoose from "mongoose";
+import fs from "node:fs";
+import path from "node:path";
+import * as mongo from "mongoose";
+
+const EVENTS_PATH = './src/events/';
+
+const isJs = (file = "") => file.endsWith(".js");
+const isDir = (dir) => fs.statSync(path.join(EVENTS_PATH, dir)).isDirectory();
 
 export default (client) => {
+  const methods = { client, mongo: mongo.connection };
   client.handleEvents = async () => {
-    const eventFolders = fs
-      .readdirSync(`./src/events`)
-      .filter((folder) => fs.statSync(`./src/events/${folder}`).isDirectory());
+    const eventFolders = fs.readdirSync(EVENTS_PATH).filter(isDir);
     for (const folder of eventFolders) {
-      const eventFiles = fs
-        .readdirSync(`./src/events/${folder}`)
-        .filter((file) => file.endsWith(".js"));
-      switch (folder) {
-        case "client":
-          for (const file of eventFiles) {
-            const event = (await import(`../../events/${folder}/${file}`)).default;
-            if (event.once) {
-              client.once(event.name, (...args) => event.execute(...args, client));
-            } else {
-              client.on(event.name, (...args) => event.execute(...args, client));
-            }
-          }
-          break;
-        case "mongo":
-          for (const file of eventFiles) {
-            const event = (await import(`../../events/${folder}/${file}`)).default;
-            if (event.once) {
-              mongoose.connection.once(event.name, (...args) => event.execute(...args, client));
-            } else {
-              mongoose.connection.on(event.name, (...args) => event.execute(...args, client));
-            }
-          }
-          break;
-        default:
-          break;
+      const eventPath = path.join(EVENTS_PATH, folder);
+      const eventFiles = fs.readdirSync(eventPath).filter(isJs);
+      const method = methods[folder];
+      for (const file of eventFiles) {
+        const eventFile = path.join('../', eventPath, file);
+        const event = (await import(eventFile)).default;
+        const listener = event.once ? method.once : method.on;
+        listener(event.name, (...args) => event.execute(...args, client));
       }
     }
   };
